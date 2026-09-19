@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { useRoutineStore } from './store/useRoutineStore';
 import { readFastPath, readCustomRoutines } from './store/localStore';
 import CharacterSelection from './pages/CharacterSelection';
@@ -16,19 +16,45 @@ import CustomRoutineList from './pages/CustomRoutineList';
 import ParentGate from './pages/ParentGate';
 import Settings from './pages/Settings';
 import { initializeNativeRuntime } from './platform/nativeRuntime';
+import { CHARACTER_IDS } from './data/characters';
 
 const MotionDiv = motion.div;
 
+const SCREENS = {
+  selection: CharacterSelection,
+  picker: RoutinePicker,
+  customList: CustomRoutineList,
+  setup: RoutineSetup,
+  player: ActivePlayer,
+  complete: RoutineComplete,
+  settings: Settings,
+  parentGate: ParentGate,
+};
+
+const SCREEN_DEPTH = {
+  selection: 0,
+  parentGate: 1,
+  settings: 2,
+  picker: 1,
+  customList: 2,
+  setup: 3,
+  player: 4,
+  complete: 5,
+};
+
 const pageTransition = {
-  initial: { opacity: 0, x: 30 },
+  initial: (direction) => ({ opacity: 0, x: 30 * direction }),
   animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -30 },
+  exit: (direction) => ({ opacity: 0, x: -30 * direction }),
   transition: { duration: 0.3, ease: 'easeOut' },
 };
 
 export default function App() {
   const screen = useRoutineStore((s) => s.screen);
   const rootRef = useRef(null);
+  const prevScreenRef = useRef(screen);
+  const direction = (SCREEN_DEPTH[screen] ?? 0) >= (SCREEN_DEPTH[prevScreenRef.current] ?? 0) ? 1 : -1;
+  useEffect(() => { prevScreenRef.current = screen; }, [screen]);
 
   useEffect(() => initializeNativeRuntime(), []);
 
@@ -71,7 +97,7 @@ export default function App() {
     }
     if (s === 'selection') {
       const { hasCompletedRun, lastBuddy, lastRoutine } = readFastPath();
-      if (hasCompletedRun && lastBuddy && lastRoutine) {
+      if (hasCompletedRun && CHARACTER_IDS.includes(lastBuddy) && lastRoutine) {
         if (lastRoutine.startsWith('custom:')) {
           const customId = lastRoutine.replace('custom:', '');
           const exists = readCustomRoutines().some((r) => r.id === customId);
@@ -90,53 +116,22 @@ export default function App() {
     useRoutineStore.setState({ timerInterval: null });
   }, []);
 
+  const Screen = SCREENS[screen];
+
   return (
-    <div ref={rootRef} className="app-viewport relative h-[100dvh] min-h-0 bg-cream-gradient text-ink overflow-hidden">
-      <div className="absolute inset-0 bg-cream-glow pointer-events-none" />
-      <div className="app-safe-area relative max-w-md mx-auto flex h-full min-h-0 w-full flex-col">
-        <AnimatePresence mode="wait">
-          {screen === 'selection' && (
-            <MotionDiv key="selection" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <CharacterSelection />
-            </MotionDiv>
-          )}
-          {screen === 'picker' && (
-            <MotionDiv key="picker" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <RoutinePicker />
-            </MotionDiv>
-          )}
-          {screen === 'customList' && (
-            <MotionDiv key="customList" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <CustomRoutineList />
-            </MotionDiv>
-          )}
-          {screen === 'setup' && (
-            <MotionDiv key="setup" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <RoutineSetup />
-            </MotionDiv>
-          )}
-          {screen === 'player' && (
-            <MotionDiv key="player" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <ActivePlayer />
-            </MotionDiv>
-          )}
-          {screen === 'complete' && (
-            <MotionDiv key="complete" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <RoutineComplete />
-            </MotionDiv>
-          )}
-          {screen === 'settings' && (
-            <MotionDiv key="settings" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <Settings />
-            </MotionDiv>
-          )}
-          {screen === 'parentGate' && (
-            <MotionDiv key="parentGate" {...pageTransition} className="flex h-full min-h-0 flex-col">
-              <ParentGate />
-            </MotionDiv>
-          )}
-        </AnimatePresence>
+    <MotionConfig reducedMotion="user">
+      <div ref={rootRef} className="app-viewport relative h-[100dvh] min-h-0 bg-cream-gradient text-ink overflow-hidden">
+        <div className="absolute inset-0 bg-cream-glow pointer-events-none" />
+        <div className="app-safe-area relative max-w-md mx-auto flex h-full min-h-0 w-full flex-col">
+          <AnimatePresence mode="wait" custom={direction}>
+            {Screen && (
+              <MotionDiv key={screen} custom={direction} variants={pageTransition} initial="initial" animate="animate" exit="exit" transition={pageTransition.transition} className="flex h-full min-h-0 flex-col">
+                <Screen />
+              </MotionDiv>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </MotionConfig>
   );
 }

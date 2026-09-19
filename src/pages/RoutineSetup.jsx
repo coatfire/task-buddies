@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, Reorder, AnimatePresence, useDragControls } from 'framer-motion';
-import { ChevronDown, ChevronUp, GripVertical, Minus, Plus, Play, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, GripVertical, Minus, Plus, Play, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import PixelRexCharacter from '../components/rex/PixelRexCharacter';
 import { useRoutineStore } from '../store/useRoutineStore';
@@ -64,9 +64,10 @@ export default function RoutineSetup() {
       <div className="w-full max-w-sm flex items-center gap-2 mb-3 shrink-0 sm:mb-5">
         <button
           onClick={() => setScreen(routineType.startsWith('custom:') ? 'customList' : 'picker')}
-          className="w-10 h-10 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
+          className="w-11 h-11 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
+          aria-label="Back"
         >
-          <span className="text-sm">←</span>
+          <ArrowLeft className="w-5 h-5" />
         </button>
         <Logo className="h-8 w-auto" size="small" />
       </div>
@@ -103,25 +104,25 @@ export default function RoutineSetup() {
         </MotionButton>
         {!showBuilder && (
           <button onClick={() => setShowBuilder(true)} className="mt-2.5 w-full h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
-            <Settings2 className="w-4.5 h-4.5 text-ink-muted" />
-            <span className="text-xs font-display font-semibold text-ink">Edit tasks</span>
+            <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
+            <span className="text-xs font-display font-semibold text-ink">Edit Tasks</span>
             <ChevronDown className="w-4 h-4 text-ink-muted" />
           </button>
         )}
         {isFastPath && (
-          <div className="mt-3 flex items-center justify-center gap-4">
+          <div className="mt-1.5 flex items-center justify-center gap-2">
             <button
               onClick={() => setScreen('selection')}
-              className="text-[12px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
+              className="min-h-[44px] px-3 text-[13px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
             >
-              Change buddy
+              Change Buddy
             </button>
             <span className="text-border-card text-xs">·</span>
             <button
               onClick={() => setScreen('picker')}
-              className="text-[12px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
+              className="min-h-[44px] px-3 text-[13px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
             >
-              Change routine
+              Change Routine
             </button>
           </div>
         )}
@@ -138,12 +139,12 @@ export default function RoutineSetup() {
           >
             <div className="flex items-center justify-between mb-3 sm:mb-4">
               <div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-ink">{routineName} Routine</h3>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-ink">{routineName}</h3>
                 <p className="text-[13px] sm:text-sm text-ink-muted font-body">{tasks.length} tasks · {totalMinutes} min total</p>
               </div>
-              <button onClick={() => setShowBuilder(false)} className="min-w-[92px] h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
-                <Settings2 className="w-4.5 h-4.5 text-ink-muted" />
-                <span className="text-xs font-display font-semibold text-ink">Edit</span>
+              <button onClick={() => setShowBuilder(false)} className="h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
+                <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
+                <span className="text-xs font-display font-semibold text-ink">Done</span>
                 <ChevronUp className="w-4 h-4 text-ink-muted" />
               </button>
             </div>
@@ -166,7 +167,7 @@ export default function RoutineSetup() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-dashed border-border-card hover:border-accent/50 hover:bg-accent/5 transition-colors text-sm font-display font-semibold text-ink-muted hover:text-ink"
                 >
                   <PlusCircle className="w-4 h-4" />
-                  Add task
+                  Add Task
                 </button>
                 <button
                   onClick={handleSave}
@@ -202,7 +203,7 @@ export default function RoutineSetup() {
             >
               <div className="flex items-center justify-between px-5 py-4 border-b border-border-card shrink-0">
                 <h3 className="font-display font-bold text-lg text-ink">Add a Task</h3>
-                <button onClick={() => setShowPicker(false)} className="w-8 h-8 rounded-full bg-[#FAF3E8] flex items-center justify-center text-ink-muted hover:text-ink transition-colors">
+                <button onClick={() => setShowPicker(false)} aria-label="Close" className="w-10 h-10 rounded-full bg-[#FAF3E8] flex items-center justify-center text-ink-muted hover:text-ink transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -251,8 +252,8 @@ function TaskBuilderItem({ task, onDurationChange, onDelete, onTitleChange }) {
       value={task}
       dragControls={dragControls}
       dragListener={false}
-      className="flex flex-col gap-2 py-3 px-3.5 rounded-2xl bg-white/60/78 border border-white/8 cursor-grab active:cursor-grabbing"
-      whileDrag={{ scale: 1.03, boxShadow: '0 14px 30px rgba(0, 0, 0, 0.35)', backgroundColor: 'rgba(44, 29, 19, 0.96)' }}
+      className="flex flex-col gap-2 py-3 px-3.5 rounded-2xl bg-[#FAF3E8] border border-border-card"
+      whileDrag={{ scale: 1.03, boxShadow: '0 10px 24px rgba(74, 52, 38, 0.18)' }}
     >
       {/* Row 1 — task name, full width */}
       <div className="flex items-center gap-2 min-w-0">
@@ -262,9 +263,10 @@ function TaskBuilderItem({ task, onDurationChange, onDelete, onTitleChange }) {
             event.stopPropagation();
             dragControls.start(event);
           }}
-          className="shrink-0 rounded-lg p-0.5 touch-none cursor-grab active:cursor-grabbing"
+          className="shrink-0 -ml-2 w-9 h-9 flex items-center justify-center rounded-lg touch-none cursor-grab active:cursor-grabbing"
+          aria-label="Drag to reorder"
         >
-          <GripVertical className="w-4 h-4 text-ink-muted/40" />
+          <GripVertical className="w-4 h-4 text-ink-muted/60" />
         </button>
         <span className="text-lg shrink-0">{task.itemEmoji}</span>
         <input
@@ -273,19 +275,21 @@ function TaskBuilderItem({ task, onDurationChange, onDelete, onTitleChange }) {
           onChange={(e) => onTitleChange(e.target.value)}
           onPointerDown={(e) => e.stopPropagation()}
           placeholder="Task name..."
-          className="flex-1 min-w-0 bg-transparent font-display font-semibold text-sm text-ink placeholder:text-ink-muted/50 outline-none border-b border-transparent focus:border-border-card truncate"
+          aria-label="Task name"
+          className="flex-1 min-w-0 bg-transparent font-display font-semibold text-base text-ink placeholder:text-ink-muted/50 outline-none border-b border-transparent focus:border-border-card truncate"
         />
       </div>
       {/* Row 2 — duration stepper + delete, aligned right under the title */}
       <div className="flex items-center justify-end gap-1.5 pl-9">
-        <div className="flex items-center rounded-xl border border-border-card bg-[#FAF3E8] overflow-hidden">
+        <div className="flex items-center rounded-xl border border-border-card bg-white/70 overflow-hidden">
           <button
             onClick={(e) => { e.stopPropagation(); onDurationChange(-1); }}
             onPointerDown={(e) => e.stopPropagation()}
             disabled={task.durationMinutes <= 1}
-            className="w-8 h-8 flex items-center justify-center hover:bg-surface-card transition-colors disabled:opacity-30 text-ink"
+            aria-label="Less time"
+            className="w-10 h-10 flex items-center justify-center hover:bg-surface-card transition-colors disabled:opacity-30 text-ink"
           >
-            <Minus className="w-3.5 h-3.5" />
+            <Minus className="w-4 h-4" />
           </button>
           <span className="min-w-[3rem] px-1 text-center font-display font-bold text-sm" style={{ color: task.themeColor }}>
             {task.durationMinutes}m
@@ -294,17 +298,19 @@ function TaskBuilderItem({ task, onDurationChange, onDelete, onTitleChange }) {
             onClick={(e) => { e.stopPropagation(); onDurationChange(1); }}
             onPointerDown={(e) => e.stopPropagation()}
             disabled={task.durationMinutes >= 60}
-            className="w-8 h-8 flex items-center justify-center hover:bg-surface-card transition-colors disabled:opacity-30 text-ink"
+            aria-label="More time"
+            className="w-10 h-10 flex items-center justify-center hover:bg-surface-card transition-colors disabled:opacity-30 text-ink"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
           </button>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onDelete(); }}
           onPointerDown={(e) => e.stopPropagation()}
-          className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-ink-muted/50 hover:text-red-500 hover:bg-red-50 transition-colors"
+          aria-label="Remove task"
+          className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-ink-muted/60 hover:text-red-500 hover:bg-red-50 transition-colors"
         >
-          <Trash2 className="w-3.5 h-3.5" />
+          <Trash2 className="w-4 h-4" />
         </button>
       </div>
     </Reorder.Item>

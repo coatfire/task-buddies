@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 import { useRoutineStore } from '../store/useRoutineStore';
 import Logo from '../components/Logo';
 
@@ -39,9 +40,10 @@ export default function RoutinePicker() {
       <div className="flex items-center gap-2 mb-3 shrink-0 sm:mb-5">
         <button
           onClick={() => setScreen('selection')}
-          className="w-10 h-10 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
+          aria-label="Back"
+          className="w-11 h-11 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
         >
-          <span className="text-sm">←</span>
+          <ArrowLeft className="w-5 h-5" />
         </button>
         <Logo className="h-8 w-auto" size="small" />
       </div>

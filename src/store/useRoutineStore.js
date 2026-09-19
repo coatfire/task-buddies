@@ -125,7 +125,7 @@ export const useRoutineStore = create(
     set({ hasSavedRoutine: true });
   },
 
-  setTasks: (tasks) => set({ tasks }),
+  setTasks: (tasks) => set({ tasks, hasSavedRoutine: false }),
 
   setRoutineName: (name) => set({ routineName: name }),
 
@@ -137,11 +137,13 @@ export const useRoutineStore = create(
   },
 
   startRoutine: () => {
-    const { tasks } = get();
-    if (tasks.length === 0) return;
+    const rawTasks = get().tasks;
+    if (rawTasks.length === 0) return;
+    const tasks = rawTasks.map((t) => (t.title.trim() ? t : { ...t, title: t.itemLabel || 'Task' }));
     const firstTask = tasks[0];
     const totalSeconds = firstTask.durationMinutes * 60;
     set({
+      tasks,
       screen: 'player',
       currentTaskIndex: 0,
       timeLeft: totalSeconds,

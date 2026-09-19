@@ -112,7 +112,7 @@ export default function RoutineComplete() {
             style={{ left: `${piece.x}%`, top: -20, fontSize: piece.size, color: piece.color }}
             initial={{ y: -30, opacity: 1, rotate: 0 }}
             animate={{ y: viewportHeight.current + 50, opacity: [1, 1, 0.8, 0], rotate: piece.rotation }}
-            transition={{ duration: piece.duration, delay: piece.delay, ease: 'easeOut', repeat: Infinity, repeatDelay: 1 }}
+            transition={{ duration: piece.duration, delay: piece.delay, ease: 'easeOut', repeat: 2, repeatDelay: 1 }}
           >
             {piece.shape}
           </MotionDiv>
@@ -136,7 +136,7 @@ export default function RoutineComplete() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, type: 'spring' }}
           >
-            🎉 All Done! 🎉
+            All Done!
           </MotionH1>
 
           <MotionP
@@ -159,11 +159,13 @@ export default function RoutineComplete() {
             </div>
           </MotionDiv>
 
-          {/* Treasure Chest Reward */}
+          {/* Treasure Chest Reward — slot is reserved so the layout doesn't jump when it appears */}
+          {rewardsEnabled && pickedReward && (
+          <div className="w-full max-w-xs mx-auto my-4 min-h-[132px] flex items-center">
           <AnimatePresence>
             {chestState !== 'hidden' && (
               <MotionDiv
-                className="w-full max-w-xs mx-auto my-4"
+                className="w-full"
                 initial={{ opacity: 0, scale: 0.6, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -222,18 +224,17 @@ export default function RoutineComplete() {
               </MotionDiv>
             )}
           </AnimatePresence>
+          </div>
+          )}
 
           <MotionDiv
-            className="mt-5 mb-2"
+            className="w-full sm:max-w-xs mt-3 mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.42 }}
           >
-            <button
-              onClick={resetRoutine}
-              className="text-sm font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
-            >
-              Start over
+            <button onClick={resetRoutine} className="btn-primary w-full">
+              Back to Buddies
             </button>
           </MotionDiv>
 
@@ -280,11 +281,6 @@ export default function RoutineComplete() {
                   <span className="text-xs text-ink-muted font-body">{task.durationMinutes}m</span>
                 </MotionDiv>
               ))}
-            </div>
-            <div className="mt-3 text-center">
-              <span className="font-display font-bold text-sm text-success">
-                Total: {totalMinutes} minutes
-              </span>
             </div>
           </MotionDiv>
         </MotionDiv>

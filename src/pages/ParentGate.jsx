@@ -7,13 +7,12 @@ import { useRoutineStore } from '../store/useRoutineStore';
 const MotionButton = motion.button;
 
 function createChallenge() {
-  const multiplier = Math.floor(Math.random() * 7) + 3;
-  const multiplicand = Math.floor(Math.random() * 9) + 11;
-  const offset = Math.floor(Math.random() * 23) + 7;
+  const a = Math.floor(Math.random() * 7) + 3;
+  const b = Math.floor(Math.random() * 7) + 3;
 
   return {
-    prompt: `${multiplicand} × ${multiplier} + ${offset}`,
-    answer: (multiplicand * multiplier) + offset,
+    prompt: `${a} × ${b}`,
+    answer: a * b,
   };
 }
 
@@ -33,7 +32,7 @@ export default function ParentGate() {
 
     setChallenge(createChallenge());
     setAnswer('');
-    setError('That was not correct. A new question is ready.');
+    setError('Not quite — try this one.');
   };
 
   return (
@@ -44,7 +43,7 @@ export default function ParentGate() {
           type="button"
           onClick={() => setScreen('selection')}
           whileTap={{ scale: 0.95 }}
-          className="w-10 h-10 rounded-2xl bg-surface border border-border-card shadow-soft flex items-center justify-center"
+          className="w-11 h-11 rounded-2xl bg-surface border border-border-card shadow-soft flex items-center justify-center"
           aria-label="Return to buddy selection"
         >
           <ArrowLeft className="w-5 h-5 text-ink-muted" />
@@ -59,7 +58,7 @@ export default function ParentGate() {
           <div className="mx-auto mb-4 w-14 h-14 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center">
             <ShieldCheck className="w-7 h-7 text-ink" />
           </div>
-          <h1 className="font-display text-2xl font-bold text-ink mb-2">Grown-ups only</h1>
+          <h1 className="font-display text-2xl font-bold text-ink mb-2">Grown-Ups Only</h1>
           <p className="font-body text-sm text-ink-muted leading-relaxed mb-6">
             Ask a grown-up to solve this question to open the Parent Area.
           </p>
@@ -71,7 +70,7 @@ export default function ParentGate() {
             id="parent-gate-answer"
             value={answer}
             onChange={(event) => {
-              setAnswer(event.target.value.replace(/\D/g, '').slice(0, 4));
+              setAnswer(event.target.value.replace(/\D/g, '').slice(0, 2));
               setError('');
             }}
             inputMode="numeric"

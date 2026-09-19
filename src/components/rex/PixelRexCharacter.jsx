@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getCharacter } from '../../data/characters';
 
 const SPRITE_FRAME_SIZE = 128;
 const FRAME_COUNT = 16;
@@ -7,22 +8,10 @@ const FRAME_ROWS = 4;
 const ANIM_DURATION = 1.6;
 const SPRITE_ASSET_BASE_PATH = '/buddy-watercolor';
 
-const CHARACTER_SIZE_MULTIPLIERS = {
-  hoppy: 1.56,
-  snoozy: 1.56,
-  sparky: 1.45,
-  luna: 1.56,
-  zen: 1.43,
-  buddy: 1.44,
-  rex: 1.68,
-  snapper: 1.74,
-  finn: 1.57,
-  masha: 1.62,
-  stella: 1.68,
-  flutty: 1.62,
-};
-
-export default function PixelRexCharacter({ state, eatPhase = 'none', className = '', size = 120, characterId = 'rex' }) {
+export default function PixelRexCharacter({ state, eatPhase = 'none', className = '', size = 120, characterId: requestedId }) {
+  // Falls back to the default buddy if the id is unknown (e.g. a retired character in old storage).
+  const character = getCharacter(requestedId);
+  const characterId = character.id;
   const [currentAnim, setCurrentAnim] = useState('idle');
   const [isChomping, setIsChomping] = useState(false);
   const [currentFrame, setCurrentFrame] = useState(0);
@@ -78,7 +67,7 @@ export default function PixelRexCharacter({ state, eatPhase = 'none', className 
     return () => clearInterval(intervalId);
   }, [currentAnim]);
 
-  const scale = (size / SPRITE_FRAME_SIZE) * (CHARACTER_SIZE_MULTIPLIERS[characterId] || 1);
+  const scale = (size / SPRITE_FRAME_SIZE) * character.spriteScale;
   const frameColumn = currentFrame % FRAME_COLUMNS;
   const frameRow = Math.floor(currentFrame / FRAME_COLUMNS);
   const backgroundPosition = `-${frameColumn * SPRITE_FRAME_SIZE}px -${frameRow * SPRITE_FRAME_SIZE}px`;

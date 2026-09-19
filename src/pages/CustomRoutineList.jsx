@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { ArrowLeft, ChevronRight, PlusCircle, Trash2 } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useRoutineStore } from '../store/useRoutineStore';
+import ConfirmDialog from '../components/ConfirmDialog';
 import {
   readCustomRoutines,
   createCustomRoutineLocal,
@@ -55,9 +56,10 @@ export default function CustomRoutineList() {
       <div className="flex items-center gap-2 mb-3 shrink-0 sm:mb-5">
         <button
           onClick={() => setScreen('picker')}
-          className="w-10 h-10 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
+          aria-label="Back"
+          className="w-11 h-11 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shadow-soft"
         >
-          <span className="text-sm">←</span>
+          <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="w-10 h-10 rounded-2xl bg-[#7FC56A]/15 border border-[#7FC56A]/20 flex items-center justify-center">
           <span className="text-lg">✏️</span>
@@ -85,28 +87,27 @@ export default function CustomRoutineList() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
-                className="relative"
+                className="flex items-center gap-2 pl-3 pr-2 py-2 rounded-[24px] border border-border-card bg-surface-card shadow-soft"
               >
                 <button
                   onClick={() => handleSelect(routine)}
-                  className="w-full flex items-center gap-3 px-4 py-4 rounded-[24px] border border-border-card bg-surface-card hover:bg-[#FAF3E8] hover:border-accent/30 transition-all text-left shadow-soft"
+                  className="flex-1 min-w-0 flex items-center gap-3 py-2 rounded-2xl text-left"
                 >
                   <div className="w-12 h-12 rounded-[16px] flex items-center justify-center border border-border-card bg-[#FAF3E8] text-2xl shrink-0">
                     {routine.emoji}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="font-display font-semibold text-ink text-base truncate">{routine.name}</div>
-                    <div className="text-xs text-ink-muted font-body mt-0.5">Tap to edit & run</div>
+                    <div className="text-xs text-ink-muted font-body mt-0.5">Tap to set up and start</div>
                   </div>
-                  <span className="text-ink-muted/50 text-sm">→</span>
+                  <ChevronRight className="w-5 h-5 text-ink-muted/60 shrink-0" />
                 </button>
-
-                {/* Delete button */}
                 <button
-                  onClick={(e) => { e.stopPropagation(); setConfirmDelete(routine.id); }}
-                  className="absolute top-3 right-3 w-8 h-8 rounded-xl flex items-center justify-center text-ink-muted/40 hover:text-red-400 hover:bg-red-50 transition-colors z-10"
+                  onClick={() => setConfirmDelete(routine.id)}
+                  aria-label={`Delete ${routine.name}`}
+                  className="shrink-0 w-11 h-11 rounded-xl border border-border-card bg-[#FAF3E8] flex items-center justify-center text-ink-muted hover:text-red-500 hover:bg-red-50 hover:border-red-200 transition-colors"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </MotionDiv>
             ))}
@@ -174,7 +175,9 @@ export default function CustomRoutineList() {
                   <button
                     key={emoji}
                     onClick={() => setNewEmoji(emoji)}
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all ${
+                    aria-label={`Icon ${emoji}`}
+                    aria-pressed={newEmoji === emoji}
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center text-lg transition-all ${
                       newEmoji === emoji
                         ? 'bg-accent/20 border-2 border-accent/50 scale-110'
                         : 'bg-[#FAF3E8] border border-border-card hover:bg-surface-card'
@@ -194,7 +197,7 @@ export default function CustomRoutineList() {
               </button>
               <button
                 onClick={() => { setShowCreate(false); setNewName(''); }}
-                className="w-full mt-2 text-sm text-ink-muted hover:text-ink py-2 font-body"
+                className="w-full mt-2 min-h-[44px] text-sm text-ink-muted hover:text-ink py-2 font-body"
               >
                 Cancel
               </button>
@@ -203,44 +206,16 @@ export default function CustomRoutineList() {
         )}
       </AnimatePresence>
 
-      {/* Delete Confirmation Modal */}
-      <AnimatePresence>
-        {confirmDelete && (
-          <motion.div
-            className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center z-50 px-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setConfirmDelete(null)}
-          >
-            <motion.div
-              className="bg-surface-card border border-border-card rounded-[28px] p-6 w-full max-w-xs shadow-soft text-ink"
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-red-200 bg-red-50 text-2xl">
-                🗑️
-              </div>
-              <h2 className="font-display font-bold text-ink text-lg mb-1 text-center">Delete Routine?</h2>
-              <p className="text-ink-muted text-sm text-center mb-4 font-body">This will remove the routine and all its saved tasks. This can't be undone.</p>
-              <button
-                onClick={() => handleDelete(confirmDelete)}
-                className="w-full py-3 rounded-2xl bg-red-50 border border-red-200 text-red-500 font-display font-bold text-sm hover:bg-red-100 transition-colors"
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => setConfirmDelete(null)}
-                className="w-full mt-2 text-sm text-ink-muted hover:text-ink py-2 font-body"
-              >
-                Cancel
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <ConfirmDialog
+        open={confirmDelete !== null}
+        icon="🗑️"
+        title="Delete Routine?"
+        message="This will remove the routine and all its saved tasks. This can't be undone."
+        confirmLabel="Delete"
+        destructive
+        onConfirm={() => handleDelete(confirmDelete)}
+        onCancel={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }

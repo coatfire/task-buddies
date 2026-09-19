@@ -8,13 +8,13 @@ export const TASK_LIBRARY = [
   // ── Hygiene & Self-care ──
   { key: 'brush_teeth',        label: 'Brush Teeth',              emoji: '🦷',  svgGroup: 'toothbrush',  defaultMinutes: 2,  routines: ['morning', 'bedtime'] },
   { key: 'wash_face',          label: 'Wash Face',                emoji: '🧼',  svgGroup: 'soap',        defaultMinutes: 2,  routines: ['morning'] },
-  { key: 'bath_shower',        label: 'Bath / Shower',            emoji: '🛁',  svgGroup: 'soap',        defaultMinutes: 10, routines: ['bedtime'] },
+  { key: 'bath_shower',        label: 'Bath or Shower',           emoji: '🛁',  svgGroup: 'soap',        defaultMinutes: 10, routines: ['bedtime'] },
   { key: 'brush_hair',         label: 'Brush Hair',               emoji: '👩‍🦱', svgGroup: 'hairbrush',   defaultMinutes: 2,  routines: ['morning'] },
   { key: 'go_potty',           label: 'Go Potty',                 emoji: '🧻',  svgGroup: 'toilet-roll', defaultMinutes: 2,  routines: ['morning', 'bedtime'] },
 
   // ── Dressing ──
   { key: 'get_dressed',        label: 'Get Dressed',              emoji: '👕',  svgGroup: 'clothes',     defaultMinutes: 5,  routines: ['morning'] },
-  { key: 'put_on_pyjamas',     label: 'Put on Pyjamas',           emoji: '👕',  svgGroup: 'clothes',     defaultMinutes: 2,  routines: ['bedtime'] },
+  { key: 'put_on_pyjamas',     label: 'Put on Pajamas',           emoji: '👕',  svgGroup: 'clothes',     defaultMinutes: 2,  routines: ['bedtime'] },
   { key: 'put_on_shoes',       label: 'Put on Shoes',             emoji: '👟',  svgGroup: 'shoe',        defaultMinutes: 2,  routines: ['morning'] },
 
   // ── Food & Drink ──
@@ -24,13 +24,13 @@ export const TASK_LIBRARY = [
 
   // ── Tidying ──
   { key: 'make_bed',           label: 'Make Bed',                 emoji: '🛏️',  svgGroup: 'pillow',      defaultMinutes: 2,  routines: ['morning'] },
-  { key: 'tidy_room',          label: 'Tidy Room',                emoji: '🧹',  svgGroup: 'broom',       defaultMinutes: 5,  routines: ['bedtime'] },
-  { key: 'tidy_toys',          label: 'Tidy Toys',                emoji: '🧸',  svgGroup: 'toy',         defaultMinutes: 5,  routines: ['bedtime'] },
+  { key: 'tidy_room',          label: 'Clean Up Room',            emoji: '🧹',  svgGroup: 'broom',       defaultMinutes: 5,  routines: ['bedtime'] },
+  { key: 'tidy_toys',          label: 'Put Away Toys',            emoji: '🧸',  svgGroup: 'toy',         defaultMinutes: 5,  routines: ['bedtime'] },
 
   // ── Bags & School ──
-  { key: 'pack_bag',           label: 'Pack Bag',                 emoji: '🎒',  svgGroup: 'backpack',    defaultMinutes: 3,  routines: ['morning'] },
-  { key: 'unpack_bag',         label: 'Unpack Bag',               emoji: '🎒',  svgGroup: 'backpack',    defaultMinutes: 2,  routines: ['homework'] },
-  { key: 'pack_bag_tomorrow',  label: 'Pack Bag for Tomorrow',    emoji: '🎒',  svgGroup: 'backpack',    defaultMinutes: 3,  routines: ['homework', 'bedtime'] },
+  { key: 'pack_bag',           label: 'Pack Backpack',            emoji: '🎒',  svgGroup: 'backpack',    defaultMinutes: 3,  routines: ['morning'] },
+  { key: 'unpack_bag',         label: 'Unpack Backpack',          emoji: '🎒',  svgGroup: 'backpack',    defaultMinutes: 2,  routines: ['homework'] },
+  { key: 'pack_bag_tomorrow',  label: 'Pack Backpack for Tomorrow', emoji: '🎒', svgGroup: 'backpack',    defaultMinutes: 3,  routines: ['homework', 'bedtime'] },
 
   // ── Reading & Learning ──
   { key: 'pick_a_book',        label: 'Pick a Book',              emoji: '📖',  svgGroup: 'book',        defaultMinutes: 1,  routines: ['bedtime'] },
@@ -42,12 +42,12 @@ export const TASK_LIBRARY = [
   { key: 'feed_pet',           label: 'Feed Pet',                 emoji: '🐾',  svgGroup: 'pet-bowl',    defaultMinutes: 2,  routines: ['morning'] },
 
   // ── Screen time ──
-  { key: 'screen_off_tv',      label: 'Screen Time Off — TV',     emoji: '📺',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
-  { key: 'screen_off_tablet',  label: 'Screen Time Off — Tablet', emoji: '📱',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
-  { key: 'screen_off_console', label: 'Screen Time Off — Console',emoji: '🎮',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
+  { key: 'screen_off_tv',      label: 'TV Off',                   emoji: '📺',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
+  { key: 'screen_off_tablet',  label: 'Tablet Off',               emoji: '📱',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
+  { key: 'screen_off_console', label: 'Console Off',              emoji: '🎮',  svgGroup: 'screen',      defaultMinutes: 1,  routines: ['bedtime'] },
 
   // ── Wind-down & Connection ──
-  { key: 'talk_time',          label: 'Talk Time',                emoji: '💋',  svgGroup: 'lips',        defaultMinutes: 5,  routines: ['bedtime'] },
+  { key: 'talk_time',          label: 'Talk Time',                emoji: '�',  svgGroup: 'lips',        defaultMinutes: 5,  routines: ['bedtime'] },
   { key: 'lights_off',         label: 'Lights Off',               emoji: '🌙',  svgGroup: 'moon',        defaultMinutes: 1,  routines: ['bedtime'] },
   { key: 'say_prayers',        label: 'Say Prayers',              emoji: '🙏',  svgGroup: 'hands',       defaultMinutes: 2,  routines: ['bedtime'] },
 

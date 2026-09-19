@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+import ConfirmDialog from '../components/ConfirmDialog';
 import PixelRexCharacter from '../components/rex/PixelRexCharacter';
 import ProgressRing from '../components/rex/ProgressRing';
 import TaskItemSVG from '../components/rex/TaskItemSVG';
@@ -35,6 +37,7 @@ export default function ActivePlayer() {
   const [showParticles, setShowParticles] = useState(false);
   const [isEatingSequence, setIsEatingSequence] = useState(false);
   const [postChompCelebrating, setPostChompCelebrating] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
   const timeoutsRef = useRef([]);
 
   useEffect(() => {
@@ -112,26 +115,28 @@ export default function ActivePlayer() {
   }, [isWaiting, isEatingSequence, doneEarly]);
 
   const handleCancelRoutine = useCallback(() => {
+    setConfirmCancel(false);
     cancelRoutine();
   }, [cancelRoutine]);
 
   const instructionText = isEatingSequence
-    ? `Reward moment for ${characterName}. Next step starts soon.`
+    ? `Yum! ${characterName} loved that. Next task coming up...`
     : isHungry
-      ? `Tap feed to reward ${characterName} and unlock the next task.`
+      ? `${characterName} is hungry! Tap the button to feed ${characterName}.`
       : isRunning
-        ? `${characterName} is waiting while you finish this step.`
-        : 'Paused. Resume whenever you are ready.';
+        ? `${characterName} is cheering you on. You've got this!`
+        : 'Taking a break. Tap Resume when you are ready.';
 
   return (
     <div className="h-full min-h-0 flex flex-col items-center px-3 pt-1.5 pb-3 sm:px-4 sm:pt-2 sm:pb-4 relative overflow-hidden text-ink">
       <div className="w-full max-w-sm min-h-0 flex-1 flex flex-col">
         <div className="flex items-center gap-2 mb-2 z-10 shrink-0 sm:mb-3">
           <button
-            onClick={handleCancelRoutine}
-            className="w-10 h-10 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shrink-0 shadow-soft"
+            onClick={() => setConfirmCancel(true)}
+            aria-label="Stop routine"
+            className="w-11 h-11 rounded-2xl bg-surface border border-border-card flex items-center justify-center text-ink-muted hover:text-ink hover:bg-surface-card transition-colors shrink-0 shadow-soft"
           >
-            <span className="text-sm">✕</span>
+            <X className="w-5 h-5" />
           </button>
           <div className="flex-1 flex flex-col gap-1 min-w-0">
             <div className="flex justify-between text-[11px] font-body text-ink-muted mb-0.5">
@@ -152,7 +157,7 @@ export default function ActivePlayer() {
               })}
             </div>
           </div>
-          <div className="w-10 h-10 shrink-0" />
+          <div className="w-11 h-11 shrink-0" />
         </div>
 
         <AnimatePresence mode="wait">
@@ -179,15 +184,15 @@ export default function ActivePlayer() {
         </AnimatePresence>
 
         <div className="relative z-10 mb-3 flex flex-1 min-h-0 items-center justify-center sm:mb-4">
-          <div className="absolute inset-8 rounded-full bg-accent/8 blur-3xl pointer-events-none" />
+          <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
           <div className="relative w-full rounded-[32px] border border-border-card bg-surface-card px-3 py-3.5 sm:px-6 sm:py-6 shadow-soft flex items-center justify-center overflow-hidden">
 
             <div className="absolute top-3 left-3 rounded-full border border-border-card bg-[#FAF3E8] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body sm:top-4 sm:left-4 sm:px-3 sm:py-1.5 sm:text-[11px] sm:tracking-[0.16em]">
-              {isHungry ? 'Reward time' : isEatingSequence ? 'Celebrating' : isRunning ? 'In progress' : 'Paused'}
+              {isHungry ? 'Snack Time' : isEatingSequence ? 'Yum!' : isRunning ? 'Go, Go, Go!' : 'Paused'}
             </div>
 
             <div className="absolute top-3 right-3 z-20 min-w-[62px] rounded-2xl border border-border-card bg-[#FAF3E8] px-2.5 py-1.5 text-center shadow-soft sm:top-4 sm:right-4 sm:min-w-[68px] sm:px-3 sm:py-2">
-              <div className="text-[9px] uppercase tracking-[0.12em] text-ink-muted font-body mb-0.5 sm:text-[10px] sm:tracking-[0.14em]">Next treat</div>
+              <div className="text-[9px] uppercase tracking-[0.12em] text-ink-muted font-body mb-0.5 sm:text-[10px] sm:tracking-[0.14em]">Next Treat</div>
               <AnimatePresence mode="wait">
               {!isItemHidden && (
                   <MotionDiv
@@ -291,15 +296,29 @@ export default function ActivePlayer() {
                 </button>
               </div>
             )}
-            <button
-              onClick={skipTask}
-              className="py-1.5 text-xs font-body text-ink-muted hover:text-ink transition-colors"
-            >
-              Skip this task
-            </button>
+            {!isHungry && (
+              <button
+                onClick={skipTask}
+                className="min-h-[44px] px-4 text-[13px] font-body text-ink-muted hover:text-ink transition-colors"
+              >
+                Skip Task
+              </button>
+            )}
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={confirmCancel}
+        icon="🛑"
+        title="Stop Routine?"
+        message={`${characterName} will have to start again from the first task.`}
+        confirmLabel="Stop Routine"
+        cancelLabel="Keep Going"
+        destructive
+        onConfirm={handleCancelRoutine}
+        onCancel={() => setConfirmCancel(false)}
+      />
     </div>
   );
 }
