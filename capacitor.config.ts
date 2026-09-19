@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Task Buddies',
   webDir: 'dist',
   backgroundColor: '#FAF3E8',
-  loggingBehavior: 'debug',
+  loggingBehavior: 'production',
   zoomEnabled: false,
   android: {
     allowMixedContent: false,

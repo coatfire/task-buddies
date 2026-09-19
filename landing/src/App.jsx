@@ -19,8 +19,9 @@ function Spark({ style, size = 24, opacity = 0.55 }) {
   );
 }
 
-const APP_URL = 'https://task-buddy-ten-dun.vercel.app/';
-const SUPPORT_URL = 'https://github.com/shaneo2008/task-buddy/issues/new';
+const APP_URL = 'https://app.taskbuddies.app/';
+const SUPPORT_EMAIL = 'hello@lovou.app';
+const SUPPORT_URL = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Task Buddies support')}`;
 
 function LegalPage({ title, children }) {
   return (
@@ -46,7 +47,7 @@ function LegalPage({ title, children }) {
 function PrivacyPage() {
   return (
     <LegalPage title="Privacy Policy">
-      <p><strong>Last updated:</strong> September 3, 2026</p>
+      <p><strong>Last updated:</strong> September 19, 2026</p>
       <p>
         Task Buddies is designed for children and families. The app does not require an account
         and does not include advertising, analytics, tracking, or in-app purchases.
@@ -76,12 +77,10 @@ function PrivacyPage() {
       </p>
       <h2>Contact</h2>
       <p>
-        For privacy questions, open a support request without including personal or sensitive
-        information.
+        For privacy questions, email us at{' '}
+        <a href={SUPPORT_URL}>{SUPPORT_EMAIL}</a>. Please don&apos;t include personal or sensitive
+        information about your child.
       </p>
-      <a className="legal-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-        Open a support request
-      </a>
     </LegalPage>
   );
 }
@@ -102,11 +101,12 @@ function SupportPage() {
       </ul>
       <h2>Get help</h2>
       <p>
-        Report a problem using the public issue tracker. Do not include a child&apos;s name,
-        screenshots containing personal information, or other sensitive data.
+        Email us at <a href={SUPPORT_URL}>{SUPPORT_EMAIL}</a> and we&apos;ll get back to you. Please
+        don&apos;t include a child&apos;s name, screenshots containing personal information, or other
+        sensitive data.
       </p>
-      <a className="legal-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-        Open a support request
+      <a className="legal-link" href={SUPPORT_URL}>
+        Email support
       </a>
     </LegalPage>
   );
@@ -120,9 +120,7 @@ const FRAME_COUNT  = 16;
 const FRAME_MS     = 100; // 1600ms / 16 frames
 
 const SIZE_MULT = {
-  hoppy: 1.56, snoozy: 1.56, sparky: 1.45, luna: 1.56,
-  zen:   1.43, buddy:  1.44, rex:   1.68, snapper: 1.74,
-  finn:  1.57, masha:  1.62, stella: 1.68, flutty: 1.62,
+  hoppy: 1.56, snapper: 1.74, snoozy: 1.56, flutty: 1.62, buddy: 1.44,
 };
 
 function BuddySprite({ buddyId, size = 160 }) {
@@ -159,11 +157,13 @@ function BuddySprite({ buddyId, size = 160 }) {
   );
 }
 
+// Keep in sync with CHARACTERS in ../src/data/characters.js
 const buddies = [
-  { id: 'buddy',  name: 'Buddy'  },
-  { id: 'hoppy',  name: 'Hoppy'  },
-  { id: 'rex',    name: 'Rex'    },
-  { id: 'flutty', name: 'Flutty' },
+  { id: 'hoppy',   name: 'Hoppy'   },
+  { id: 'snapper', name: 'Snapper' },
+  { id: 'snoozy',  name: 'Snoozy'  },
+  { id: 'flutty',  name: 'Flutty'  },
+  { id: 'buddy',   name: 'Buddy'   },
 ];
 
 const routines = [
@@ -284,7 +284,7 @@ export default function App() {
 
         {/* ── Subheadline ── */}
         <p className="text-center text-[1.0625rem] leading-relaxed opacity-75 max-w-xs mb-12">
-          Task Buddies gives children a cosy companion that guides
+          Task Buddies gives children a cozy companion that guides
           them through their routine, one step at a time. No nagging required.
         </p>
 
@@ -357,7 +357,7 @@ export default function App() {
           rel="noopener noreferrer"
           className="btn-launch w-full mb-12"
         >
-          Meet your Buddy
+          Meet Your Buddy
         </a>
 
         {/* ── Footer ── */}
