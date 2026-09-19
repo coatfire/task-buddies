@@ -1,22 +1,70 @@
+# Task Buddies — Codemagic CI/CD
+#
+# Workflows:
+#   native-verification  Unsigned Android + iOS builds plus web checks. Safe to run any time.
+#   android-internal     Signed AAB -> Google Play "Internal testing" track.
+#   ios-testflight       Signed IPA -> TestFlight.
+#
+# Environment variable groups (app-level, Task Buddies app -> Environment variables).
+# Same layout as the Lovou app so values can be copied across:
+#
+#   appstore_credentials      APP_STORE_CONNECT_ISSUER_ID        (reuse from Lovou)
+#                             APP_STORE_CONNECT_KEY_IDENTIFIER   (reuse from Lovou)
+#                             APP_STORE_CONNECT_PRIVATE_KEY      (reuse from Lovou, Secure)
+#                             FCI_CERTIFICATE_PRIVATE_KEY        (reuse from Lovou, Secure)
+#                             APP_STORE_APPLE_ID                 (NEW: numeric Apple ID of the Task Buddies app record)
+#
+#   google_play_credentials   GCLOUD_SERVICE_ACCOUNT_CREDENTIALS (reuse from Lovou, Secure;
+#                                                                 grant the service account access to Task Buddies in Play Console)
+#
+#   android_keystore          FCI_ANDROID_KEYSTORE_BASE64        (NEW keystore for this app, base64-encoded, Secure)
+#                             KEYSTORE_PASSWORD                  (Secure)
+#                             KEYSTORE_ALIAS
+#                             KEYSTORE_KEY_PASSWORD              (Secure)
+#
+# All workflows are manual-trigger only. Add a `triggering:` block when you want tag/branch builds.
+
+definitions:
+  env_versions: &env_versions
+    node: 22.23.2
+    java: 21
+    xcode: latest
+
+  npm_cache: &npm_cache
+    cache_paths:
+      - $HOME/.npm
+
+  scripts:
+    - &install_deps
+      name: Install dependencies
+      script: npm ci
+    - &web_checks
+      name: Lint and test web app
+      script: npm run lint && npm test
+    - &cap_sync
+      name: Build web app and sync Capacitor projects
+      script: npm run cap:sync
+    - &android_local_props
+      name: Point Gradle at the Codemagic Android SDK
+      script: echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+
 workflows:
   native-verification:
-    name: Native verification
-    max_build_duration: 120
+    name: Native verification (unsigned)
+    max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
-      node: 22.23.2
-      java: 21
-      xcode: latest
+      <<: *env_versions
+    cache:
+      <<: *npm_cache
     scripts:
-      - name: Install dependencies
-        script: npm ci
-      - name: Run web checks
+      - *install_deps
+      - name: Run full web checks
         script: npm run check
-      - name: Sync Capacitor projects
-        script: npm run cap:sync
-      - name: Build Android debug app
+      - *cap_sync
+      - *android_local_props
+      - name: Build Android debug APK
         script: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
           cd android
           ./gradlew lint assembleDebug
       - name: Build iOS app without signing
@@ -31,62 +79,114 @@ workflows:
     artifacts:
       - android/app/build/outputs/**/*.apk
       - android/app/build/reports/lint-results-*.html
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
       - /tmp/xcodebuild_logs/*.log
 
-  android-release:
-    name: Android signed bundle
-    max_build_duration: 120
+  android-internal:
+    name: Android -> Play Internal testing
+    max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
-      node: 22.23.2
-      java: 21
-      android_signing:
-        - task_buddies_upload
+      <<: *env_versions
+      groups:
+        - android_keystore
+        - google_play_credentials
+    cache:
+      <<: *npm_cache
     scripts:
-      - name: Install dependencies
-        script: npm ci
-      - name: Sync Capacitor project
-        script: npm run cap:sync
-      - name: Build signed Android bundle
+      - *install_deps
+      - *web_checks
+      - *cap_sync
+      - *android_local_props
+      - name: Decode upload keystore
         script: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+          # Map the Lovou-style variable names onto what android/app/build.gradle reads.
+          echo "$FCI_ANDROID_KEYSTORE_BASE64" | base64 --decode > "$CM_BUILD_DIR/upload-keystore.jks"
+          {
+            echo "CM_KEYSTORE_PATH=$CM_BUILD_DIR/upload-keystore.jks"
+            echo "CM_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "CM_KEY_ALIAS=$KEYSTORE_ALIAS"
+            echo "CM_KEY_PASSWORD=$KEYSTORE_KEY_PASSWORD"
+          } >> "$CM_ENV"
+      - name: Build signed release bundle
+        script: |
           cd android
           ./gradlew lint bundleRelease
+      - name: Verify bundle was produced
+        script: |
+          AAB=$(find android/app/build/outputs/bundle/release -name '*.aab' | head -n 1)
+          test -n "$AAB" || { echo "No AAB produced"; exit 1; }
+          echo "Built $AAB (versionCode $BUILD_NUMBER)"
     artifacts:
       - android/app/build/outputs/**/*.aab
+      - android/app/build/outputs/**/mapping.txt
       - android/app/build/reports/lint-results-*.html
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        # Play requires draft releases until the app has been published once.
+        # Flip to false after the first production release.
+        submit_as_draft: true
 
-  ios-release:
-    name: iOS signed archive
-    max_build_duration: 120
+  ios-testflight:
+    name: iOS -> TestFlight
+    max_build_duration: 90
     instance_type: mac_mini_m2
-    integrations:
-      app_store_connect: task_buddies_app_store_connect
     environment:
-      node: 22.23.2
-      java: 21
-      xcode: latest
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: app.taskbuddies
+      <<: *env_versions
+      groups:
+        - appstore_credentials
+      vars:
+        BUNDLE_ID: app.taskbuddies
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+    cache:
+      <<: *npm_cache
     scripts:
-      - name: Install dependencies
-        script: npm ci
-      - name: Sync Capacitor project
-        script: npm run cap:sync
+      - *install_deps
+      - *web_checks
+      - *cap_sync
+      - name: Fetch signing files
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --certificate-key=@env:FCI_CERTIFICATE_PRIVATE_KEY \
+            --create
+          keychain add-certificates
       - name: Set build number
         script: |
+          # Prefer "latest TestFlight build + 1" so numbers stay unique across
+          # machines and re-runs; fall back to Codemagic's counter if the app
+          # record does not exist yet or the lookup fails.
           cd ios/App
-          agvtool new-version -all "$BUILD_NUMBER"
+          NEXT="$BUILD_NUMBER"
+          if [ -n "${APP_STORE_APPLE_ID:-}" ]; then
+            LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || true)
+            if [ -n "$LATEST" ] && [ "$LATEST" -ge "$BUILD_NUMBER" ]; then
+              NEXT=$((LATEST + 1))
+            fi
+          fi
+          echo "Using build number $NEXT"
+          agvtool new-version -all "$NEXT"
       - name: Apply signing profiles
-        script: xcode-project use-profiles --project ios/App/App.xcodeproj
+        script: xcode-project use-profiles --project "$XCODE_PROJECT"
       - name: Build signed IPA
         script: |
           xcode-project build-ipa \
-            --project ios/App/App.xcodeproj \
-            --scheme App
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
+        # Uncomment once you have created a beta group in App Store Connect.
+        # beta_groups:
+        #   - Family Testers
+        submit_to_app_store: false

@@ -34,26 +34,78 @@ Open the generated projects with `npm run cap:open:android` or
 
 ## Codemagic setup
 
-`codemagic.yaml` intentionally builds artifacts but does not publish them. Keep the first
-TestFlight and Play Console uploads under manual review.
+`codemagic.yaml` defines three manual-trigger workflows:
+
+| Workflow | Output | Publishes to |
+| --- | --- | --- |
+| `native-verification` | Unsigned debug APK + unsigned iOS build | Nothing (smoke test) |
+| `android-internal` | Signed AAB | Google Play **Internal testing** (as draft) |
+| `ios-testflight` | Signed IPA | **TestFlight** |
+
+### One-time configuration
+
+Signing and publishing use **app-level environment variable groups** with the same names and
+variable keys as the Lovou app, so most values can be copied across. Codemagic app-level
+groups are not shared between apps; re-create them under Task Buddies → Environment variables.
 
 1. Add this repository to Codemagic and select `codemagic.yaml`.
-2. Run **Native verification** before configuring signing.
-3. Upload the Android upload keystore under Team settings → Code signing identities and
-   give it the reference name `task_buddies_upload`. Keep an independent encrypted backup;
-   do not commit the keystore or passwords.
-4. Add the App Store Connect API integration with the reference
-   `task_buddies_app_store_connect`.
-5. Register the explicit App ID `app.taskbuddies` in Apple Developer.
-6. Create a **New App** in App Store Connect using that App ID.
-7. Let Codemagic fetch or upload an Apple Distribution certificate and App Store
-   provisioning profile for `app.taskbuddies`.
-8. Run the Android or iOS release workflow and manually upload the generated AAB or IPA
-   to the appropriate internal testing track.
+2. Run **native-verification** first. It needs no secrets and proves the toolchain.
+3. **Apple app record** — register the explicit App ID `app.taskbuddies` in Apple Developer,
+   then create a **New App** in App Store Connect using it. Note the numeric **Apple ID**
+   under App Information → General Information.
+4. Create these variable groups (mark anything sensitive as **Secure**):
 
-Codemagic's `BUILD_NUMBER` sets Android `versionCode` and iOS
-`CURRENT_PROJECT_VERSION`. Increase the marketing version in Android, Xcode, and the root
-package together for each public release.
+   | Group | Variable | Source |
+   | --- | --- | --- |
+   | `appstore_credentials` | `APP_STORE_CONNECT_ISSUER_ID` | Copy from Lovou |
+   | | `APP_STORE_CONNECT_KEY_IDENTIFIER` | Copy from Lovou |
+   | | `APP_STORE_CONNECT_PRIVATE_KEY` | Copy from Lovou |
+   | | `FCI_CERTIFICATE_PRIVATE_KEY` | Copy from Lovou (same Distribution cert can sign both apps) |
+   | | `APP_STORE_APPLE_ID` | **New** — numeric Apple ID from step 3 |
+   | `google_play_credentials` | `GCLOUD_SERVICE_ACCOUNT_CREDENTIALS` | Copy from Lovou |
+   | `android_keystore` | `FCI_ANDROID_KEYSTORE_BASE64` | **New** — base64 of a fresh upload keystore (see below) |
+   | | `KEYSTORE_PASSWORD` | New |
+   | | `KEYSTORE_ALIAS` | New |
+   | | `KEYSTORE_KEY_PASSWORD` | New |
+
+5. **Grant the Play service account access** — Play Console → Users and permissions → the
+   service account → Add app → Task Buddies → **Release manager**. Without this, uploads fail
+   with a 403 even though the JSON is valid.
+6. The App Store Connect API key must have the **App Manager** role (it already does if it
+   uploads Lovou builds).
+
+### Creating the upload keystore
+
+Do not reuse Lovou's keystore — one upload key per app limits blast radius if a key leaks.
+
+```bash
+keytool -genkeypair -v \
+  -keystore task-buddies-upload.jks \
+  -alias taskbuddies \
+  -keyalg RSA -keysize 2048 -validity 10000
+
+# Value for FCI_ANDROID_KEYSTORE_BASE64:
+base64 -w0 task-buddies-upload.jks      # macOS: base64 -i task-buddies-upload.jks
+```
+
+Store the `.jks` and its passwords in a password manager. Never commit them.
+
+### Google Play first-upload gotcha
+
+The Play Developer API refuses to create the *first* release of a brand-new app. Before the
+`android-internal` workflow can publish, run it once, download the AAB artifact, and upload
+it by hand to Internal testing in Play Console. Every build after that publishes
+automatically. `submit_as_draft: true` is required until the app has had one production
+release; flip it to `false` afterwards.
+
+### Version numbers
+
+- iOS build number: the workflow asks App Store Connect for the latest TestFlight build and
+  uses `latest + 1`, falling back to Codemagic's `BUILD_NUMBER`.
+- Android `versionCode`: Codemagic's `BUILD_NUMBER` (see `android/app/build.gradle`).
+- Marketing version (`1.0.0`): bump together in `android/app/build.gradle`
+  (`versionName`), Xcode (`MARKETING_VERSION`), and the root `package.json` for each public
+  release.
 
 ## Google Play setup
 
@@ -81,8 +133,8 @@ The current binary:
 - has no account system, backend, analytics, advertising, tracking, or in-app purchases;
 - stores routines, rewards, buddy choices, and timer state on the device;
 - may use optional local notifications for timer completion;
-- opens privacy and support URLs only from a randomized parental gate;
-- does not show the web donation link in native builds;
+- opens privacy, support, and the Lovou waitlist link only from a randomized parental gate,
+  in the system browser (not the in-app WebView);
 - bundles fonts and application content locally.
 
 Apple App Privacy and Google Data safety should therefore declare no data collected or
