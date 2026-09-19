@@ -10,8 +10,8 @@
 #
 #   appstore_credentials      APP_STORE_CONNECT_ISSUER_ID        (reuse from Lovou)
 #                             APP_STORE_CONNECT_KEY_IDENTIFIER   (reuse from Lovou)
-#                             APP_STORE_CONNECT_PRIVATE_KEY      (reuse from Lovou, Secure)
-#                             FCI_CERTIFICATE_PRIVATE_KEY        (reuse from Lovou, Secure)
+#                             APP_STORE_CONNECT_PRIVATE_KEY      (reuse from Lovou, Secure; PEM or base64 PEM)
+#                             FCI_CERTIFICATE_PRIVATE_KEY        (reuse from Lovou, Secure; PEM or base64 PEM)
 #                             APP_STORE_APPLE_ID                 (NEW: numeric Apple ID of the Task Buddies app record)
 #
 #   google_play_credentials   GCLOUD_SERVICE_ACCOUNT_CREDENTIALS (reuse from Lovou, Secure;
@@ -146,12 +146,31 @@ workflows:
       - *install_deps
       - *web_checks
       - *cap_sync
+      - name: Prepare signing keys
+        script: |
+          # Lovou stores these keys base64-encoded. Decode to PEM if needed so the
+          # same values work here whether they are stored raw or encoded.
+          to_pem() {
+            if printf '%s' "$1" | grep -q 'BEGIN'; then printf '%s\n' "$1"; else printf '%s' "$1" | base64 --decode; fi
+          }
+          to_pem "$FCI_CERTIFICATE_PRIVATE_KEY" > /tmp/cert_private_key.pem
+          to_pem "$APP_STORE_CONNECT_PRIVATE_KEY" > /tmp/asc_private_key.pem
+          chmod 600 /tmp/*.pem
+          grep -q 'BEGIN' /tmp/cert_private_key.pem || { echo "FCI_CERTIFICATE_PRIVATE_KEY is not a PEM key"; exit 1; }
+          grep -q 'BEGIN' /tmp/asc_private_key.pem  || { echo "APP_STORE_CONNECT_PRIVATE_KEY is not a PEM key"; exit 1; }
+          # Expose the decoded App Store Connect key to the publishing step (multiline var).
+          {
+            echo "ASC_PRIVATE_KEY_PEM<<CM_EOF"
+            cat /tmp/asc_private_key.pem
+            echo "CM_EOF"
+          } >> "$CM_ENV"
       - name: Fetch signing files
         script: |
           keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
-            --certificate-key=@env:FCI_CERTIFICATE_PRIVATE_KEY \
+            --private-key=@file:/tmp/asc_private_key.pem \
+            --certificate-key=@file:/tmp/cert_private_key.pem \
             --create
           keychain add-certificates
       - name: Set build number
@@ -162,7 +181,8 @@ workflows:
           cd ios/App
           NEXT="$BUILD_NUMBER"
           if [ -n "${APP_STORE_APPLE_ID:-}" ]; then
-            LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || true)
+            LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" \
+              --private-key=@file:/tmp/asc_private_key.pem 2>/dev/null || true)
             if [ -n "$LATEST" ] && [ "$LATEST" -ge "$BUILD_NUMBER" ]; then
               NEXT=$((LATEST + 1))
             fi
@@ -182,7 +202,7 @@ workflows:
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        api_key: $ASC_PRIVATE_KEY_PEM
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: true
