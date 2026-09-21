@@ -133,8 +133,9 @@ The current binary:
 - has no account system, backend, analytics, advertising, tracking, or in-app purchases;
 - stores routines, rewards, buddy choices, and timer state on the device;
 - may use optional local notifications for timer completion;
-- opens privacy, support, and the Lovou waitlist link only from a randomized parental gate,
-  in the system browser (not the in-app WebView);
+- opens privacy, support, and the Lovou link only after a randomized parental gate, in the
+  system browser (not the in-app WebView). The Lovou card on the routine-complete screen
+  routes through the same gate before any URL opens;
 - bundles fonts and application content locally.
 
 Apple App Privacy and Google Data safety should therefore declare no data collected or

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import Logo from '../components/Logo';
 import { useRoutineStore } from '../store/useRoutineStore';
+import { LINKS, openExternalUrl } from '../platform/externalLinks';
 
 const MotionButton = motion.button;
 
@@ -17,7 +18,7 @@ function createChallenge() {
 }
 
 export default function ParentGate() {
-  const setScreen = useRoutineStore((state) => state.setScreen);
+  const afterGate = useRoutineStore((state) => state.afterGate);
   const [challenge, setChallenge] = useState(createChallenge);
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +27,10 @@ export default function ParentGate() {
     event.preventDefault();
 
     if (Number(answer) === challenge.answer) {
-      setScreen('settings');
+      if (afterGate === 'lovou') {
+        void openExternalUrl(LINKS.lovou).catch((err) => console.error('[task-buddy] external link failed', err));
+      }
+      useRoutineStore.setState({ screen: 'settings', afterGate: null });
       return;
     }
 
@@ -41,7 +45,7 @@ export default function ParentGate() {
         <Logo className="h-8 w-auto" size="small" />
         <MotionButton
           type="button"
-          onClick={() => setScreen('selection')}
+          onClick={() => useRoutineStore.setState({ screen: afterGate ? 'complete' : 'selection', afterGate: null })}
           whileTap={{ scale: 0.95 }}
           className="w-11 h-11 rounded-2xl bg-surface border border-border-card shadow-soft flex items-center justify-center"
           aria-label="Return to buddy selection"

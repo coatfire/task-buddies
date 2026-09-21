@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { BookOpen } from 'lucide-react';
 import PixelRexCharacter from '../components/rex/PixelRexCharacter';
 import { useRoutineStore } from '../store/useRoutineStore';
 import {
@@ -53,8 +54,19 @@ function pickRewardFromBag(rewards, shownMap) {
   return sorted[0];
 }
 
+const LOVOU_CARD = {
+  bedtime: {
+    title: "Ready for tonight's story?",
+    body: 'Turn tonight\u2019s routine into a personalized bedtime adventure with Lovou.',
+  },
+  default: {
+    title: 'Make bedtime magical too',
+    body: 'Calming, personalized audio stories that pick up where Task Buddies leaves off.',
+  },
+};
+
 export default function RoutineComplete() {
-  const { tasks, resetRoutine, selectedCharacter, routineName, routineType } = useRoutineStore();
+  const { tasks, resetRoutine, selectedCharacter, routineName, routineType, openParentGate } = useRoutineStore();
   const [confetti, setConfetti] = useState([]);
   const [showContent, setShowContent] = useState(false);
   const viewportHeight = useRef(typeof window !== 'undefined' ? window.innerHeight : 800);
@@ -69,6 +81,7 @@ export default function RoutineComplete() {
   const totalMinutes = tasks.reduce((sum, t) => sum + t.durationMinutes, 0);
   const routineBase = routineType?.startsWith('custom:') ? null : routineType;
   const closingLine = (CLOSING_LINES[routineBase] || ((n) => `You did it! ${n} is so happy you finished. ✨`))(characterName);
+  const lovouCard = LOVOU_CARD[routineBase] || LOVOU_CARD.default;
 
   useEffect(() => {
     setRewards(readConfiguredRewards(DEFAULT_REWARDS));
@@ -236,6 +249,30 @@ export default function RoutineComplete() {
             <button onClick={resetRoutine} className="btn-primary w-full">
               Back to Buddies
             </button>
+          </MotionDiv>
+
+          {/* Lovou bridge — link opens only after the parent gate (Kids Category / Families policy) */}
+          <MotionDiv
+            className="w-full sm:max-w-xs mb-4 rounded-[24px] border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+          >
+            <div className="flex items-start gap-3">
+              <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-display font-bold text-[15px] text-ink leading-snug">{lovouCard.title}</h3>
+                <p className="text-[13px] text-ink-muted font-body leading-snug mt-1">{lovouCard.body}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => openParentGate('lovou')}
+              className="mt-3 w-full min-h-[44px] rounded-2xl border border-border-card bg-surface-card px-4 py-2.5 text-sm font-display font-semibold text-ink hover:bg-white/60 transition-colors"
+            >
+              Learn More
+            </button>
+            <p className="mt-2 text-center text-[11px] text-ink-muted/80 font-body">Grown-ups only · opens in your browser</p>
           </MotionDiv>
 
           <MotionDiv

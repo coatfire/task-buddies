@@ -35,9 +35,12 @@ const TARGETS = [
   { dir: 'android', width: 1080, height: 2340 },
 ];
 
-/** Access the app's zustand store from inside the page (same module instance as the app). */
+/**
+ * The app exposes its live zustand store as window.__tb in dev builds (see src/main.jsx).
+ * Importing the module here would get a separate instance once Vite HMR has re-versioned it.
+ */
 const STORE_BOOTSTRAP = `
-  window.__tb = window.__tb || (await import('/src/store/useRoutineStore.js')).useRoutineStore;
+  if (!window.__tb) throw new Error('window.__tb missing: run against the Vite dev server (npm run dev)');
 `;
 
 const bedtimeTasks = (idx) => [

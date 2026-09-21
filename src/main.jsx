@@ -17,6 +17,9 @@ async function startApp() {
   await initializeStorage();
   await useRoutineStore.persist.rehydrate();
 
+  // Dev only: lets scripts/screenshots/capture.mjs seed app state. Stripped from production builds.
+  if (import.meta.env.DEV) window.__tb = useRoutineStore;
+
   createRoot(document.getElementById('root')).render(
     <React.StrictMode>
       <App />

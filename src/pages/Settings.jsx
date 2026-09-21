@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Pencil, Plus, Trash2, X } from 'lucide-react';
+import { BookOpen, ExternalLink, Pencil, Plus, Trash2, X } from 'lucide-react';
 import { useRoutineStore } from '../store/useRoutineStore';
 import {
   readConfiguredRewards,
@@ -11,7 +11,7 @@ import {
 import defaultRewards from '../data/rewards.json';
 import Logo from '../components/Logo';
 import ConfirmDialog from '../components/ConfirmDialog';
-import { openExternalUrl } from '../platform/externalLinks';
+import { LINKS, openExternalUrl } from '../platform/externalLinks';
 
 const MotionButton = motion.button;
 
@@ -143,6 +143,27 @@ export default function Settings() {
           </div>
         </div>
 
+        {/* Lovou bridge */}
+        <div className="mb-4 rounded-2xl border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-display font-bold text-[15px] text-ink leading-snug">Bring Stories to Bedtime</h3>
+              <p className="text-[13px] text-ink-muted font-body leading-snug mt-1">
+                Want custom, calming audio stories that pick up right where Task Buddies leaves off? Explore Lovou.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => openLink(LINKS.lovou)}
+            className="mt-3 w-full min-h-[44px] rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-center gap-2 text-sm font-display font-semibold text-ink hover:opacity-90 transition-opacity shadow-soft"
+          >
+            Explore Lovou
+            <ExternalLink className="w-3.5 h-3.5 text-ink/70" />
+          </button>
+        </div>
+
         {/* Rewards list header */}
         <div className="flex items-center justify-between mb-2 px-1">
           <h3 className="font-display font-semibold text-sm text-ink">Reward Ideas</h3>
@@ -239,7 +260,7 @@ export default function Settings() {
         <div className="rounded-xl border border-border-card bg-surface-card p-2 grid grid-cols-2 gap-2">
           <button
             type="button"
-            onClick={() => openLink('https://www.taskbuddies.app/privacy')}
+            onClick={() => openLink(LINKS.privacy)}
             className="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
           >
             <span className="text-xs font-display font-semibold text-ink">Privacy</span>
@@ -247,19 +268,11 @@ export default function Settings() {
           </button>
           <button
             type="button"
-            onClick={() => openLink('https://www.taskbuddies.app/support')}
+            onClick={() => openLink(LINKS.support)}
             className="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
           >
             <span className="text-xs font-display font-semibold text-ink">Support</span>
             <ExternalLink className="w-3 h-3 text-ink-muted" />
-          </button>
-          <button
-            type="button"
-            onClick={() => openLink('https://www.lovou.app/')}
-            className="col-span-2 flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl bg-accent px-3 py-2 hover:opacity-90 transition-opacity shadow-soft"
-          >
-            <span className="text-sm leading-none">✨</span>
-            <span className="text-xs font-display font-semibold text-ink">Check Out Lovou</span>
           </button>
         </div>
       </div>

@@ -47,7 +47,7 @@ export const useRoutineStore = create(
   persist(
     (set, get) => ({
   screen: 'selection',
-  selectedCharacter: 'rex',
+  selectedCharacter: 'hoppy',
   routineName: 'Bedtime',
   routineType: 'bedtime',
   tasks: getDefaultTasksForType('bedtime'),
@@ -60,8 +60,12 @@ export const useRoutineStore = create(
   rexState: 'idle',
   hasSavedRoutine: false,
   customRoutineId: null,
+  // Optional action to run once the parent gate is passed, e.g. 'lovou'.
+  afterGate: null,
 
   setScreen: (screen) => set({ screen }),
+
+  openParentGate: (afterGate = null) => set({ screen: 'parentGate', afterGate }),
 
   setSelectedCharacter: (character) => set({ selectedCharacter: character }),
 
