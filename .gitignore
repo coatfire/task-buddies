@@ -10,3 +10,6 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# generated store screenshots (npm run screenshots)
+store-assets/screenshots

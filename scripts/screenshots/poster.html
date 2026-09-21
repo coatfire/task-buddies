@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Nunito';
+    font-weight: 800;
+    src: url('../../node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Nunito';
+    font-weight: 700;
+    src: url('../../node_modules/@fontsource/nunito/files/nunito-latin-700-normal.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'DM Sans';
+    font-weight: 500;
+    src: url('../../node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2') format('woff2');
+  }
+
+  :root {
+    --w: 1290px;
+    --h: 2796px;
+    --bg: #FAF3E8;
+    --ink: #4A3426;
+    --muted: #8A7560;
+    --phone-w: 1010px;
+    --phone-top: 760px;
+    --bezel: 34px;
+    --radius: 118px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; }
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: var(--ink);
+    position: relative;
+  }
+
+  /* soft glow like the app background */
+  .glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 35%, transparent 70%),
+      radial-gradient(ellipse at 50% 100%, rgba(74,52,38,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .copy {
+    position: absolute;
+    top: 170px; left: 90px; right: 90px;
+    height: calc(var(--phone-top) - 170px - 40px);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 36px;
+    text-align: center;
+  }
+  .headline {
+    font-weight: 800;
+    font-size: 112px;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .sub {
+    max-width: 1000px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.3;
+    color: var(--muted);
+    text-wrap: balance;
+  }
+  .sub:empty { display: none; }
+
+  .phone {
+    position: absolute;
+    left: 50%;
+    top: var(--phone-top);
+    transform: translateX(-50%);
+    width: var(--phone-w);
+    padding: var(--bezel);
+    background: #2B211C;
+    border-radius: var(--radius);
+    box-shadow:
+      0 60px 120px -30px rgba(74,52,38,0.45),
+      0 20px 40px -20px rgba(74,52,38,0.30),
+      inset 0 0 0 4px rgba(255,255,255,0.06);
+  }
+  .screen {
+    position: relative;
+    width: 100%;
+    border-radius: calc(var(--radius) - var(--bezel));
+    overflow: hidden;
+    background: #FAF3E8;
+    aspect-ratio: 390 / 844;
+  }
+  .screen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* fake status bar so the capture looks like a real phone */
+  .statusbar {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 96px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 76px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 500; font-size: 36px; color: var(--ink);
+    pointer-events: none;
+  }
+  .statusbar .icons { display: flex; gap: 14px; align-items: center; }
+  .statusbar svg { width: 40px; height: 32px; fill: var(--ink); }
+  .island {
+    position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+    width: 280px; height: 76px; border-radius: 40px; background: #2B211C;
+  }
+
+  /* phone-less hero: buddies scattered on the tint */
+  .buddies { position: absolute; inset: 0; display: none; }
+  body.layout-buddies .phone { display: none; }
+  body.layout-buddies .buddies { display: block; }
+  body.layout-buddies .copy { top: 240px; height: 560px; }
+  .buddy {
+    position: absolute;
+    width: 128px; height: 128px;
+    background-repeat: no-repeat;
+    background-size: 400% 400%;   /* 4x4 sprite sheet */
+    background-position: 0 0;     /* frame 0 */
+    transform-origin: center;
+    image-rendering: auto;
+    filter: drop-shadow(0 30px 40px rgba(74,52,38,0.22));
+  }
+  .blob {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.55);
+    box-shadow: 0 40px 80px -30px rgba(74,52,38,0.25);
+  }
+
+  /* per-poster tints */
+  body.tint-peach  { --bg: #F6D9C4; }
+  body.tint-sage   { --bg: #DCE5D2; }
+  body.tint-sky    { --bg: #D8E6EC; }
+  body.tint-lilac  { --bg: #E3DCF2; }
+  body.tint-sand   { --bg: #F0E4CC; }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="copy">
+    <h1 class="headline" id="headline"></h1>
+    <p class="sub" id="sub"></p>
+  </div>
+  <div class="buddies" id="buddies"></div>
+  <div class="phone">
+    <div class="screen">
+      <img id="shot" alt="" />
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="icons">
+          <svg viewBox="0 0 40 32"><rect x="2" y="20" width="6" height="10" rx="1.5"/><rect x="11" y="14" width="6" height="16" rx="1.5"/><rect x="20" y="8" width="6" height="22" rx="1.5"/><rect x="29" y="2" width="6" height="28" rx="1.5"/></svg>
+          <svg viewBox="0 0 40 32"><path d="M20 26a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm-9.9-7.4 3.5 3.5a9 9 0 0 1 12.8 0l3.5-3.5a14 14 0 0 0-19.8 0zM3 11.9l3.5 3.5a19 19 0 0 1 27 0l3.5-3.5a24 24 0 0 0-34 0z"/></svg>
+          <svg viewBox="0 0 40 32"><rect x="1" y="6" width="32" height="20" rx="5" fill="none" stroke="#4A3426" stroke-width="3"/><rect x="35" y="12" width="4" height="8" rx="1.5"/><rect x="4" y="9" width="26" height="14" rx="3"/></svg>
+        </span>
+      </div>
+      <div class="island"></div>
+    </div>
+  </div>
+</body>
+</html>
