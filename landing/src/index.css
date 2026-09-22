@@ -50,6 +50,52 @@ body {
   padding: 1.75rem;
 }
 
+/* ── How it works steps ──────────────────── */
+.step-num {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F0A275 0%, #E8956A 100%);
+  color: #24130D;
+  font-family: 'Fraunces', 'DM Sans', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+/* ── Why it works list ───────────────────── */
+.why-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.why-list li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+.why-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #F0A275;
+}
+
+/* ── Lovou bridge card ───────────────────── */
+.lovou-card {
+  border-color: rgba(240, 162, 117, 0.45);
+  background: rgba(255, 250, 244, 0.75);
+}
+
 /* ── Routine cards ───────────────────────── */
 .routine-card {
   background: rgba(255, 255, 255, 0.65);

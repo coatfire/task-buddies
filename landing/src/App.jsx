@@ -20,6 +20,7 @@ function Spark({ style, size = 24, opacity = 0.55 }) {
 }
 
 const APP_URL = 'https://app.taskbuddies.app/';
+const LOVOU_URL = 'https://www.lovou.app/?utm_source=taskbuddies&utm_medium=landing';
 const SUPPORT_EMAIL = 'hello@lovou.app';
 const SUPPORT_URL = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Task Buddies support')}`;
 
@@ -173,6 +174,12 @@ const routines = [
   { emoji: '⭐', name: 'Custom',   tagline: 'Build any routine that fits your child' },
 ];
 
+const steps = [
+  { n: 1, title: 'Pick a buddy and a routine', body: 'Five buddies. Bedtime, morning and homework come ready to go, or build your own.' },
+  { n: 2, title: 'Your child does one task at a time', body: 'A ring slowly empties while the buddy waits. Finish the task, tap Done, and the buddy gets fed.' },
+  { n: 3, title: 'Open the reward chest together', body: 'When the last task is done: confetti, a proud buddy, and a small reward you actually want to give.' },
+];
+
 function BuddyCarousel() {
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -283,55 +290,79 @@ export default function App() {
         </h1>
 
         {/* ── Subheadline ── */}
-        <p className="text-center text-[1.0625rem] leading-relaxed opacity-75 max-w-xs mb-12">
-          Task Buddies gives children a cozy companion that guides
-          them through their routine, one step at a time. No nagging required.
+        <p className="text-center text-[1.0625rem] leading-relaxed opacity-75 max-w-xs mb-8">
+          A cozy companion that sits with your child through bedtime, mornings
+          and homework, one step at a time. You stop nagging. They keep going.
         </p>
 
-        {/* ── Body doubling ── */}
-        <section className="glass-card w-full mb-10" aria-label="About body doubling">
+        {/* ── Primary CTA (above the fold) ── */}
+        <a
+          href={APP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-launch w-full mb-12"
+        >
+          Meet Your Buddy
+        </a>
+
+        {/* ── How a routine works ── */}
+        <section className="w-full mb-10" aria-label="How it works">
+          <h2 className="font-display font-bold text-xl text-center mb-5">How a routine works</h2>
+          <ol className="space-y-3">
+            {steps.map(({ n, title, body }) => (
+              <li key={n} className="glass-card !p-4 flex gap-4 items-start">
+                <span className="step-num">{n}</span>
+                <div>
+                  <p className="font-display font-bold text-[0.95rem] leading-snug">{title}</p>
+                  <p className="text-[0.875rem] leading-relaxed opacity-70 mt-0.5">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── Why it works ── */}
+        <section className="glass-card w-full mb-10" aria-label="Why it works">
+          <h2 className="font-display font-bold text-xl mb-3">Why it works</h2>
           <div className="space-y-4 text-[0.9375rem] leading-relaxed">
             <p>
-              Ever noticed how a task that feels impossible alone suddenly becomes
-              manageable when someone is just... there?
+              Nothing here is clever. It's the boring stuff that occupational therapists
+              and teachers have used for years, wrapped in something a five-year-old wants
+              to look at.
             </p>
+            <ul className="why-list">
+              <li><strong>Time you can see.</strong> A ring slowly empties around the buddy. Kids don't read clocks; they read shapes.</li>
+              <li><strong>One step at a time.</strong> Only the current task is on screen. The rest of the routine can wait.</li>
+              <li><strong>A reward that always arrives.</strong> Finishing a task feeds the buddy, every time, straight away.</li>
+              <li><strong>No way to fail.</strong> When time runs out, nothing beeps and nothing is lost. The buddy just gets hungry and waits.</li>
+            </ul>
             <p>
-              That's body doubling. A simple, well-documented principle that helps
-              children, especially those whose brains work a little differently,
-              move through tasks they would otherwise resist. Having a present
-              companion, even a digital one, lowers the demand enough to get started.
-            </p>
-            <p>
-              Task Buddies puts that principle into a free, offline-ready app.
-              The Buddy sits with your child through their routine. Each completed
-              task feeds the Buddy. No pressure. No timers counting down. Just a
-              small, encouraging presence making the next step feel possible.
+              Some parents call it body doubling: it's easier to do a hard thing when
+              someone friendly is sitting with you. A buddy isn't a person, but for a lot of
+              kids that little face is enough to get started.
             </p>
           </div>
         </section>
 
         {/* ── Rewards ── */}
         <section className="glass-card w-full mb-10" aria-label="About rewards">
+          <h2 className="font-display font-bold text-xl mb-3">The reward is you</h2>
           <div className="space-y-4 text-[0.9375rem] leading-relaxed">
             <p>
-              When the routine is done, a reward chest appears.
+              When the routine is done, a chest appears. Inside isn't screen time or
+              sugar. It's a secret handshake. Sixty seconds of freeze dance. One minute of
+              silly faces, together.
             </p>
             <p>
-              Inside, it's not screen time or sugar. It's a secret handshake.
-              Sixty seconds of freeze dance. One minute of silly faces, together.
-              Small enough that you'll always say yes. Big enough that they'll
-              actually remember.
-            </p>
-            <p>
-              Rewards in Task Buddies are built to hand you a moment of connection,
-              not manage it away. The chest is the excuse. The minute you spend
-              together is the point.
+              Small enough that you'll always say yes. Big enough that they'll remember.
+              You can edit the list to suit your family. The chest is the excuse; the
+              minute together is the point.
             </p>
           </div>
         </section>
 
         {/* ── Routine types ── */}
-        <section className="w-full mb-5" aria-label="Routine types">
+        <section className="w-full mb-10" aria-label="Routine types">
           <div className="grid grid-cols-2 gap-3">
             {routines.map(({ emoji, name, tagline }) => (
               <div key={name} className="routine-card">
@@ -343,11 +374,25 @@ export default function App() {
           </div>
         </section>
 
+        {/* ── Lovou bridge ── */}
+        <section className="glass-card w-full mb-10 lovou-card" aria-label="About Lovou">
+          <p className="eyebrow-pill inline-block mb-3">From the makers of Lovou</p>
+          <h2 className="font-display font-bold text-xl mb-2">The other half of our bedtime</h2>
+          <p className="text-[0.9375rem] leading-relaxed mb-4">
+            Task Buddies gets you through the routine. Lovou is the story after it,
+            made with your child and played back in the voices they choose. No ads,
+            nothing sold to anyone.
+          </p>
+          <a className="legal-link !mt-0" href={LOVOU_URL} target="_blank" rel="noopener noreferrer">
+            Have a look at Lovou
+          </a>
+        </section>
+
         {/* ── Trust line ── */}
         <p className="text-[0.8125rem] text-center opacity-50 leading-relaxed mb-8 max-w-[280px]">
-          No data collected. No cookies. No account needed.
+          Free. No data collected. No cookies. No account.
           <br />
-          Just open it and go.
+          Works offline. Just open it and go.
         </p>
 
         {/* ── CTA ── */}
