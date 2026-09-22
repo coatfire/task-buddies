@@ -148,9 +148,10 @@ export default function Settings() {
           <div className="flex items-start gap-3">
             <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-display font-bold text-[15px] text-ink leading-snug">Bring Stories to Bedtime</h3>
+              <h3 className="font-display font-bold text-[15px] text-ink leading-snug">The other half of our bedtime</h3>
               <p className="text-[13px] text-ink-muted font-body leading-snug mt-1">
-                Want custom, calming audio stories that pick up right where Task Buddies leaves off? Explore Lovou.
+                Task Buddies gets you through the routine. Lovou is the story after it, made with your child and
+                played back in the voices they choose. No ads, nothing sold to anyone.
               </p>
             </div>
           </div>
@@ -159,7 +160,7 @@ export default function Settings() {
             onClick={() => openLink(LINKS.lovou)}
             className="mt-3 w-full min-h-[44px] rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-center gap-2 text-sm font-display font-semibold text-ink hover:opacity-90 transition-opacity shadow-soft"
           >
-            Explore Lovou
+            Have a look at Lovou
             <ExternalLink className="w-3.5 h-3.5 text-ink/70" />
           </button>
         </div>

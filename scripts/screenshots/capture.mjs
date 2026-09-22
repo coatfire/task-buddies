@@ -69,7 +69,7 @@ const SHOTS = [
   {
     id: 'player-running',
     headline: 'A timer that never rushes',
-    sub: 'Your buddy waits patiently. No alarms, no countdown pressure.',
+    sub: 'When time runs out, nothing beeps and nothing fails. Your buddy just gets hungry.',
     tint: 'sky',
     seed: async (page) => {
       await page.evaluate(`(async () => { ${STORE_BOOTSTRAP}
@@ -253,8 +253,9 @@ async function main() {
     for (const t of TARGETS) await mkdir(resolve(OUT, t.dir), { recursive: true });
     await mkdir(resolve(OUT, 'raw'), { recursive: true });
 
-    for (const [i, shot] of shots.entries()) {
-      const n = String(i + 1).padStart(2, '0');
+    for (const shot of shots) {
+      // number by position in the full set so ONLY= subsets overwrite the right files
+      const n = String(SHOTS.indexOf(shot) + 1).padStart(2, '0');
       process.stdout.write(`${n} ${shot.id} … `);
       const appPng = shot.layout === 'buddies' ? null : await captureApp(browser, shot);
       if (appPng) await writeFile(resolve(OUT, 'raw', `${n}-${shot.id}.png`), appPng);
