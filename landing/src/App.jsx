@@ -48,10 +48,12 @@ function LegalPage({ title, children }) {
 function PrivacyPage() {
   return (
     <LegalPage title="Privacy Policy">
-      <p><strong>Last updated:</strong> September 19, 2026</p>
+      <p><strong>Last updated:</strong> September 22, 2026</p>
       <p>
-        Task Buddies is designed for children and families. The app does not require an account
-        and does not include advertising, analytics, tracking, or in-app purchases.
+        Task Buddies is made by{' '}
+        <a className="underline underline-offset-2" href="https://coatfire.com/" target="_blank" rel="noopener noreferrer">Coatfire Limited</a>,
+        Ireland. It is designed for children and families. The app does not require an account and
+        does not include advertising, analytics, tracking, or in-app purchases.
       </p>
       <h2>Information the app handles</h2>
       <p>
@@ -60,6 +62,12 @@ function PrivacyPage() {
         Your device platform may include app data in its own device backup according to your Apple
         or Google account settings.
       </p>
+      <p>
+        The web version at app.taskbuddies.app stores the same settings in your browser&apos;s local
+        storage. This is needed for the app to work and is not used for tracking. The web version is
+        served by Vercel, whose servers keep standard access logs (IP address and browser type) for
+        a short period to operate the service. We do not use these logs to identify anyone.
+      </p>
       <h2>Permissions</h2>
       <p>
         The app may ask for notification permission so it can alert you when a routine step ends.
@@ -67,14 +75,25 @@ function PrivacyPage() {
       </p>
       <h2>External links</h2>
       <p>
-        Privacy and support links are available only from the gated Parent Area. Opening a link
-        uses your device browser, where the destination&apos;s privacy practices apply.
+        Links to this privacy policy, to support, and to Lovou (our bedtime story app) open only
+        after a grown-ups-only gate. Opening a link uses your device browser, where the
+        destination&apos;s own privacy policy applies.
       </p>
       <h2>Children&apos;s privacy</h2>
       <p>
         Task Buddies does not knowingly collect personal information from children. Because the
         app does not collect or transmit user data, there is no child profile or account to delete.
         App data can be removed by clearing app storage or uninstalling the app.
+      </p>
+      <p>
+        Parents and guardians can contact us with any question about their child&apos;s use of the
+        app. Because we hold no data, there is nothing for us to access, correct, or delete, but we
+        will confirm this in writing on request.
+      </p>
+      <h2>Changes to this policy</h2>
+      <p>
+        If the app ever changes in a way that affects your privacy, we will update this page and
+        the date at the top before the change reaches the app stores.
       </p>
       <h2>Contact</h2>
       <p>
@@ -407,7 +426,7 @@ export default function App() {
 
         {/* ── Footer ── */}
         <footer className="text-xs text-center opacity-50 flex flex-wrap justify-center gap-x-3 gap-y-2">
-          <span>Made by Coatfire &nbsp;&middot;&nbsp; taskbuddies.app</span>
+          <span>Coatfire Limited, makers of Lovou &nbsp;&middot;&nbsp; taskbuddies.app</span>
           <a href="/privacy">Privacy</a>
           <a href="/support">Support</a>
         </footer>
