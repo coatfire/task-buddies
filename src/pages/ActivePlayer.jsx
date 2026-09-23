@@ -187,7 +187,7 @@ export default function ActivePlayer() {
             <h2 className="font-display text-[1.55rem] sm:text-[2rem] font-bold text-center mb-1 leading-tight text-ink">
               {currentTask?.title}
             </h2>
-            <p className="text-[0.8125rem] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto">
+            <p className="text-[0.8125rem] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto tablet:min-h-[3.25em]">
               {instructionText}
             </p>
           </MotionDiv>
@@ -262,60 +262,60 @@ export default function ActivePlayer() {
           </div>
         </div>
 
-        <AnimatePresence>
-          {isHungry && !isEatingSequence && (
-            <MotionButton
-              className="btn-coral w-full text-lg sm:text-xl z-10 mb-3 shrink-0"
-              onClick={handleFeed}
-              initial={{ opacity: 0, y: 30, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.8 }}
-              transition={{ duration: 0.3, type: 'spring' }}
-              whileTap={{ scale: 0.92 }}
-            >
-              Feed {characterName} {currentTask?.itemEmoji}
-            </MotionButton>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {isWaiting && isRunning && !isEatingSequence && (
-            <MotionButton
-              className="btn-done-early w-full text-base sm:text-lg z-10 mb-3 shrink-0"
-              onClick={handleDoneEarly}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              Done! Feed {characterName}
-            </MotionButton>
-          )}
-        </AnimatePresence>
-
-        {!isEatingSequence && (
-          <div className="mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5 tablet:mt-0 tablet:mb-auto">
-            {isWaiting && (
-              <div className="w-full rounded-[28px] border border-border-card bg-surface-card p-2.5 sm:p-3 shadow-soft">
-                <button
-                  onClick={isRunning ? pauseRoutine : resumeRoutine}
-                  className="w-full bg-[#FAF3E8] border border-border-card rounded-2xl py-2.5 sm:py-3 font-display font-semibold text-sm text-ink hover:bg-surface-card active:bg-border-card/30 transition-colors"
-                >
-                  {isRunning ? 'Pause' : 'Resume'}
-                </button>
-              </div>
-            )}
-            {!isHungry && (
-              <button
-                onClick={skipTask}
-                className="min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors"
+        {/* Fixed-height slot: the primary button animates in/out inside it so the card above never shifts. */}
+        <div className="relative z-10 mb-3 shrink-0 min-h-[3.5rem]">
+          <AnimatePresence>
+            {isHungry && !isEatingSequence && (
+              <MotionButton
+                className="btn-coral absolute inset-x-0 top-0 w-full text-lg sm:text-xl"
+                onClick={handleFeed}
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 30, scale: 0.8 }}
+                transition={{ duration: 0.3, type: 'spring' }}
+                whileTap={{ scale: 0.92 }}
               >
-                Skip Task
-              </button>
+                Feed {characterName} {currentTask?.itemEmoji}
+              </MotionButton>
             )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {isWaiting && isRunning && !isEatingSequence && (
+              <MotionButton
+                className="btn-done-early absolute inset-x-0 top-0 w-full text-base sm:text-lg"
+                onClick={handleDoneEarly}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                Done! Feed {characterName}
+              </MotionButton>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Always laid out, hidden with visibility so the footprint is constant across states. */}
+        <div className={`mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5 tablet:mt-0 tablet:mb-auto ${isEatingSequence ? 'invisible' : ''}`}>
+          <div className={`w-full rounded-[28px] border border-border-card bg-surface-card p-2.5 sm:p-3 shadow-soft ${isWaiting ? '' : 'invisible'}`}>
+            <button
+              onClick={isRunning ? pauseRoutine : resumeRoutine}
+
+              className="w-full bg-[#FAF3E8] border border-border-card rounded-2xl py-2.5 sm:py-3 font-display font-semibold text-sm text-ink hover:bg-surface-card active:bg-border-card/30 transition-colors"
+            >
+              {isRunning ? 'Pause' : 'Resume'}
+            </button>
           </div>
-        )}
+          <button
+            onClick={skipTask}
+
+            className={`min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors ${isHungry ? 'invisible' : ''}`}
+          >
+            Skip Task
+          </button>
+        </div>
       </div>
 
       <ConfirmDialog
