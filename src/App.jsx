@@ -123,7 +123,7 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       <div ref={rootRef} className="app-viewport relative h-[100dvh] min-h-0 bg-cream-gradient text-ink overflow-hidden">
         <div className="absolute inset-0 bg-cream-glow pointer-events-none" />
-        <div className={`app-safe-area relative max-w-md mx-auto flex h-full min-h-0 w-full flex-col ${screen === 'complete' ? 'wide:max-w-4xl' : ''}`}>
+        <div className={`app-safe-area relative max-w-md mx-auto flex h-full min-h-0 w-full flex-col ${screen === 'complete' ? 'wide:max-w-3xl' : ''}`}>
           <AnimatePresence mode="wait" custom={direction}>
             {Screen && (
               <MotionDiv key={screen} custom={direction} variants={pageTransition} initial="initial" animate="animate" exit="exit" transition={pageTransition.transition} className="flex flex-1 min-h-0 flex-col">

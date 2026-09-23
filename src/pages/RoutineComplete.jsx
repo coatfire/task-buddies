@@ -130,7 +130,7 @@ export default function RoutineComplete() {
 
       {showContent && (
         <MotionDiv
-          className="w-full max-w-sm mx-auto flex flex-col items-center z-10 wide:max-w-none wide:grid wide:grid-cols-2 wide:gap-x-10 wide:items-start"
+          className="w-full max-w-sm mx-auto flex flex-col items-center z-10 wide:max-w-none wide:grid wide:grid-cols-2 wide:gap-x-6 wide:items-start"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, type: 'spring' }}
@@ -252,7 +252,7 @@ export default function RoutineComplete() {
 
           {/* Lovou bridge — link opens only after the parent gate (Kids Category / Families policy) */}
           <MotionDiv
-            className="w-full sm:max-w-xs mb-4 rounded-[24px] border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft wide:col-start-2 wide:row-start-1 wide:row-span-2 wide:self-center wide:justify-self-center wide:max-w-sm wide:p-6"
+            className="w-full sm:max-w-xs mb-4 rounded-[24px] border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft wide:col-start-2 wide:row-start-1 wide:self-center wide:justify-self-center wide:max-w-sm wide:p-6"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55 }}
