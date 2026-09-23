@@ -19,6 +19,7 @@ import {
  */
 
 const TASK_COLORS = ['#9D8AAE', '#86A4B3', '#C89A63', '#B86F56', '#81906F', '#B68FA1'];
+export const PARENT_SCREENS = ['parentGate', 'settings'];
 
 function toRuntimeTask(task, index) {
   const libEntry = getTaskByKey(task.task_type_key || task.key);
@@ -62,10 +63,21 @@ export const useRoutineStore = create(
   customRoutineId: null,
   // Optional action to run once the parent gate is passed, e.g. 'lovou'.
   afterGate: null,
+  // Buddy-flow screen to return to when leaving the Parent Area tab.
+  returnScreen: null,
 
   setScreen: (screen) => set({ screen }),
 
-  openParentGate: (afterGate = null) => set({ screen: 'parentGate', afterGate }),
+  openParentGate: (afterGate = null) => {
+    const { screen, isRunning } = get();
+    // Never leave a routine ticking behind the Parent Area.
+    if (screen === 'player' && isRunning) get().pauseRoutine();
+    const returnScreen = PARENT_SCREENS.includes(screen) ? get().returnScreen : screen;
+    set({ screen: 'parentGate', afterGate, returnScreen });
+  },
+
+  // Buddy tab: back to wherever the parent flow was entered from.
+  leaveParentArea: () => set({ screen: get().returnScreen || 'selection', afterGate: null, returnScreen: null }),
 
   setSelectedCharacter: (character) => set({ selectedCharacter: character }),
 
@@ -250,12 +262,15 @@ export const useRoutineStore = create(
       skipHydration: true,
       merge: (persistedState, currentState) => {
         const persistedScreen = persistedState?.screen;
+        const inParentArea = PARENT_SCREENS.includes(persistedScreen);
         return {
           ...currentState,
           ...persistedState,
-          screen: ['settings', 'parentGate'].includes(persistedScreen)
-            ? 'selection'
+          screen: inParentArea
+            ? (persistedState?.returnScreen || 'selection')
             : (persistedScreen ?? currentState.screen),
+          returnScreen: null,
+          afterGate: null,
         };
       },
       partialize: ({ timerInterval: _timerInterval, ...rest }) => rest,

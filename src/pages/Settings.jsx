@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, ExternalLink, Pencil, Plus, Trash2, X } from 'lucide-react';
-import { useRoutineStore } from '../store/useRoutineStore';
+import { BookOpen, ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react';
 import {
   readConfiguredRewards,
   readRewardsEnabled,
@@ -16,7 +15,6 @@ import { LINKS, openExternalUrl } from '../platform/externalLinks';
 const MotionButton = motion.button;
 
 export default function Settings() {
-  const setScreen = useRoutineStore((s) => s.setScreen);
   const [rewards, setRewards] = useState([]);
   const [rewardsEnabled, setRewardsEnabled] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -92,15 +90,6 @@ export default function Settings() {
         <div className="flex items-center gap-2">
           <Logo className="h-8 w-auto" size="small" />
         </div>
-        <MotionButton
-          onClick={() => setScreen('selection')}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label="Close Parent Area"
-          className="w-11 h-11 rounded-2xl bg-surface border border-border-card shadow-soft flex items-center justify-center hover:bg-surface-card transition-colors"
-        >
-          <X className="w-5 h-5 text-ink-muted" />
-        </MotionButton>
       </div>
 
       {/* Title */}
@@ -108,7 +97,7 @@ export default function Settings() {
         <h1 className="text-[1.45rem] leading-tight font-display font-bold text-ink mb-1 sm:text-3xl sm:mb-2">
           Parent Area
         </h1>
-        <p className="max-w-[18rem] mx-auto text-ink-muted text-[13px] font-body leading-snug sm:max-w-none sm:text-sm sm:leading-normal">
+        <p className="max-w-[18rem] mx-auto text-ink-muted text-[0.8125rem] font-body leading-snug sm:max-w-none sm:text-sm sm:leading-normal">
           Changes are saved automatically
         </p>
       </div>
@@ -148,8 +137,8 @@ export default function Settings() {
           <div className="flex items-start gap-3">
             <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-display font-bold text-[15px] text-ink leading-snug">The other half of our bedtime</h3>
-              <p className="text-[13px] text-ink-muted font-body leading-snug mt-1">
+              <h3 className="font-display font-bold text-[0.9375rem] text-ink leading-snug">The other half of our bedtime</h3>
+              <p className="text-[0.8125rem] text-ink-muted font-body leading-snug mt-1">
                 Task Buddies gets you through the routine. Lovou is the story after it, made with your child and
                 played back in the voices they choose. No ads, nothing sold to anyone.
               </p>
@@ -158,7 +147,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => openLink(LINKS.lovou)}
-            className="mt-3 w-full min-h-[44px] rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-center gap-2 text-sm font-display font-semibold text-ink hover:opacity-90 transition-opacity shadow-soft"
+            className="mt-3 w-full min-h-[2.75rem] rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-center gap-2 text-sm font-display font-semibold text-ink hover:opacity-90 transition-opacity shadow-soft"
           >
             Have a look at Lovou
             <ExternalLink className="w-3.5 h-3.5 text-ink/70" />
@@ -195,13 +184,13 @@ export default function Settings() {
                   <div className="flex gap-2">
                     <button
                       onClick={handleSaveEdit}
-                      className="flex-1 min-h-[44px] rounded-xl bg-accent px-3 py-2 text-xs font-display font-semibold text-ink hover:opacity-90 transition-opacity"
+                      className="flex-1 min-h-[2.75rem] rounded-xl bg-accent px-3 py-2 text-xs font-display font-semibold text-ink hover:opacity-90 transition-opacity"
                     >
                       {editText.trim() ? 'Done' : 'Remove'}
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="flex-1 min-h-[44px] rounded-xl bg-[#FAF3E8] border border-border-card px-3 py-2 text-xs font-display font-semibold text-ink-muted hover:bg-surface-card transition-colors"
+                      className="flex-1 min-h-[2.75rem] rounded-xl bg-[#FAF3E8] border border-border-card px-3 py-2 text-xs font-display font-semibold text-ink-muted hover:bg-surface-card transition-colors"
                     >
                       Cancel
                     </button>
@@ -212,7 +201,7 @@ export default function Settings() {
                   <button
                     type="button"
                     onClick={() => handleStartEdit(reward)}
-                    className="flex-1 min-w-0 min-h-[44px] text-left py-1"
+                    className="flex-1 min-w-0 min-h-[2.75rem] text-left py-1"
                   >
                     <p className="text-ink text-sm font-body leading-snug">{reward.text}</p>
                   </button>
@@ -241,7 +230,7 @@ export default function Settings() {
             onClick={handleAddReward}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full min-h-[48px] rounded-2xl border border-dashed border-border-card bg-surface-card px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#FAF3E8] hover:border-accent/40 transition-colors shadow-soft"
+            className="w-full min-h-[3rem] rounded-2xl border border-dashed border-border-card bg-surface-card px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#FAF3E8] hover:border-accent/40 transition-colors shadow-soft"
           >
             <Plus className="w-4 h-4 text-ink" />
             <span className="text-sm font-display font-semibold text-ink">Add Reward</span>
@@ -249,7 +238,7 @@ export default function Settings() {
 
           <button
             onClick={() => setConfirmReset(true)}
-            className="w-full min-h-[44px] px-4 py-2 text-xs font-display font-semibold text-ink-muted hover:text-red-400 transition-colors"
+            className="w-full min-h-[2.75rem] px-4 py-2 text-xs font-display font-semibold text-ink-muted hover:text-red-400 transition-colors"
           >
             Reset to Defaults
           </button>
@@ -262,7 +251,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => openLink(LINKS.privacy)}
-            className="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
+            className="flex items-center justify-center gap-1.5 min-h-[2.75rem] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
           >
             <span className="text-xs font-display font-semibold text-ink">Privacy</span>
             <ExternalLink className="w-3 h-3 text-ink-muted" />
@@ -270,7 +259,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => openLink(LINKS.support)}
-            className="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
+            className="flex items-center justify-center gap-1.5 min-h-[2.75rem] rounded-xl border border-border-card bg-[#FAF3E8] px-3 py-2 hover:bg-surface-card transition-colors"
           >
             <span className="text-xs font-display font-semibold text-ink">Support</span>
             <ExternalLink className="w-3 h-3 text-ink-muted" />

@@ -15,6 +15,8 @@ const config: CapacitorConfig = {
     backgroundColor: '#FAF3E8',
     contentInset: 'never',
     scrollEnabled: true,
+    // iPad defaults to desktop-mode rendering (wide viewport, scaled down). Force the phone-style viewport.
+    preferredContentMode: 'mobile',
   },
   plugins: {
     SplashScreen: {

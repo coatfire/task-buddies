@@ -40,7 +40,7 @@ export default function ConfirmDialog({
             <p className="text-ink-muted text-sm text-center mb-4 font-body">{message}</p>
             <button
               onClick={onConfirm}
-              className={`w-full min-h-[48px] py-3 rounded-2xl font-display font-bold text-sm transition-colors ${
+              className={`w-full min-h-[3rem] py-3 rounded-2xl font-display font-bold text-sm transition-colors ${
                 destructive
                   ? 'bg-red-50 border border-red-200 text-red-500 hover:bg-red-100'
                   : 'bg-accent text-ink hover:opacity-90'
@@ -50,7 +50,7 @@ export default function ConfirmDialog({
             </button>
             <button
               onClick={onCancel}
-              className="w-full mt-2 min-h-[44px] text-sm text-ink-muted hover:text-ink py-2 font-body"
+              className="w-full mt-2 min-h-[2.75rem] text-sm text-ink-muted hover:text-ink py-2 font-body"
             >
               {cancelLabel}
             </button>

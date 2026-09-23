@@ -7,10 +7,18 @@ import ProgressRing from '../components/rex/ProgressRing';
 import TaskItemSVG from '../components/rex/TaskItemSVG';
 import ParticleBurst from '../components/rex/ParticleBurst';
 import { useRoutineStore } from '../store/useRoutineStore';
+import { useRootScale } from '../hooks/useRootScale';
 
 const MotionDiv = motion.div;
 const MotionButton = motion.button;
 const COMPLETED_TASK_COLOR = '#81906F';
+// Ring diameter. The tablet values are mirrored in tabletSpriteSize() so the buddy stays ~half the ring.
+const RING_CLASS = 'w-[min(65vw,55vh)] h-[min(65vw,55vh)] tablet:w-[min(70vw,38vh,20rem)] tablet:h-[min(70vw,38vh,20rem)] tablet:landscape:w-[min(32vh,20rem)] tablet:landscape:h-[min(32vh,20rem)]';
+const PHONE_SPRITE_SIZE = 146;
+const tabletSpriteSize = ({ vw, vh, rem }) => {
+  const ring = vw > vh ? Math.min(0.32 * vh, 20 * rem) : Math.min(0.7 * vw, 0.38 * vh, 20 * rem);
+  return Math.round(ring * 0.5);
+};
 
 export default function ActivePlayer() {
   const {
@@ -19,6 +27,8 @@ export default function ActivePlayer() {
     pauseRoutine, resumeRoutine, isRunning, selectedCharacter, routineName, cancelRoutine, tick,
   } = useRoutineStore();
 
+  const viewport = useRootScale();
+  const spriteSize = viewport.scale === 1 ? PHONE_SPRITE_SIZE : tabletSpriteSize(viewport);
   const currentTask = tasks[currentTaskIndex];
   const isHungry = rexState === 'hungry';
   const isBored = rexState === 'bored';
@@ -139,7 +149,7 @@ export default function ActivePlayer() {
             <X className="w-5 h-5" />
           </button>
           <div className="flex-1 flex flex-col gap-1 min-w-0">
-            <div className="flex justify-between text-[11px] font-body text-ink-muted mb-0.5">
+            <div className="flex justify-between text-[0.6875rem] font-body text-ink-muted mb-0.5">
               <span className="truncate">{routineName}</span>
               <span className="shrink-0 ml-2">Task {currentTaskIndex + 1} of {tasks.length}</span>
             </div>
@@ -163,13 +173,13 @@ export default function ActivePlayer() {
         <AnimatePresence mode="wait">
           <MotionDiv
             key={currentTask?.id}
-            className="text-center mb-2 z-10 shrink-0 sm:mb-3"
+            className="text-center mb-2 z-10 shrink-0 sm:mb-3 tablet:mt-auto"
             initial={{ opacity: 0, y: 18, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -18, scale: 0.96 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <div className="hidden items-center gap-2 rounded-full border border-border-card bg-surface px-3 py-1 text-[11px] font-body text-ink-muted mb-2 sm:inline-flex sm:text-xs sm:mb-3">
+            <div className="hidden items-center gap-2 rounded-full border border-border-card bg-surface px-3 py-1 text-[0.6875rem] font-body text-ink-muted mb-2 sm:inline-flex sm:text-xs sm:mb-3 tablet:landscape:hidden">
               <span>{currentTask?.itemEmoji}</span>
               <span>{taskDurationLabel}</span>
               {tasksRemaining > 0 ? <span>· {tasksRemaining} left after this</span> : <span>· final step</span>}
@@ -177,22 +187,22 @@ export default function ActivePlayer() {
             <h2 className="font-display text-[1.55rem] sm:text-[2rem] font-bold text-center mb-1 leading-tight text-ink">
               {currentTask?.title}
             </h2>
-            <p className="text-[13px] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto">
+            <p className="text-[0.8125rem] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto">
               {instructionText}
             </p>
           </MotionDiv>
         </AnimatePresence>
 
-        <div className="relative z-10 mb-3 flex flex-1 min-h-0 items-center justify-center sm:mb-4">
+        <div className="relative z-10 mb-3 flex flex-1 min-h-0 items-center justify-center sm:mb-4 tablet:flex-none tablet:mb-5">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
           <div className="relative w-full rounded-[32px] border border-border-card bg-surface-card px-3 py-3.5 sm:px-6 sm:py-6 shadow-soft flex items-center justify-center overflow-hidden">
 
-            <div className="absolute top-3 left-3 rounded-full border border-border-card bg-[#FAF3E8] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body sm:top-4 sm:left-4 sm:px-3 sm:py-1.5 sm:text-[11px] sm:tracking-[0.16em]">
+            <div className="absolute top-3 left-3 rounded-full border border-border-card bg-[#FAF3E8] px-2.5 py-1 text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body sm:top-4 sm:left-4 sm:px-3 sm:py-1.5 sm:text-[0.6875rem] sm:tracking-[0.16em]">
               {isHungry ? 'Snack Time' : isEatingSequence ? 'Yum!' : isRunning ? 'Go, Go, Go!' : 'Paused'}
             </div>
 
-            <div className="absolute top-3 right-3 z-20 min-w-[62px] rounded-2xl border border-border-card bg-[#FAF3E8] px-2.5 py-1.5 text-center shadow-soft sm:top-4 sm:right-4 sm:min-w-[68px] sm:px-3 sm:py-2">
-              <div className="text-[9px] uppercase tracking-[0.12em] text-ink-muted font-body mb-0.5 sm:text-[10px] sm:tracking-[0.14em]">Next Treat</div>
+            <div className="absolute top-3 right-3 z-20 min-w-[3.875rem] rounded-2xl border border-border-card bg-[#FAF3E8] px-2.5 py-1.5 text-center shadow-soft sm:top-4 sm:right-4 sm:min-w-[4.25rem] sm:px-3 sm:py-2">
+              <div className="text-[0.5625rem] uppercase tracking-[0.12em] text-ink-muted font-body mb-0.5 sm:text-[0.625rem] sm:tracking-[0.14em]">Next Treat</div>
               <AnimatePresence mode="wait">
               {!isItemHidden && (
                   <MotionDiv
@@ -227,7 +237,7 @@ export default function ActivePlayer() {
                   exit={{ opacity: 0, y: -10, scale: 0.8 }}
                 >
                   <div className="bg-[#FAF3E8] border border-border-card rounded-2xl px-3 py-1.5 shadow-soft">
-                    <p className="font-display text-[13px] sm:text-sm font-semibold text-ink whitespace-nowrap">All done? Come feed me! 🐾</p>
+                    <p className="font-display text-[0.8125rem] sm:text-sm font-semibold text-ink whitespace-nowrap">All done? Come feed me! 🐾</p>
                   </div>
                 </MotionDiv>
               )}
@@ -239,13 +249,13 @@ export default function ActivePlayer() {
               themeColor={currentTask?.themeColor || COMPLETED_TASK_COLOR}
               size={214}
               strokeWidth={11}
-              className="w-[min(65vw,55vh)] h-[min(65vw,55vh)]"
+              className={RING_CLASS}
             >
               <PixelRexCharacter
                 state={postChompCelebrating ? 'celebrating' : rexState}
                 eatPhase={eatPhase}
                 themeColor={currentTask?.themeColor}
-                size={146}
+                size={spriteSize}
                 characterId={selectedCharacter}
               />
             </ProgressRing>
@@ -285,7 +295,7 @@ export default function ActivePlayer() {
         </AnimatePresence>
 
         {!isEatingSequence && (
-          <div className="mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5">
+          <div className="mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5 tablet:mt-0 tablet:mb-auto">
             {isWaiting && (
               <div className="w-full rounded-[28px] border border-border-card bg-surface-card p-2.5 sm:p-3 shadow-soft">
                 <button
@@ -299,7 +309,7 @@ export default function ActivePlayer() {
             {!isHungry && (
               <button
                 onClick={skipTask}
-                className="min-h-[44px] px-4 text-[13px] font-body text-ink-muted hover:text-ink transition-colors"
+                className="min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors"
               >
                 Skip Task
               </button>

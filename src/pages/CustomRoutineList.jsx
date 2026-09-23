@@ -70,7 +70,7 @@ export default function CustomRoutineList() {
       {/* Title */}
       <div className="text-center mb-4 px-2 shrink-0 sm:mb-6 sm:px-4">
         <h1 className="text-[1.6rem] leading-tight font-display font-bold text-ink mb-1 sm:text-3xl sm:mb-2">Your Routines</h1>
-        <p className="text-ink-muted text-[13px] font-body leading-snug sm:text-sm">Create and manage custom routines</p>
+        <p className="text-ink-muted text-[0.8125rem] font-body leading-snug sm:text-sm">Create and manage custom routines</p>
       </div>
 
       {/* Content */}
@@ -197,7 +197,7 @@ export default function CustomRoutineList() {
               </button>
               <button
                 onClick={() => { setShowCreate(false); setNewName(''); }}
-                className="w-full mt-2 min-h-[44px] text-sm text-ink-muted hover:text-ink py-2 font-body"
+                className="w-full mt-2 min-h-[2.75rem] text-sm text-ink-muted hover:text-ink py-2 font-body"
               >
                 Cancel
               </button>

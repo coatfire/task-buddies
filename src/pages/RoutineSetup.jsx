@@ -7,6 +7,7 @@ import { useRoutineStore } from '../store/useRoutineStore';
 import { getTasksForRoutine } from '../store/taskLibrary';
 import { readFastPath } from '../store/localStore';
 import Logo from '../components/Logo';
+import { scaled, useRootScale } from '../hooks/useRootScale';
 
 const TASK_COLORS = ['#9D8AAE', '#86A4B3', '#C89A63', '#B86F56', '#81906F', '#B68FA1'];
 const MotionDiv = motion.div;
@@ -15,6 +16,7 @@ const MotionButton = motion.button;
 export default function RoutineSetup() {
   const { tasks, setTasks, startRoutine, routineName, routineType, selectedCharacter, setScreen, saveRoutine, hasSavedRoutine } = useRoutineStore();
   const characterName = selectedCharacter.charAt(0).toUpperCase() + selectedCharacter.slice(1);
+  const { scale: rootScale } = useRootScale();
   const [showBuilder, setShowBuilder] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -74,19 +76,19 @@ export default function RoutineSetup() {
 
       <MotionDiv className="text-center mb-2.5 shrink-0 sm:mb-3" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="font-display text-[1.5rem] sm:text-3xl font-bold text-ink mb-1 leading-tight">{characterName}'s {routineName}</h1>
-        <p className="hidden text-ink-muted font-body text-[13px] sm:block sm:text-sm leading-snug">Complete tasks to feed {characterName}.</p>
+        <p className="hidden text-ink-muted font-body text-[0.8125rem] sm:block sm:text-sm leading-snug">Complete tasks to feed {characterName}.</p>
       </MotionDiv>
 
       <MotionDiv className="relative w-full max-w-sm mb-2.5 shrink-0 sm:mb-3" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
         <div className="relative rounded-[32px] border border-border-card bg-surface-card px-3 py-3.5 sm:px-6 sm:py-6 shadow-soft overflow-hidden text-center">
-          <PixelRexCharacter state="idle" size={132} className="mx-auto" characterId={selectedCharacter} />
+          <PixelRexCharacter state="idle" size={scaled(132, rootScale)} className="mx-auto" characterId={selectedCharacter} />
           <div className="mt-2.5 grid grid-cols-2 gap-2">
             <div className="rounded-2xl border border-border-card bg-[#FAF3E8] px-3 py-2">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body">Total</div>
+              <div className="text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body">Total</div>
               <div className="text-sm font-display font-semibold text-ink mt-1">{totalMinutes} min</div>
             </div>
             <div className="rounded-2xl border border-border-card bg-[#FAF3E8] px-3 py-2">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body">Buddy</div>
+              <div className="text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body">Buddy</div>
               <div className="text-sm font-display font-semibold text-ink mt-1">{characterName}</div>
             </div>
           </div>
@@ -113,14 +115,14 @@ export default function RoutineSetup() {
           <div className="mt-1.5 flex items-center justify-center gap-2">
             <button
               onClick={() => setScreen('selection')}
-              className="min-h-[44px] px-3 text-[13px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
+              className="min-h-[2.75rem] px-3 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
             >
               Change Buddy
             </button>
             <span className="text-border-card text-xs">·</span>
             <button
               onClick={() => setScreen('picker')}
-              className="min-h-[44px] px-3 text-[13px] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
+              className="min-h-[2.75rem] px-3 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
             >
               Change Routine
             </button>
@@ -140,7 +142,7 @@ export default function RoutineSetup() {
             <div className="flex items-center justify-between mb-3 sm:mb-4">
               <div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-ink">{routineName}</h3>
-                <p className="text-[13px] sm:text-sm text-ink-muted font-body">{tasks.length} tasks · {totalMinutes} min total</p>
+                <p className="text-[0.8125rem] sm:text-sm text-ink-muted font-body">{tasks.length} tasks · {totalMinutes} min total</p>
               </div>
               <button onClick={() => setShowBuilder(false)} className="h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
                 <Settings2 className="w-[18px] h-[18px] text-ink-muted" />

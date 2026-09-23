@@ -19,6 +19,7 @@ function createChallenge() {
 
 export default function ParentGate() {
   const afterGate = useRoutineStore((state) => state.afterGate);
+  const leaveParentArea = useRoutineStore((state) => state.leaveParentArea);
   const [challenge, setChallenge] = useState(createChallenge);
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState('');
@@ -45,10 +46,10 @@ export default function ParentGate() {
         <Logo className="h-8 w-auto" size="small" />
         <MotionButton
           type="button"
-          onClick={() => useRoutineStore.setState({ screen: afterGate ? 'complete' : 'selection', afterGate: null })}
+          onClick={leaveParentArea}
           whileTap={{ scale: 0.95 }}
           className="w-11 h-11 rounded-2xl bg-surface border border-border-card shadow-soft flex items-center justify-center"
-          aria-label="Return to buddy selection"
+          aria-label="Back"
         >
           <ArrowLeft className="w-5 h-5 text-ink-muted" />
         </MotionButton>

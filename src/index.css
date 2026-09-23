@@ -48,6 +48,15 @@ button { font-family: inherit; }
   }
 }
 
+/* Tablet: the layout is rem-based, so scaling the root font scales the whole UI. */
+@media (min-width: 700px) {
+  html { font-size: clamp(18px, 0.6vw + 13px, 22px); }
+}
+/* Landscape tablets are height-constrained: scale from the short edge instead. */
+@media (min-width: 700px) and (orientation: landscape) {
+  html { font-size: clamp(16px, 2.1vh, 20px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
@@ -78,7 +87,7 @@ button { font-family: inherit; }
   padding: 0.875rem 1.25rem;
   box-shadow: 0 2px 8px rgba(74, 52, 38, 0.12);
   transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s ease;
-  min-height: 56px;
+  min-height: 3.5rem;
   cursor: pointer;
 }
 .btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74, 52, 38, 0.16); }
@@ -95,7 +104,7 @@ button { font-family: inherit; }
   padding: 0.875rem 1.25rem;
   box-shadow: 0 2px 8px rgba(74, 52, 38, 0.12);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
-  min-height: 56px;
+  min-height: 3.5rem;
   cursor: pointer;
 }
 .btn-coral:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74, 52, 38, 0.16); }
@@ -111,7 +120,7 @@ button { font-family: inherit; }
   padding: 0.875rem 1.25rem;
   box-shadow: 0 2px 8px rgba(74, 52, 38, 0.12);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
-  min-height: 56px;
+  min-height: 3.5rem;
   cursor: pointer;
 }
 .btn-done-early:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74, 52, 38, 0.14); }

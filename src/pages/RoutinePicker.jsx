@@ -51,7 +51,7 @@ export default function RoutinePicker() {
       {/* Title */}
       <div className="text-center mb-4 px-2 shrink-0 sm:mb-6 sm:px-4">
         <h1 className="text-[1.6rem] leading-tight font-display font-bold text-ink mb-1 sm:text-3xl sm:mb-2">Choose a Routine</h1>
-        <p className="text-ink-muted text-[13px] font-body leading-snug sm:text-sm sm:leading-normal">What are we doing today?</p>
+        <p className="text-ink-muted text-[0.8125rem] font-body leading-snug sm:text-sm sm:leading-normal">What are we doing today?</p>
       </div>
 
       {/* Routine Tiles */}
@@ -69,7 +69,7 @@ export default function RoutinePicker() {
                   transition={{ delay: i * 0.08 }}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
-                  className={`flex flex-col items-center px-3 py-3 rounded-[24px] bg-surface-card transition-all min-h-[128px] justify-center sm:p-5 sm:rounded-[28px] sm:min-h-[170px] ${
+                  className={`flex flex-col items-center px-3 py-3 rounded-[24px] bg-surface-card transition-all min-h-[8rem] justify-center sm:p-5 sm:rounded-[28px] sm:min-h-[10.625rem] ${
                     isHighlighted
                       ? 'border-2 border-accent shadow-soft'
                       : 'border border-border-card'
@@ -79,9 +79,9 @@ export default function RoutinePicker() {
                     <span>{routine.emoji}</span>
                   </div>
                   <span className="font-display font-semibold text-ink text-[1rem] mb-0.5 sm:text-xl sm:mb-1">{routine.label}</span>
-                  <span className="text-[12px] text-ink-muted text-center leading-snug font-body sm:text-sm sm:leading-tight">{routine.description}</span>
+                  <span className="text-[0.75rem] text-ink-muted text-center leading-snug font-body sm:text-sm sm:leading-tight">{routine.description}</span>
                   {isHighlighted && (
-                    <span className="mt-1.5 text-[10px] font-body text-accent font-semibold uppercase tracking-wide">Suggested</span>
+                    <span className="mt-1.5 text-[0.625rem] font-body text-accent font-semibold uppercase tracking-wide">Suggested</span>
                   )}
                 </MotionButton>
               );
@@ -91,7 +91,7 @@ export default function RoutinePicker() {
       </div>
 
       <div className="max-w-sm mx-auto rounded-[24px] border border-border-card bg-surface px-3 py-2 shadow-soft text-center shrink-0 sm:px-4 sm:py-3">
-        <p className="text-ink-muted text-[12px] font-body leading-snug sm:text-sm sm:leading-relaxed">Choose a ready-made path or create your own.</p>
+        <p className="text-ink-muted text-[0.75rem] font-body leading-snug sm:text-sm sm:leading-relaxed">Choose a ready-made path or create your own.</p>
       </div>
 
     </div>

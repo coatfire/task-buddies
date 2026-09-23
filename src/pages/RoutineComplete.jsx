@@ -10,6 +10,7 @@ import {
   readShownRewards,
 } from '../store/localStore';
 import DEFAULT_REWARDS from '../data/rewards.json';
+import { scaled, useRootScale } from '../hooks/useRootScale';
 
 const CONFETTI_COLORS = ['#E89B6F', '#E8C08A', '#9CAF88', '#88BDD4', '#B3A8D8', '#D8C27A', '#D4A8C7', '#8FA8C8'];
 
@@ -62,6 +63,7 @@ const LOVOU_CARD = {
 
 export default function RoutineComplete() {
   const { tasks, resetRoutine, selectedCharacter, routineName, routineType, openParentGate } = useRoutineStore();
+  const { scale: rootScale } = useRootScale();
   const [confetti, setConfetti] = useState([]);
   const [showContent, setShowContent] = useState(false);
   const viewportHeight = useRef(typeof window !== 'undefined' ? window.innerHeight : 800);
@@ -128,12 +130,14 @@ export default function RoutineComplete() {
 
       {showContent && (
         <MotionDiv
-          className="w-full max-w-sm mx-auto flex flex-col items-center z-10"
+          className="w-full max-w-sm mx-auto flex flex-col items-center z-10 wide:max-w-none wide:grid wide:grid-cols-2 wide:gap-x-10 wide:items-start"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, type: 'spring' }}
         >
-          <div className="hidden items-center gap-2 rounded-full border border-border-card bg-surface px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-ink-muted font-body shadow-soft mb-4 sm:inline-flex">
+          {/* Wrappers are display: contents on phones (natural stacking order) and become grid cells on wide landscape tablets. */}
+          <div className="contents wide:flex wide:flex-col wide:items-center wide:col-start-1">
+          <div className="hidden items-center gap-2 rounded-full border border-border-card bg-surface px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.16em] text-ink-muted font-body shadow-soft mb-4 sm:inline-flex">
             <span>Routine Complete</span>
             <span className="text-ink">{routineName}</span>
           </div>
@@ -162,13 +166,13 @@ export default function RoutineComplete() {
             transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
           >
             <div className="relative rounded-[32px] border border-border-card bg-surface-card px-6 py-5 sm:px-8 sm:py-7 shadow-soft overflow-hidden">
-            <PixelRexCharacter state="celebrating" size={148} characterId={selectedCharacter} />
+            <PixelRexCharacter state="celebrating" size={scaled(148, rootScale)} characterId={selectedCharacter} />
             </div>
           </MotionDiv>
 
           {/* Treasure Chest Reward — slot is reserved so the layout doesn't jump when it appears */}
           {rewardsEnabled && pickedReward && (
-          <div className="w-full max-w-xs mx-auto my-4 min-h-[132px] flex items-center">
+          <div className="w-full max-w-xs mx-auto my-4 min-h-[8.25rem] flex items-center">
           <AnimatePresence>
             {chestState !== 'hidden' && (
               <MotionDiv
@@ -223,7 +227,7 @@ export default function RoutineComplete() {
                       🌟
                     </MotionDiv>
                     <div className="text-center">
-                      <p className="text-[10px] uppercase tracking-[0.16em] text-accent font-body mb-1">Your Reward</p>
+                      <p className="text-[0.625rem] uppercase tracking-[0.16em] text-accent font-body mb-1">Your Reward</p>
                       <p className="font-display font-black text-2xl text-ink leading-snug text-center">{pickedReward.text}</p>
                     </div>
                   </MotionDiv>
@@ -244,10 +248,11 @@ export default function RoutineComplete() {
               Back to Buddies
             </button>
           </MotionDiv>
+          </div>
 
           {/* Lovou bridge — link opens only after the parent gate (Kids Category / Families policy) */}
           <MotionDiv
-            className="w-full sm:max-w-xs mb-4 rounded-[24px] border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft"
+            className="w-full sm:max-w-xs mb-4 rounded-[24px] border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft wide:col-start-2 wide:row-start-1 wide:row-span-2 wide:self-center wide:justify-self-center wide:max-w-sm wide:p-6"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55 }}
@@ -255,20 +260,21 @@ export default function RoutineComplete() {
             <div className="flex items-start gap-3">
               <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-display font-bold text-[15px] text-ink leading-snug">{LOVOU_CARD.title}</h3>
-                <p className="text-[13px] text-ink-muted font-body leading-snug mt-1">{LOVOU_CARD.body}</p>
+                <h3 className="font-display font-bold text-[0.9375rem] text-ink leading-snug">{LOVOU_CARD.title}</h3>
+                <p className="text-[0.8125rem] text-ink-muted font-body leading-snug mt-1">{LOVOU_CARD.body}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => openParentGate('lovou')}
-              className="mt-3 w-full min-h-[44px] rounded-2xl border border-border-card bg-surface-card px-4 py-2.5 text-sm font-display font-semibold text-ink hover:bg-white/60 transition-colors"
+              className="mt-3 w-full min-h-[2.75rem] rounded-2xl border border-border-card bg-surface-card px-4 py-2.5 text-sm font-display font-semibold text-ink hover:bg-white/60 transition-colors"
             >
               {LOVOU_CARD.cta}
             </button>
-            <p className="mt-2 text-center text-[11px] text-ink-muted/80 font-body">Grown-ups only · opens in your browser</p>
+            <p className="mt-2 text-center text-[0.6875rem] text-ink-muted/80 font-body">Grown-ups only · opens in your browser</p>
           </MotionDiv>
 
+          <div className="contents wide:flex wide:flex-col wide:items-center wide:col-start-1">
           <MotionDiv
             className="grid grid-cols-3 gap-2 w-full mt-1 mb-1 sm:max-w-xs"
             initial={{ opacity: 0, y: 12 }}
@@ -276,15 +282,15 @@ export default function RoutineComplete() {
             transition={{ delay: 0.45 }}
           >
             <div className="rounded-2xl border border-border-card bg-surface-card px-3 py-2 text-center">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body">Tasks</div>
+              <div className="text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body">Tasks</div>
               <div className="text-sm font-display font-semibold text-ink mt-1">{tasks.length}</div>
             </div>
             <div className="rounded-2xl border border-border-card bg-surface-card px-3 py-2 text-center">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body">Time</div>
+              <div className="text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body">Time</div>
               <div className="text-sm font-display font-semibold text-ink mt-1">{totalMinutes} min</div>
             </div>
             <div className="rounded-2xl border border-border-card bg-surface-card px-3 py-2 text-center">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-ink-muted font-body">Buddy</div>
+              <div className="text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body">Buddy</div>
               <div className="text-sm font-display font-semibold text-ink mt-1">{characterName}</div>
             </div>
           </MotionDiv>
@@ -314,6 +320,7 @@ export default function RoutineComplete() {
               ))}
             </div>
           </MotionDiv>
+          </div>
         </MotionDiv>
       )}
     </div>
