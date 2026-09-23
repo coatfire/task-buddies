@@ -7,8 +7,6 @@ export default {
       screens: {
         // iPad mini portrait is 744px; Tailwind's md: (768px) would miss it.
         tablet: '700px',
-        // Landscape tablets: room for a two-column All Done screen.
-        wide: { raw: '(min-width: 1000px) and (orientation: landscape)' },
       },
       colors: {
         // ── 2026 design tokens ──────────────────────────────────────────
