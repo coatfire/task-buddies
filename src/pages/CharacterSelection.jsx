@@ -70,7 +70,7 @@ export default function CharacterSelection() {
                     </div>
                     <span className="font-display font-semibold text-ink text-[1.45rem] mb-0.5 sm:text-2xl sm:mb-1">{char.name}</span>
                     <span className="text-[0.8125rem] text-ink-muted text-center font-body leading-snug sm:text-sm">{char.trait}</span>
-                    <div className="mt-auto pt-3 w-full rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-between sm:mt-5 sm:pt-0 sm:py-3">
+                    <div className="mt-auto pt-3 w-full rounded-2xl bg-accent px-4 py-2.5 flex items-center justify-between sm:mt-5 sm:py-3">
                       <span className="text-xs font-display font-semibold text-ink">Choose {char.name}</span>
                       <span className="text-ink text-sm">→</span>
                     </div>
