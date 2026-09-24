@@ -5,6 +5,8 @@ export const LINKS = {
   privacy: 'https://www.taskbuddies.app/privacy',
   support: 'https://www.taskbuddies.app/support',
   lovou: 'https://www.lovou.app/?utm_source=taskbuddies&utm_medium=app',
+  instagram: 'https://www.instagram.com/lovou.app/',
+  tiktok: 'https://www.tiktok.com/@lovou.app',
 };
 
 const ALLOWED_HOSTS = new Set([
@@ -12,6 +14,8 @@ const ALLOWED_HOSTS = new Set([
   'www.taskbuddies.app',
   'lovou.app',
   'www.lovou.app',
+  'www.instagram.com',
+  'www.tiktok.com',
   'buymeacoffee.com',
 ]);
 

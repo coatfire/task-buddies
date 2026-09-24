@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react';
+import { BookOpen, ExternalLink, Instagram, Pencil, Plus, Trash2 } from 'lucide-react';
 import {
   readConfiguredRewards,
   readRewardsEnabled,
@@ -10,9 +10,15 @@ import {
 import defaultRewards from '../data/rewards.json';
 import Logo from '../components/Logo';
 import ConfirmDialog from '../components/ConfirmDialog';
+import TikTokIcon from '../components/TikTokIcon';
 import { LINKS, openExternalUrl } from '../platform/externalLinks';
 
 const MotionButton = motion.button;
+
+const SOCIALS = [
+  { id: 'instagram', label: 'Lovou on Instagram', Icon: Instagram },
+  { id: 'tiktok', label: 'Lovou on TikTok', Icon: TikTokIcon },
+];
 
 export default function Settings() {
   const [rewards, setRewards] = useState([]);
@@ -247,7 +253,7 @@ export default function Settings() {
 
       {/* About / Support */}
       <div className="px-2 pt-2 pb-1 shrink-0 border-t border-border-card">
-        <div className="rounded-xl border border-border-card bg-surface-card p-2 grid grid-cols-2 gap-2">
+        <div className="rounded-xl border border-border-card bg-surface-card p-2 grid grid-cols-[1fr_1fr_auto_auto] gap-2">
           <button
             type="button"
             onClick={() => openLink(LINKS.privacy)}
@@ -264,6 +270,18 @@ export default function Settings() {
             <span className="text-xs font-display font-semibold text-ink">Support</span>
             <ExternalLink className="w-3 h-3 text-ink-muted" />
           </button>
+          {SOCIALS.map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => openLink(LINKS[id])}
+              aria-label={label}
+              title={label}
+              className="flex items-center justify-center w-[2.75rem] min-h-[2.75rem] rounded-xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors"
+            >
+              <Icon className="w-5 h-5 text-ink" />
+            </button>
+          ))}
         </div>
       </div>
 
