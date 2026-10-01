@@ -12,7 +12,7 @@ const MotionButton = motion.button;
 const TABLET_CARD_SPRITE = 130;
 
 export default function CharacterSelection() {
-  const { scale: rootScale } = useRootScale();
+  const { scale: rootScale, isTablet } = useRootScale();
   const setScreen = useRoutineStore((s) => s.setScreen);
   const setSelectedCharacter = useRoutineStore((s) => s.setSelectedCharacter);
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', loop: true });
@@ -68,7 +68,7 @@ export default function CharacterSelection() {
                       Today's Guide
                     </div>
                     <div className="relative mb-3 flex w-full flex-1 items-center justify-center rounded-[20px] bg-[#FAF3E8] border border-border-card overflow-visible min-h-[min(13.5rem,30dvh)] sm:mb-4 sm:min-h-0 tablet:flex-none tablet:aspect-[4/3]">
-                      <PixelRexCharacter state="celebrating" characterId={char.id} size={rootScale === 1 ? 170 : scaled(TABLET_CARD_SPRITE, rootScale)} className="shrink-0" />
+                      <PixelRexCharacter state="celebrating" characterId={char.id} size={isTablet ? scaled(TABLET_CARD_SPRITE, rootScale) : 170} className="shrink-0" />
                     </div>
                     <span className="font-display font-semibold text-ink text-[1.45rem] mb-0.5 sm:text-2xl sm:mb-1">{char.name}</span>
                     <span className="text-[0.8125rem] text-ink-muted text-center font-body leading-snug sm:text-sm">{char.trait}</span>

@@ -13,11 +13,13 @@ const MotionDiv = motion.div;
 const MotionButton = motion.button;
 const COMPLETED_TASK_COLOR = '#81906F';
 // Ring diameter. The tablet values are mirrored in tabletSpriteSize() so the buddy stays ~half the ring.
-const RING_CLASS = 'w-[min(65vw,55vh)] h-[min(65vw,55vh)] tablet:w-[min(70vw,38vh,20rem)] tablet:h-[min(70vw,38vh,20rem)] tablet:landscape:w-[min(32vh,20rem)] tablet:landscape:h-[min(32vh,20rem)]';
+const RING_CLASS = 'w-[min(65vw,55vh)] h-[min(65vw,55vh)] tablet:w-[min(70vw,38vh,20rem)] tablet:h-[min(70vw,38vh,20rem)] tablet:landscape:w-[min(26vh,20rem)] tablet:landscape:h-[min(26vh,20rem)]';
 const PHONE_SPRITE_SIZE = 146;
 const tabletSpriteSize = ({ vw, vh, rem }) => {
-  const ring = vw > vh ? Math.min(0.32 * vh, 20 * rem) : Math.min(0.7 * vw, 0.38 * vh, 20 * rem);
-  return Math.round(ring * 0.5);
+  const landscape = vw > vh;
+  const ring = landscape ? Math.min(0.26 * vh, 20 * rem) : Math.min(0.7 * vw, 0.38 * vh, 20 * rem);
+  // Landscape rings are smaller, so leave a little more room for the time and "Ready when you are".
+  return Math.round(ring * (landscape ? 0.42 : 0.5));
 };
 
 export default function ActivePlayer() {
@@ -28,7 +30,7 @@ export default function ActivePlayer() {
   } = useRoutineStore();
 
   const viewport = useRootScale();
-  const spriteSize = viewport.scale === 1 ? PHONE_SPRITE_SIZE : tabletSpriteSize(viewport);
+  const spriteSize = viewport.isTablet ? tabletSpriteSize(viewport) : PHONE_SPRITE_SIZE;
   const currentTask = tasks[currentTaskIndex];
   const isHungry = rexState === 'hungry';
   const isBored = rexState === 'bored';
@@ -231,7 +233,7 @@ export default function ActivePlayer() {
             <AnimatePresence>
               {isHungry && !isEatingSequence && (
                 <MotionDiv
-                  className="absolute top-12 inset-x-0 flex justify-center z-20 sm:top-14"
+                  className="absolute top-12 inset-x-0 flex justify-center z-20 sm:top-14 tablet:landscape:hidden"
                   initial={{ opacity: 0, y: 10, scale: 0.8 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.8 }}

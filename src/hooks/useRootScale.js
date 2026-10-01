@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 
 const BASE_FONT_PX = 16;
 
+// Must match the `tablet` screen in tailwind.config.js.
+const TABLET_MIN_WIDTH = 700;
+
 function readViewport() {
-  if (typeof window === 'undefined') return { scale: 1, rem: BASE_FONT_PX, vw: 390, vh: 844 };
+  if (typeof window === 'undefined') return { scale: 1, rem: BASE_FONT_PX, vw: 390, vh: 844, isTablet: false };
   const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || BASE_FONT_PX;
-  return { scale: rem / BASE_FONT_PX, rem, vw: window.innerWidth, vh: window.innerHeight };
+  // Decide tablet by width, not by font scale: landscape iPad mini resolves to exactly 16px.
+  return { scale: rem / BASE_FONT_PX, rem, vw: window.innerWidth, vh: window.innerHeight, isTablet: window.innerWidth >= TABLET_MIN_WIDTH };
 }
 
 /**
