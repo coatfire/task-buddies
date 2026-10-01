@@ -1,11 +1,10 @@
 import { useState, useCallback } from 'react';
 import { motion, Reorder, AnimatePresence, useDragControls } from 'framer-motion';
-import { ArrowLeft, ChevronDown, ChevronUp, GripVertical, Lock, Minus, Plus, Play, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, GripVertical, ListChecks, Lock, Minus, Plus, Play, Repeat, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import PixelRexCharacter from '../components/rex/PixelRexCharacter';
 import { useRoutineStore } from '../store/useRoutineStore';
 import { getTasksForRoutine } from '../store/taskLibrary';
-import { readFastPath } from '../store/localStore';
 import Logo from '../components/Logo';
 import { scaled, useRootScale } from '../hooks/useRootScale';
 
@@ -28,7 +27,6 @@ export default function RoutineSetup() {
   const [showPicker, setShowPicker] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const totalMinutes = tasks.reduce((sum, t) => sum + t.durationMinutes, 0);
-  const isFastPath = readFastPath().hasCompletedRun;
 
   const updateTaskDuration = useCallback((taskId, delta) => {
     setTasks(tasks.map((t) => t.id === taskId ? { ...t, durationMinutes: Math.max(1, Math.min(60, t.durationMinutes + delta)) } : t));
@@ -84,6 +82,23 @@ export default function RoutineSetup() {
       <MotionDiv className="text-center mb-2.5 shrink-0 sm:mb-3" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="font-display text-[1.5rem] sm:text-3xl font-bold text-ink mb-1 leading-tight">{characterName}'s {routineName}</h1>
         <p className="hidden text-ink-muted font-body text-[0.8125rem] sm:block sm:text-sm leading-snug">Complete tasks to feed {characterName}.</p>
+        {/* Accent pills, matching Lovou's buddy screen. */}
+        <div className="mt-2.5 flex items-center justify-center gap-2 sm:mt-3">
+          {[
+            { label: 'Change Buddy', Icon: Repeat, screen: 'selection' },
+            { label: 'Change Routine', Icon: ListChecks, screen: 'picker' },
+          ].map(({ label, Icon, screen }) => (
+            <button
+              key={screen}
+              type="button"
+              onClick={() => setScreen(screen)}
+              className="min-h-[2.75rem] inline-flex items-center gap-1.5 rounded-full border border-accent/50 bg-accent/10 px-4 text-[0.8125rem] font-display font-semibold text-ink hover:bg-accent/20 hover:border-accent transition-colors"
+            >
+              <Icon className="w-4 h-4 text-accent" aria-hidden="true" />
+              {label}
+            </button>
+          ))}
+        </div>
       </MotionDiv>
 
       <MotionDiv className="relative w-full max-w-sm mb-2.5 shrink-0 sm:mb-3" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
@@ -119,23 +134,6 @@ export default function RoutineSetup() {
             <span className="text-xs font-display font-semibold text-ink">Edit Tasks</span>
             <ChevronDown className="w-4 h-4 text-ink-muted" />
           </button>
-        )}
-        {isFastPath && (
-          <div className="mt-1.5 flex items-center justify-center gap-2">
-            <button
-              onClick={() => setScreen('selection')}
-              className="min-h-[2.75rem] px-3 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
-            >
-              Change Buddy
-            </button>
-            <span className="text-border-card text-xs">·</span>
-            <button
-              onClick={() => setScreen('picker')}
-              className="min-h-[2.75rem] px-3 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors underline-offset-2 hover:underline"
-            >
-              Change Routine
-            </button>
-          </div>
         )}
       </MotionDiv>
 
