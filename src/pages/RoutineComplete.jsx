@@ -243,7 +243,7 @@ export default function RoutineComplete() {
             transition={{ delay: 0.42 }}
           >
             <button onClick={resetRoutine} className="btn-primary w-full">
-              Back to Buddies
+              Back to buddies
             </button>
           </MotionDiv>
 

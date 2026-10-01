@@ -137,7 +137,7 @@ export default function CustomRoutineList() {
           className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-dashed border-border-card bg-surface-card hover:bg-[#FAF3E8] hover:border-accent/40 transition-all text-sm font-display font-semibold text-ink-muted hover:text-ink shadow-soft"
         >
           {unlocked ? <PlusCircle className="w-5 h-5" /> : <Lock className="w-4 h-4" aria-hidden="true" />}
-          Create New Routine
+          Create new routine
         </MotionButton>
       </div>
 
@@ -161,7 +161,7 @@ export default function CustomRoutineList() {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border-card bg-[#FAF3E8] text-2xl">
                 {newEmoji}
               </div>
-              <h2 className="font-display font-bold text-ink text-lg mb-1 text-center">New Custom Routine</h2>
+              <h2 className="font-display font-bold text-ink text-lg mb-1 text-center">New custom routine</h2>
               <p className="text-ink-muted text-sm text-center mb-4 font-body">Give it a name and pick an icon</p>
 
               <input
@@ -199,7 +199,7 @@ export default function CustomRoutineList() {
                 disabled={!newName.trim()}
                 className="btn-primary w-full disabled:opacity-40"
               >
-                Create Routine 🎉
+                Create routine
               </button>
               <button
                 onClick={() => { setShowCreate(false); setNewName(''); }}
@@ -215,7 +215,7 @@ export default function CustomRoutineList() {
       <ConfirmDialog
         open={confirmDelete !== null}
         icon="🗑️"
-        title="Delete Routine?"
+        title="Delete routine?"
         message="This will remove the routine and all its saved tasks. This can't be undone."
         confirmLabel="Delete"
         destructive

@@ -79,14 +79,15 @@ export default function RoutineSetup() {
         <Logo className="h-8 w-auto" size="small" />
       </div>
 
-      <MotionDiv className="text-center mb-2.5 shrink-0 sm:mb-3" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+      {/* Tablet: centre the stack vertically while the editor is closed (auto margins top and bottom). */}
+      <MotionDiv className={`text-center mb-2.5 shrink-0 sm:mb-3 ${showBuilder ? '' : 'tablet:mt-auto'}`} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="font-display text-[1.5rem] sm:text-3xl font-bold text-ink mb-1 leading-tight">{characterName}'s {routineName}</h1>
         <p className="hidden text-ink-muted font-body text-[0.8125rem] sm:block sm:text-sm leading-snug">Complete tasks to feed {characterName}.</p>
         {/* Accent pills, matching Lovou's buddy screen. */}
         <div className="mt-2.5 flex items-center justify-center gap-2 sm:mt-3">
           {[
-            { label: 'Change Buddy', Icon: Repeat, screen: 'selection' },
-            { label: 'Change Routine', Icon: ListChecks, screen: 'picker' },
+            { label: 'Change buddy', Icon: Repeat, screen: 'selection' },
+            { label: 'Change routine', Icon: ListChecks, screen: 'picker' },
           ].map(({ label, Icon, screen }) => (
             <button
               key={screen}
@@ -117,21 +118,21 @@ export default function RoutineSetup() {
         </div>
       </MotionDiv>
 
-      <MotionDiv className="w-full max-w-sm rounded-[28px] border border-border-card bg-surface-card p-3 shadow-soft mb-2.5 shrink-0 sm:p-4 sm:mb-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+      <MotionDiv className={`w-full max-w-sm rounded-[28px] border border-border-card bg-surface-card p-3 shadow-soft mb-2.5 shrink-0 sm:p-4 sm:mb-3 ${showBuilder ? '' : 'tablet:mb-auto'}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
         <MotionButton
           className="btn-primary w-full flex items-center justify-center gap-2 text-lg sm:text-xl"
           onClick={startRoutine}
           whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }}
         >
           <Play className="w-6 h-6 fill-current" />
-          Start Routine
+          Start routine
         </MotionButton>
         {!showBuilder && (
           <button onClick={openBuilder} className="mt-2.5 w-full h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
             {tasksUnlocked
               ? <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
               : <Lock className="w-4 h-4 text-ink-muted" aria-hidden="true" />}
-            <span className="text-xs font-display font-semibold text-ink">Edit Tasks</span>
+            <span className="text-xs font-display font-semibold text-ink">Edit tasks</span>
             <ChevronDown className="w-4 h-4 text-ink-muted" />
           </button>
         )}
@@ -176,7 +177,7 @@ export default function RoutineSetup() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-dashed border-border-card hover:border-accent/50 hover:bg-accent/5 transition-colors text-sm font-display font-semibold text-ink-muted hover:text-ink"
                 >
                   <PlusCircle className="w-4 h-4" />
-                  Add Task
+                  Add task
                 </button>
                 <button
                   onClick={handleSave}
@@ -211,7 +212,7 @@ export default function RoutineSetup() {
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             >
               <div className="flex items-center justify-between px-5 py-4 border-b border-border-card shrink-0">
-                <h3 className="font-display font-bold text-lg text-ink">Add a Task</h3>
+                <h3 className="font-display font-bold text-lg text-ink">Add a task</h3>
                 <button onClick={() => setShowPicker(false)} aria-label="Close" className="w-10 h-10 rounded-full bg-[#FAF3E8] flex items-center justify-center text-ink-muted hover:text-ink transition-colors">
                   <X className="w-4 h-4" />
                 </button>
@@ -238,7 +239,7 @@ export default function RoutineSetup() {
                   >
                     <span className="text-2xl shrink-0">❓</span>
                     <div className="flex-1 min-w-0">
-                      <div className="font-display font-semibold text-sm text-ink">Custom Task</div>
+                      <div className="font-display font-semibold text-sm text-ink">Custom task</div>
                       <div className="text-xs text-ink-muted font-body">Name it yourself</div>
                     </div>
                     <PlusCircle className="w-5 h-5 text-accent/60 shrink-0" />

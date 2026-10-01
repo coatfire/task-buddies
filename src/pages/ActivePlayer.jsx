@@ -313,7 +313,7 @@ export default function ActivePlayer() {
 
             className={`min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors ${isHungry ? 'invisible' : ''}`}
           >
-            Skip Task
+            Skip task
           </button>
         </div>
       </div>
@@ -321,10 +321,10 @@ export default function ActivePlayer() {
       <ConfirmDialog
         open={confirmCancel}
         icon="🛑"
-        title="Stop Routine?"
+        title="Stop routine?"
         message={`${characterName} will have to start again from the first task.`}
-        confirmLabel="Stop Routine"
-        cancelLabel="Keep Going"
+        confirmLabel="Stop routine"
+        cancelLabel="Keep going"
         destructive
         onConfirm={handleCancelRoutine}
         onCancel={() => setConfirmCancel(false)}

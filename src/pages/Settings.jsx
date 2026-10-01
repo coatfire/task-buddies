@@ -124,11 +124,13 @@ export default function Settings() {
 
       {/* Scrollable body */}
       <div className="flex-1 min-h-0 overflow-y-auto px-2 pb-2" data-buddy-scroll="true">
+        {/* Tablet: rewards switch and Lovou card side by side. On phones the wrapper is a plain block. */}
+        <div className="tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:items-start tablet:mb-4">
         {/* Rewards Toggle */}
-        <div className="mb-3 px-4 py-3 rounded-2xl border border-border-card bg-surface-card shadow-soft sm:mb-4">
+        <div className="mb-3 px-4 py-3 rounded-2xl border border-border-card bg-surface-card shadow-soft sm:mb-4 tablet:mb-0">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1">
-              <h3 id="rewards-toggle-label" className="font-display font-semibold text-sm text-ink mb-0.5">Enable Rewards</h3>
+              <h3 id="rewards-toggle-label" className="font-display font-semibold text-sm text-ink mb-0.5">Enable rewards</h3>
               <p className="text-xs text-ink-muted font-body">Show a reward chest after completing routines</p>
             </div>
             <button
@@ -153,7 +155,7 @@ export default function Settings() {
         </div>
 
         {/* Lovou bridge */}
-        <div className="mb-4 rounded-2xl border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft">
+        <div className="mb-4 rounded-2xl border border-accent/40 bg-[#FAF3E8] p-4 shadow-soft tablet:mb-0">
           <div className="flex items-start gap-3">
             <div className="shrink-0 w-11 h-11 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center"><BookOpen className="w-5 h-5 text-ink" /></div>
             <div className="flex-1 min-w-0">
@@ -173,6 +175,7 @@ export default function Settings() {
             <ExternalLink className="w-3.5 h-3.5 text-ink/70" />
           </button>
         </div>
+        </div>
 
         {/* Rewards list header */}
         <div className="flex items-center justify-between mb-2 px-1">
@@ -180,7 +183,7 @@ export default function Settings() {
           <span className="text-xs text-ink-muted font-body">{rewards.length} rewards</span>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 tablet:grid tablet:grid-cols-2 tablet:gap-2 tablet:space-y-0">
           {rewards.map((reward, index) => (
             <motion.div
               key={reward.id}
@@ -250,17 +253,17 @@ export default function Settings() {
             onClick={handleAddReward}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full min-h-[3rem] rounded-2xl border border-dashed border-border-card bg-surface-card px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#FAF3E8] hover:border-accent/40 transition-colors shadow-soft"
+            className="w-full min-h-[3rem] tablet:col-span-2 rounded-2xl border border-dashed border-border-card bg-surface-card px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#FAF3E8] hover:border-accent/40 transition-colors shadow-soft"
           >
             <Plus className="w-4 h-4 text-ink" />
-            <span className="text-sm font-display font-semibold text-ink">Add Reward</span>
+            <span className="text-sm font-display font-semibold text-ink">Add reward</span>
           </MotionButton>
 
           <button
             onClick={() => setConfirmReset(true)}
-            className="w-full min-h-[2.75rem] px-4 py-2 text-xs font-display font-semibold text-ink-muted hover:text-red-400 transition-colors"
+            className="w-full min-h-[2.75rem] tablet:col-span-2 px-4 py-2 text-xs font-display font-semibold text-ink-muted hover:text-red-400 transition-colors"
           >
-            Reset to Defaults
+            Reset to defaults
           </button>
         </div>
       </div>
@@ -302,7 +305,7 @@ export default function Settings() {
       <ConfirmDialog
         open={confirmDelete !== null}
         icon="🗑️"
-        title="Delete Reward?"
+        title="Delete reward?"
         message="It will no longer appear in the reward chest."
         confirmLabel="Delete"
         destructive
@@ -313,9 +316,9 @@ export default function Settings() {
       <ConfirmDialog
         open={confirmReset}
         icon="↩️"
-        title="Reset Rewards?"
+        title="Reset rewards?"
         message="Your custom rewards will be replaced with the default list."
-        confirmLabel="Reset to Defaults"
+        confirmLabel="Reset to defaults"
         destructive
         onConfirm={handleReset}
         onCancel={() => setConfirmReset(false)}

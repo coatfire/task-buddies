@@ -55,9 +55,9 @@ export default function RoutinePicker() {
       </div>
 
       {/* Routine Tiles */}
-      <div className="relative w-full max-w-sm mx-auto flex-1 min-h-0 mb-2 flex items-center sm:mb-4">
+      <div className="relative w-full max-w-sm mx-auto flex-1 min-h-0 mb-2 flex items-center sm:mb-4 tablet:max-w-4xl">
         <div className="relative w-full rounded-[32px] border border-border-card bg-surface px-3 py-4 sm:px-4 sm:py-5 shadow-soft">
-          <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 tablet:grid-cols-4">
             {ROUTINES.map((routine, i) => {
               const isHighlighted = timeHighlight === routine.type;
               return (
