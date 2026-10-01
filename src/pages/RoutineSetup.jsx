@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, Reorder, AnimatePresence, useDragControls } from 'framer-motion';
-import { ArrowLeft, ChevronDown, ChevronUp, GripVertical, Minus, Plus, Play, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, GripVertical, Lock, Minus, Plus, Play, Settings2, Trash2, PlusCircle, X, Save } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import PixelRexCharacter from '../components/rex/PixelRexCharacter';
 import { useRoutineStore } from '../store/useRoutineStore';
@@ -14,10 +14,17 @@ const MotionDiv = motion.div;
 const MotionButton = motion.button;
 
 export default function RoutineSetup() {
-  const { tasks, setTasks, startRoutine, routineName, routineType, selectedCharacter, setScreen, saveRoutine, hasSavedRoutine } = useRoutineStore();
+  const {
+    tasks, setTasks, startRoutine, routineName, routineType, selectedCharacter, setScreen, saveRoutine, hasSavedRoutine,
+    manageUnlock, setManageUnlock, openParentGate,
+  } = useRoutineStore();
   const characterName = selectedCharacter.charAt(0).toUpperCase() + selectedCharacter.slice(1);
   const { scale: rootScale } = useRootScale();
-  const [showBuilder, setShowBuilder] = useState(false);
+  const tasksUnlocked = manageUnlock === 'tasks';
+  // Arriving straight from a passed gate (or a just-created routine) opens the editor.
+  const [showBuilder, setShowBuilder] = useState(tasksUnlocked);
+  const openBuilder = () => (tasksUnlocked ? setShowBuilder(true) : openParentGate('editTasks'));
+  const closeBuilder = () => { setShowBuilder(false); setManageUnlock(null); };
   const [showPicker, setShowPicker] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const totalMinutes = tasks.reduce((sum, t) => sum + t.durationMinutes, 0);
@@ -105,8 +112,10 @@ export default function RoutineSetup() {
           Start Routine
         </MotionButton>
         {!showBuilder && (
-          <button onClick={() => setShowBuilder(true)} className="mt-2.5 w-full h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
-            <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
+          <button onClick={openBuilder} className="mt-2.5 w-full h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
+            {tasksUnlocked
+              ? <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
+              : <Lock className="w-4 h-4 text-ink-muted" aria-hidden="true" />}
             <span className="text-xs font-display font-semibold text-ink">Edit Tasks</span>
             <ChevronDown className="w-4 h-4 text-ink-muted" />
           </button>
@@ -144,7 +153,7 @@ export default function RoutineSetup() {
                 <h3 className="font-display text-lg sm:text-xl font-bold text-ink">{routineName}</h3>
                 <p className="text-[0.8125rem] sm:text-sm text-ink-muted font-body">{tasks.length} tasks · {totalMinutes} min total</p>
               </div>
-              <button onClick={() => setShowBuilder(false)} className="h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
+              <button onClick={closeBuilder} className="h-11 rounded-2xl border border-border-card bg-[#FAF3E8] hover:bg-surface-card transition-colors flex items-center justify-center gap-2 px-3">
                 <Settings2 className="w-[18px] h-[18px] text-ink-muted" />
                 <span className="text-xs font-display font-semibold text-ink">Done</span>
                 <ChevronUp className="w-4 h-4 text-ink-muted" />

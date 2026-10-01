@@ -11,6 +11,7 @@ import defaultRewards from '../data/rewards.json';
 import Logo from '../components/Logo';
 import ConfirmDialog from '../components/ConfirmDialog';
 import TikTokIcon from '../components/TikTokIcon';
+import { useRoutineStore } from '../store/useRoutineStore';
 import { LINKS, openExternalUrl } from '../platform/externalLinks';
 
 const MotionButton = motion.button;
@@ -21,6 +22,8 @@ const SOCIALS = [
 ];
 
 export default function Settings() {
+  const firstRun = useRoutineStore((s) => s.firstRun);
+  const finishFirstRun = useRoutineStore((s) => s.finishFirstRun);
   const [rewards, setRewards] = useState([]);
   const [rewardsEnabled, setRewardsEnabled] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -96,6 +99,15 @@ export default function Settings() {
         <div className="flex items-center gap-2">
           <Logo className="h-8 w-auto" size="small" />
         </div>
+        {firstRun && (
+          <button
+            type="button"
+            onClick={finishFirstRun}
+            className="min-h-[2.75rem] rounded-2xl bg-accent px-5 text-sm font-display font-semibold text-ink shadow-soft hover:opacity-90 transition-opacity"
+          >
+            Done
+          </button>
+        )}
       </div>
 
       {/* Title */}
@@ -104,7 +116,9 @@ export default function Settings() {
           Parent Area
         </h1>
         <p className="max-w-[18rem] mx-auto text-ink-muted text-[0.8125rem] font-body leading-snug sm:max-w-none sm:text-sm sm:leading-normal">
-          Changes are saved automatically
+          {firstRun
+            ? 'Choose rewards here, then tap Done to pick a buddy and a routine. Editing tasks always asks for this check.'
+            : 'Changes are saved automatically'}
         </p>
       </div>
 
@@ -145,8 +159,8 @@ export default function Settings() {
             <div className="flex-1 min-w-0">
               <h3 className="font-display font-bold text-[0.9375rem] text-ink leading-snug">The other half of our bedtime</h3>
               <p className="text-[0.8125rem] text-ink-muted font-body leading-snug mt-1">
-                Task Buddies gets you through the routine. Lovou is the story after it, made with your child and
-                played back in the voices they choose. No ads, nothing sold to anyone.
+                Task Buddies gets you through the routine. Lovou is the story after it, made together and
+                played back in the voices you choose. No ads, nothing sold to anyone.
               </p>
             </div>
           </div>

@@ -15,6 +15,7 @@ import RoutineComplete from './pages/RoutineComplete';
 import CustomRoutineList from './pages/CustomRoutineList';
 import ParentGate from './pages/ParentGate';
 import Settings from './pages/Settings';
+import FirstRunSetup from './pages/FirstRunSetup';
 import TabBar from './components/TabBar';
 import { initializeNativeRuntime } from './platform/nativeRuntime';
 import { CHARACTER_IDS } from './data/characters';
@@ -22,6 +23,7 @@ import { CHARACTER_IDS } from './data/characters';
 const MotionDiv = motion.div;
 
 const SCREENS = {
+  welcome: FirstRunSetup,
   selection: CharacterSelection,
   picker: RoutinePicker,
   customList: CustomRoutineList,
@@ -33,6 +35,7 @@ const SCREENS = {
 };
 
 const SCREEN_DEPTH = {
+  welcome: -1,
   selection: 0,
   parentGate: 1,
   settings: 2,
@@ -52,6 +55,7 @@ const pageTransition = {
 
 export default function App() {
   const screen = useRoutineStore((s) => s.screen);
+  const firstRun = useRoutineStore((s) => s.firstRun);
   const rootRef = useRef(null);
   const prevScreenRef = useRef(screen);
   const direction = (SCREEN_DEPTH[screen] ?? 0) >= (SCREEN_DEPTH[prevScreenRef.current] ?? 0) ? 1 : -1;
@@ -131,7 +135,8 @@ export default function App() {
               </MotionDiv>
             )}
           </AnimatePresence>
-          <TabBar />
+          {/* No tabs during first-run setup: the only way forward is through the parent gate. */}
+          {!firstRun && <TabBar />}
         </div>
       </div>
     </MotionConfig>

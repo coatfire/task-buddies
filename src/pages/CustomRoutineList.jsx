@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ChevronRight, PlusCircle, Trash2 } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Lock, PlusCircle, Trash2 } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useRoutineStore } from '../store/useRoutineStore';
 import ConfirmDialog from '../components/ConfirmDialog';
@@ -16,10 +16,11 @@ const MotionButton = motion.button;
 const EMOJI_OPTIONS = ['✏️', '🏀', '🎶', '🧹', '🌿', '🎮', '🍳', '🐕', '🎨', '📖', '🧘', '💪', '🚿', '🎒'];
 
 export default function CustomRoutineList() {
-  const { setRoutine, setScreen } = useRoutineStore();
+  const { setRoutine, setScreen, manageUnlock, setManageUnlock, openParentGate } = useRoutineStore();
+  const unlocked = manageUnlock === 'routines' || manageUnlock === 'routines:create';
   const [routines, setRoutines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showCreate, setShowCreate] = useState(false);
+  const [showCreate, setShowCreate] = useState(manageUnlock === 'routines:create');
   const [newName, setNewName] = useState('');
   const [newEmoji, setNewEmoji] = useState('✏️');
   const [confirmDelete, setConfirmDelete] = useState(null);
@@ -38,7 +39,12 @@ export default function CustomRoutineList() {
     setNewName('');
     setNewEmoji('✏️');
     setRoutine(`custom:${created.id}`, created.name, created.id);
+    // A new routine has no tasks yet, so carry the unlock over to its task editor.
+    setManageUnlock('tasks');
   };
+
+  const requestCreate = () => (unlocked ? setShowCreate(true) : openParentGate('createRoutine'));
+  const requestDelete = (routineId) => (unlocked ? setConfirmDelete(routineId) : openParentGate('manageRoutines'));
 
   const handleDelete = (routineId) => {
     deleteCustomRoutineLocal(routineId);
@@ -103,7 +109,7 @@ export default function CustomRoutineList() {
                   <ChevronRight className="w-5 h-5 text-ink-muted/60 shrink-0" />
                 </button>
                 <button
-                  onClick={() => setConfirmDelete(routine.id)}
+                  onClick={() => requestDelete(routine.id)}
                   aria-label={`Delete ${routine.name}`}
                   className="shrink-0 w-11 h-11 rounded-xl border border-border-card bg-[#FAF3E8] flex items-center justify-center text-ink-muted hover:text-red-500 hover:bg-red-50 hover:border-red-200 transition-colors"
                 >
@@ -125,12 +131,12 @@ export default function CustomRoutineList() {
       {/* Create New Button */}
       <div className="max-w-sm mx-auto w-full shrink-0 pb-2 sm:pb-4">
         <MotionButton
-          onClick={() => setShowCreate(true)}
+          onClick={requestCreate}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-dashed border-border-card bg-surface-card hover:bg-[#FAF3E8] hover:border-accent/40 transition-all text-sm font-display font-semibold text-ink-muted hover:text-ink shadow-soft"
         >
-          <PlusCircle className="w-5 h-5" />
+          {unlocked ? <PlusCircle className="w-5 h-5" /> : <Lock className="w-4 h-4" aria-hidden="true" />}
           Create New Routine
         </MotionButton>
       </div>

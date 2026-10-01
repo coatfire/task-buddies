@@ -20,6 +20,9 @@ function createChallenge() {
 export default function ParentGate() {
   const afterGate = useRoutineStore((state) => state.afterGate);
   const leaveParentArea = useRoutineStore((state) => state.leaveParentArea);
+  const passParentGate = useRoutineStore((state) => state.passParentGate);
+  // Routine-management gates continue to the action rather than the Parent Area.
+  const opensParentArea = !afterGate || afterGate === 'lovou' || afterGate === 'setup';
   const [challenge, setChallenge] = useState(createChallenge);
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +34,7 @@ export default function ParentGate() {
       if (afterGate === 'lovou') {
         void openExternalUrl(LINKS.lovou).catch((err) => console.error('[task-buddy] external link failed', err));
       }
-      useRoutineStore.setState({ screen: 'settings', afterGate: null });
+      passParentGate();
       return;
     }
 
@@ -65,7 +68,9 @@ export default function ParentGate() {
           </div>
           <h1 className="font-display text-2xl font-bold text-ink mb-2">Grown-Ups Only</h1>
           <p className="font-body text-sm text-ink-muted leading-relaxed mb-6">
-            Ask a grown-up to solve this question to open the Parent Area.
+            {opensParentArea
+              ? 'Ask a grown-up to solve this question to open the Parent Area.'
+              : 'Ask a grown-up to solve this question to change routines and tasks.'}
           </p>
 
           <label htmlFor="parent-gate-answer" className="block font-display font-bold text-2xl text-ink mb-3">
@@ -95,7 +100,7 @@ export default function ParentGate() {
             disabled={!answer}
             className="btn-primary w-full mt-5"
           >
-            Open Parent Area
+            {opensParentArea ? 'Open Parent Area' : 'Continue'}
           </button>
         </form>
       </div>

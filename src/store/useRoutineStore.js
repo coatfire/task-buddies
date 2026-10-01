@@ -9,6 +9,8 @@ import {
   writeCustomRoutineTasks,
   writeFastPath,
   markCompletedRun,
+  markSetupComplete,
+  readSetupComplete,
 } from './localStore';
 
 /*
@@ -20,6 +22,15 @@ import {
 
 const TASK_COLORS = ['#9D8AAE', '#86A4B3', '#C89A63', '#B86F56', '#81906F', '#B68FA1'];
 export const PARENT_SCREENS = ['parentGate', 'settings'];
+
+// Where a passed parent gate leads, and which management unlock it grants.
+// Unlocks are transient: they clear as soon as the user leaves the screen they apply to.
+const GATE_TARGETS = {
+  editTasks:     { screen: 'setup',      manageUnlock: 'tasks' },
+  createRoutine: { screen: 'customList', manageUnlock: 'routines:create' },
+  manageRoutines:{ screen: 'customList', manageUnlock: 'routines' },
+};
+const UNLOCK_SCREEN = { tasks: 'setup', routines: 'customList', 'routines:create': 'customList' };
 
 function toRuntimeTask(task, index) {
   const libEntry = getTaskByKey(task.task_type_key || task.key);
@@ -65,8 +76,37 @@ export const useRoutineStore = create(
   afterGate: null,
   // Buddy-flow screen to return to when leaving the Parent Area tab.
   returnScreen: null,
+  // Routine management unlocked by the parent gate: 'tasks' | 'routines' | 'routines:create' | null. Not persisted.
+  manageUnlock: null,
+  // True until the first-run parent setup is finished. Not persisted (derived from storage at boot).
+  firstRun: false,
 
   setScreen: (screen) => set({ screen }),
+
+  setManageUnlock: (manageUnlock) => set({ manageUnlock }),
+
+  passParentGate: () => {
+    const { afterGate, returnScreen } = get();
+    const target = GATE_TARGETS[afterGate];
+    if (target) {
+      set({ ...target, afterGate: null, returnScreen: null });
+      return;
+    }
+    // Lovou link, first-run setup and the Parent Area tab all land in the Parent Area.
+    set({ screen: 'settings', afterGate: null, returnScreen: afterGate === 'setup' ? null : returnScreen });
+  },
+
+  // Called once at boot. A routine already running (e.g. app relaunched mid-routine) is never interrupted.
+  enterFirstRunIfNeeded: () => {
+    const { screen, isRunning } = get();
+    if (readSetupComplete() || (screen === 'player' && isRunning)) return;
+    set({ screen: 'welcome', firstRun: true, returnScreen: null, afterGate: null });
+  },
+
+  finishFirstRun: () => {
+    markSetupComplete();
+    set({ firstRun: false, screen: 'selection', returnScreen: null, afterGate: null });
+  },
 
   openParentGate: (afterGate = null) => {
     const { screen, isRunning } = get();
@@ -263,20 +303,28 @@ export const useRoutineStore = create(
       merge: (persistedState, currentState) => {
         const persistedScreen = persistedState?.screen;
         const inParentArea = PARENT_SCREENS.includes(persistedScreen);
+        const screen = inParentArea
+          ? (persistedState?.returnScreen || 'selection')
+          : (persistedScreen ?? currentState.screen);
         return {
           ...currentState,
           ...persistedState,
-          screen: inParentArea
-            ? (persistedState?.returnScreen || 'selection')
-            : (persistedScreen ?? currentState.screen),
+          // The first-run screen is re-derived at boot from the setup-complete flag.
+          screen: screen === 'welcome' ? 'selection' : screen,
           returnScreen: null,
           afterGate: null,
         };
       },
-      partialize: ({ timerInterval: _timerInterval, ...rest }) => rest,
+      partialize: ({ timerInterval: _timerInterval, manageUnlock: _manageUnlock, firstRun: _firstRun, ...rest }) => rest,
     }
   )
 );
+
+// Relock routine management the moment the user leaves the screen it was unlocked for.
+useRoutineStore.subscribe((state, prev) => {
+  if (!state.manageUnlock || state.screen === prev.screen) return;
+  if (state.screen !== UNLOCK_SCREEN[state.manageUnlock]) useRoutineStore.setState({ manageUnlock: null });
+});
 
 // Re-export library helpers for convenience
 export { TASK_LIBRARY };

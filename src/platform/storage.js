@@ -11,6 +11,7 @@ const NATIVE_STORAGE_KEYS = [
   'task-buddy:has-completed-run',
   'taskbuddy_rewards',
   'taskbuddy_rewards_enabled',
+  'task-buddy:setup-complete',
 ];
 
 const isNative = Capacitor.isNativePlatform();

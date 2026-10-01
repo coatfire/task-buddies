@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: 'Task Buddies',
           short_name: 'Task Buddies',
-          description: 'Cosy focus companions for kids.',
+          description: 'Cosy routine companions for families.',
           theme_color: '#F0A275',
           background_color: '#F6E5CC',
           display: 'standalone',

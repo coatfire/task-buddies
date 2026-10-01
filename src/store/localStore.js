@@ -8,6 +8,9 @@ import { readStoredJSON, writeStoredJSON } from '../platform/storage';
  *   task-buddy:routines/v1         { [routineType]: TaskRow[] }
  *   task-buddy:custom-routines/v1  Routine[]   ({ id, name, emoji, tasks })
  *   task-buddy:rewards/v1          { [rewardId]: lastShownAtISO }
+ *
+ * Any new key must also be added to NATIVE_STORAGE_KEYS in platform/storage.js,
+ * otherwise native builds never load it at launch.
  */
 
 const KEYS = {
@@ -19,6 +22,7 @@ const KEYS = {
   hasCompletedRun: 'task-buddy:has-completed-run',
   configuredRewards: 'taskbuddy_rewards',
   rewardsEnabled: 'taskbuddy_rewards_enabled',
+  setupComplete: 'task-buddy:setup-complete',
 };
 
 function safeRead(key, fallback) {
@@ -120,4 +124,13 @@ export function writeFastPath({ buddy, routine }) {
 
 export function markCompletedRun() {
   safeWrite(KEYS.hasCompletedRun, true);
+}
+
+// ── First-run parent setup ────────────────────────────────────────────
+export function readSetupComplete() {
+  return safeRead(KEYS.setupComplete, false) === true;
+}
+
+export function markSetupComplete() {
+  safeWrite(KEYS.setupComplete, true);
 }
