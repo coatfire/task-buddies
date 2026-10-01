@@ -137,6 +137,23 @@
     box-shadow: 0 40px 80px -30px rgba(74,52,38,0.25);
   }
 
+  /* iPad 13" store poster: 2064x2752 canvas, iPad Pro 11" screen, no Dynamic Island. Whole device stays in frame. */
+  body.device-ipad {
+    --w: 2064px;
+    --h: 2752px;
+    --phone-w: 1400px;
+    --phone-top: 640px;
+    --bezel: 40px;
+    --radius: 96px;
+  }
+  body.device-ipad .copy { top: 110px; left: 140px; right: 140px; gap: 32px; }
+  body.device-ipad .headline { font-size: 150px; }
+  body.device-ipad .sub { max-width: 1600px; font-size: 62px; }
+  body.device-ipad .screen { aspect-ratio: 834 / 1194; }
+  body.device-ipad .island { display: none; }
+  body.device-ipad .statusbar { height: 44px; padding: 0 48px; font-size: 26px; }
+  body.device-ipad .statusbar svg { width: 30px; height: 24px; }
+
   /* per-poster tints */
   body.tint-peach  { --bg: #F6D9C4; }
   body.tint-sage   { --bg: #DCE5D2; }

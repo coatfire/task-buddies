@@ -1,17 +1,22 @@
 /**
  * Store screenshot generator.
  *
- * 1. Drives the running app (Vite dev server) in a phone-sized Chromium,
+ * 1. Drives the running app (Vite dev server) in a phone- or iPad-sized Chromium,
  *    seeds each state directly through the zustand store, and captures it.
- * 2. Composes each capture into a marketing poster (headline + phone frame)
+ * 2. Composes each capture into a marketing poster (headline + device frame)
  *    at App Store and Play Store dimensions.
  *
  * Usage:
  *   npm run dev              # in another terminal
- *   npm run screenshots      # -> store-assets/screenshots/{ios-6.7,ios-6.9,android}/
+ *   npm run screenshots      # -> store-assets/screenshots/{ios-6.7,ios-6.9,ipad-13,android}/
  *
  *   BASE_URL=http://localhost:4173 npm run screenshots   # against `vite preview`
- *   ONLY=hero,player-running npm run screenshots         # subset by id
+ *   ONLY=setup,player-running npm run screenshots        # subset by id
+ *   DEVICES=ipad npm run screenshots                     # subset by device (phone, ipad)
+ *   OUT=tmp/shots npm run screenshots                    # write somewhere else (previews)
+ *
+ * Copy rules (App Store 2.3.8): sentence case, no em dashes, no exclamation marks,
+ * and no audience terms such as kids, children, child or little ones.
  */
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -21,18 +26,26 @@ import { CHARACTERS } from '../../src/data/characters.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
-const OUT = resolve(ROOT, 'store-assets/screenshots');
+const OUT = resolve(ROOT, process.env.OUT || 'store-assets/screenshots');
 const BASE_URL = process.env.BASE_URL || 'http://localhost:5173';
 const ONLY = process.env.ONLY?.split(',').map((s) => s.trim()).filter(Boolean);
+const ONLY_DEVICES = process.env.DEVICES?.split(',').map((s) => s.trim()).filter(Boolean);
 
-// Logical phone viewport used to capture the app. 390x844 = iPhone 14/15 class.
-const PHONE = { width: 390, height: 844, deviceScaleFactor: 3 };
-const SAFE_TOP_PX = 54; // room for the fake status bar drawn by the poster
+// Logical viewports used to capture the app.
+// safeTop leaves room for the fake status bar drawn by the poster.
+const DEVICES = {
+  phone: { width: 390, height: 844, deviceScaleFactor: 3, safeTop: 54 },   // iPhone 14/15 class
+  // iPad Pro 11" logical size. Exported at the 13" store size; the 11" viewport keeps the app's
+  // centred column readable instead of a narrow strip on a 13" canvas.
+  ipad:  { width: 834, height: 1194, deviceScaleFactor: 2, safeTop: 32 },
+};
 
+// base = the poster.html canvas width each target is designed at; posters are zoomed to fit.
 const TARGETS = [
-  { dir: 'ios-6.7', width: 1290, height: 2796 },
-  { dir: 'ios-6.9', width: 1320, height: 2868 },
-  { dir: 'android', width: 1080, height: 2340 },
+  { dir: 'ios-6.7', width: 1290, height: 2796, device: 'phone', base: 1290 },
+  { dir: 'ios-6.9', width: 1320, height: 2868, device: 'phone', base: 1290 },
+  { dir: 'ipad-13', width: 2064, height: 2752, device: 'ipad',  base: 2064 },
+  { dir: 'android', width: 1080, height: 2340, device: 'phone', base: 1290 },
 ];
 
 /**
@@ -43,12 +56,9 @@ const STORE_BOOTSTRAP = `
   if (!window.__tb) throw new Error('window.__tb missing: run against the Vite dev server (npm run dev)');
 `;
 
-const bedtimeTasks = (idx) => [
-  { key: 'put_on_pyjamas' }, { key: 'brush_teeth' }, { key: 'go_potty' }, { key: 'pick_a_book' }, { key: 'lights_off' },
-][idx];
-
 // Sprite sheets live in public/buddy-watercolor/<id>-celebrate.webp (4x4, 128px frames).
 // Positions are in poster pixels (1290x2796 base). Scale multiplies the app's spriteScale.
+// Used by shots with layout: 'buddies' (phone-less hero poster).
 const HERO_BUDDIES = [
   { id: 'hoppy',   x: 645,  y: 1640, scale: 6.4, rot: -4 },
   { id: 'snapper', x: 300,  y: 1260, scale: 4.6, rot: 8 },
@@ -59,11 +69,11 @@ const HERO_BUDDIES = [
 
 const SHOTS = [
   {
-    id: 'hero',
-    layout: 'buddies',
-    headline: 'Routines are hard. Buddies help.',
-    sub: 'A gentle companion that sits with your child through bedtime, mornings and homework.',
+    id: 'setup',
+    headline: 'Set up a family routine',
+    sub: 'Parents and guardians choose the routine, tasks and rewards. Then you do it together.',
     tint: 'sand',
+    firstRun: true, // fresh install: the app opens on the first-run setup screen
     seed: async () => {},
   },
   {
@@ -141,8 +151,8 @@ const SHOTS = [
   },
   {
     id: 'routines',
-    headline: 'Bedtime, morning, homework — or your own',
-    sub: 'Ready-made routines with sensible defaults. Change anything.',
+    headline: 'Bedtime, morning, homework or your own',
+    sub: 'Ready-made routines with sensible defaults.',
     tint: 'sky',
     seed: async (page) => {
       await page.evaluate(`(async () => { ${STORE_BOOTSTRAP}
@@ -152,9 +162,9 @@ const SHOTS = [
     },
   },
   {
-    id: 'setup',
-    headline: 'Set it up once. One tap to start.',
-    sub: 'Drag to reorder, tap to adjust minutes. It remembers for next time.',
+    id: 'tasks-locked',
+    headline: 'Parents set the tasks',
+    sub: 'Changing tasks and routines always asks for a quick grown-up check.',
     tint: 'sage',
     seed: async (page) => {
       await page.evaluate(`(async () => { ${STORE_BOOTSTRAP}
@@ -162,14 +172,12 @@ const SHOTS = [
         s.setSelectedCharacter('snoozy');
         s.setRoutine('bedtime');
       })()`);
-      await page.getByRole('button', { name: /edit tasks/i }).click();
-      await page.waitForTimeout(500);
     },
   },
   {
     id: 'parents',
     headline: 'Parents stay in control',
-    sub: 'Edit rewards and settings behind a grown-ups-only gate. Free, offline, no signup, no tracking.',
+    sub: 'Rewards and settings sit behind a parental gate. Free, offline, no signup, no tracking.',
     tint: 'peach',
     seed: async (page) => {
       await page.evaluate(`(async () => { ${STORE_BOOTSTRAP}
@@ -179,23 +187,27 @@ const SHOTS = [
   },
 ];
 
-async function captureApp(browser, shot) {
+async function captureApp(browser, shot, deviceName) {
+  const device = DEVICES[deviceName];
   const ctx = await browser.newContext({
-    viewport: { width: PHONE.width, height: PHONE.height },
-    deviceScaleFactor: PHONE.deviceScaleFactor,
+    viewport: { width: device.width, height: device.height },
+    deviceScaleFactor: device.deviceScaleFactor,
     isMobile: true,
     hasTouch: true,
     reducedMotion: 'reduce', // settle animations instantly
     colorScheme: 'light',
   });
+  // Every context is a fresh install. Unless the shot is of first-run setup itself,
+  // mark setup as done before the app boots so it opens normally with the tab bar.
+  if (!shot.firstRun) {
+    await ctx.addInitScript(() => window.localStorage.setItem('task-buddy:setup-complete', 'true'));
+  }
   const page = await ctx.newPage();
   // Vite's HMR websocket keeps the network busy, so don't wait for networkidle.
   await page.goto(BASE_URL, { waitUntil: 'load' });
   await page.locator('.app-viewport').waitFor({ timeout: 20000 });
   await page.evaluate(() => document.fonts.ready);
-  await page.addStyleTag({ content: `:root { --safe-area-top: ${SAFE_TOP_PX}px !important; }` });
-  // fresh storage for every shot so seeds don't bleed into each other
-  await page.evaluate(() => localStorage.clear());
+  await page.addStyleTag({ content: `:root { --safe-area-top: ${device.safeTop}px !important; }` });
   await page.evaluate(`(async () => { ${STORE_BOOTSTRAP} })()`);
   await shot.seed(page);
   // let AnimatePresence page transitions and staggered entrances finish
@@ -209,8 +221,8 @@ async function composePoster(browser, shot, appPng, target) {
   const ctx = await browser.newContext({ viewport: { width: target.width, height: target.height }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   await page.goto(pathToFileURL(resolve(__dirname, 'poster.html')).href);
-  await page.evaluate(({ headline, sub, tint, layout, dataUrl, zoom, buddies, spriteBase }) => {
-    document.body.classList.add(`tint-${tint}`);
+  await page.evaluate(({ headline, sub, tint, layout, device, dataUrl, zoom, buddies, spriteBase }) => {
+    document.body.classList.add(`tint-${tint}`, `device-${device}`);
     if (layout) document.body.classList.add(`layout-${layout}`);
     document.body.style.zoom = String(zoom);
     document.getElementById('headline').textContent = headline;
@@ -233,8 +245,9 @@ async function composePoster(browser, shot, appPng, target) {
     sub: shot.sub,
     tint: shot.tint,
     layout: shot.layout || null,
+    device: target.device,
     dataUrl: appPng ? `data:image/png;base64,${appPng.toString('base64')}` : null,
-    zoom: target.width / 1290,
+    zoom: target.width / target.base,
     buddies: shot.layout === 'buddies' ? HERO_BUDDIES.map((b) => ({ ...b, spriteScale: CHARACTERS.find((c) => c.id === b.id)?.spriteScale ?? 1 })) : [],
     spriteBase: pathToFileURL(resolve(ROOT, 'public/buddy-watercolor')).href,
   });
@@ -248,27 +261,31 @@ async function composePoster(browser, shot, appPng, target) {
 
 async function main() {
   const shots = ONLY ? SHOTS.filter((s) => ONLY.includes(s.id)) : SHOTS;
+  const targets = ONLY_DEVICES ? TARGETS.filter((t) => ONLY_DEVICES.includes(t.device)) : TARGETS;
+  const devices = [...new Set(targets.map((t) => t.device))];
   const browser = await chromium.launch();
   try {
-    for (const t of TARGETS) await mkdir(resolve(OUT, t.dir), { recursive: true });
-    await mkdir(resolve(OUT, 'raw'), { recursive: true });
+    for (const t of targets) await mkdir(resolve(OUT, t.dir), { recursive: true });
+    for (const d of devices) await mkdir(resolve(OUT, 'raw', d), { recursive: true });
 
     for (const shot of shots) {
       // number by position in the full set so ONLY= subsets overwrite the right files
       const n = String(SHOTS.indexOf(shot) + 1).padStart(2, '0');
       process.stdout.write(`${n} ${shot.id} … `);
-      const appPng = shot.layout === 'buddies' ? null : await captureApp(browser, shot);
-      if (appPng) await writeFile(resolve(OUT, 'raw', `${n}-${shot.id}.png`), appPng);
-      for (const t of TARGETS) {
-        const poster = await composePoster(browser, shot, appPng, t);
-        await writeFile(resolve(OUT, t.dir, `${n}-${shot.id}.png`), poster);
+      for (const d of devices) {
+        const appPng = shot.layout === 'buddies' ? null : await captureApp(browser, shot, d);
+        if (appPng) await writeFile(resolve(OUT, 'raw', d, `${n}-${shot.id}.png`), appPng);
+        for (const t of targets.filter((x) => x.device === d)) {
+          const poster = await composePoster(browser, shot, appPng, t);
+          await writeFile(resolve(OUT, t.dir, `${n}-${shot.id}.png`), poster);
+        }
       }
       console.log('ok');
     }
   } finally {
     await browser.close();
   }
-  console.log(`\nWrote ${shots.length} shots × ${TARGETS.length} sizes to ${OUT}`);
+  console.log(`\nWrote ${shots.length} shots × ${targets.length} sizes to ${OUT}`);
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });
