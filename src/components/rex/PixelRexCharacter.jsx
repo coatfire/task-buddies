@@ -88,6 +88,9 @@ export default function PixelRexCharacter({ state, eatPhase = 'none', className 
         style={{
           width: SPRITE_FRAME_SIZE,
           height: SPRITE_FRAME_SIZE,
+          // Never let flex squeeze the frame below 128px when the buddy is displayed smaller:
+          // that crops the sprite sheet and pushes the buddy off centre. Scale does the sizing.
+          flexShrink: 0,
           transform: `scale(${scale})`,
           transformOrigin: 'center',
           overflow: 'visible',
