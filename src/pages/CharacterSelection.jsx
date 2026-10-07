@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,9 +11,21 @@ import { scaled, useRootScale } from '../hooks/useRootScale';
 const MotionButton = motion.button;
 // Tablets show three cards at once, so each sprite is a little smaller than the single phone card.
 const TABLET_CARD_SPRITE = 130;
+const PHONE_CARD_SPRITE = 170;
 
 export default function CharacterSelection() {
   const { scale: rootScale, isTablet } = useRootScale();
+  // Phones: the buddy fills the panel it gets, up to 170px, so short screens never clip the card.
+  const panelRef = useRef(null);
+  const [panelHeight, setPanelHeight] = useState(null);
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(([entry]) => setPanelHeight(Math.round(entry.contentRect.height)));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const phoneSprite = panelHeight ? Math.max(72, Math.min(PHONE_CARD_SPRITE, panelHeight - 16)) : PHONE_CARD_SPRITE;
   const setScreen = useRoutineStore((s) => s.setScreen);
   const setSelectedCharacter = useRoutineStore((s) => s.setSelectedCharacter);
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', loop: true });
@@ -56,19 +69,19 @@ export default function CharacterSelection() {
         <div className="relative flex h-full min-h-0 w-full flex-col rounded-[32px] border border-border-card bg-surface px-8 py-2.5 shadow-soft overflow-hidden sm:py-5">
           <div className="h-full min-h-0 overflow-hidden" ref={emblaRef}>
             <div className="flex h-full items-stretch">
-              {characters.map((char) => (
+              {characters.map((char, index) => (
                 <div key={char.id} className="flex h-full flex-[0_0_100%] min-w-0 px-1 tablet:flex-[0_0_33.3333%] tablet:px-2">
                   <MotionButton
                     onClick={() => handleSelect(char.id)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="relative flex h-full min-h-[min(24rem,58dvh)] w-full flex-col items-center px-3 py-3 bg-surface-card rounded-[24px] shadow-soft border border-border-card hover:border-accent/50 transition-all overflow-visible sm:min-h-0 sm:p-6 tablet:p-4"
+                    className="relative flex h-full min-h-0 w-full flex-col items-center px-3 py-3 bg-surface-card rounded-[24px] shadow-soft border border-border-card hover:border-accent/50 transition-all overflow-visible sm:min-h-0 sm:p-6 tablet:p-4"
                   >
                     <div className="hidden self-start mb-2 rounded-full border border-border-card bg-white/60 px-3 py-1 text-[0.625rem] uppercase tracking-[0.14em] text-ink-muted font-body whitespace-nowrap sm:inline-flex sm:mb-3 sm:text-[0.6875rem] tablet:self-center">
                       Today's Guide
                     </div>
-                    <div className="relative mb-3 flex w-full flex-1 items-center justify-center rounded-[20px] bg-[#FAF3E8] border border-border-card overflow-visible min-h-[min(13.5rem,30dvh)] sm:mb-4 sm:min-h-0 tablet:flex-none tablet:aspect-[4/3]">
-                      <PixelRexCharacter state="celebrating" characterId={char.id} size={isTablet ? scaled(TABLET_CARD_SPRITE, rootScale) : 170} className="shrink-0" />
+                    <div ref={index === 0 ? panelRef : undefined} className="relative mb-3 flex w-full flex-1 items-center justify-center rounded-[20px] bg-[#FAF3E8] border border-border-card overflow-visible min-h-0 sm:mb-4 tablet:flex-none tablet:aspect-[4/3]">
+                      <PixelRexCharacter state="celebrating" characterId={char.id} size={isTablet ? scaled(TABLET_CARD_SPRITE, rootScale) : phoneSprite} className="shrink-0" />
                     </div>
                     <span className="font-display font-semibold text-ink text-[1.45rem] mb-0.5 sm:text-2xl sm:mb-1">{char.name}</span>
                     <span className="text-[0.8125rem] text-ink-muted text-center font-body leading-snug sm:text-sm">{char.trait}</span>
