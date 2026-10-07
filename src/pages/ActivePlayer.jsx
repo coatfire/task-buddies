@@ -15,6 +15,9 @@ const COMPLETED_TASK_COLOR = '#81906F';
 // Ring diameter. The tablet values are mirrored in tabletSpriteSize() so the buddy stays ~half the ring.
 const RING_CLASS = 'w-[min(65vw,55vh)] h-[min(65vw,55vh)] tablet:w-[min(70vw,38vh,20rem)] tablet:h-[min(70vw,38vh,20rem)] tablet:landscape:w-[min(26vh,20rem)] tablet:landscape:h-[min(26vh,20rem)]';
 const PHONE_SPRITE_SIZE = 146;
+// On short phone screens the ring shrinks to fit its card (see .timer-ring-fit in index.css);
+// the buddy follows so the time still fits inside. Phones with room keep the full 146px.
+const PHONE_SPRITE_RATIO = 0.62;
 // Fade controls out but keep their space. visibility switches at the end of the fade.
 const FADE = 'transition-[opacity,visibility,color] duration-200';
 const HIDDEN = 'opacity-0 invisible pointer-events-none';
@@ -33,7 +36,17 @@ export default function ActivePlayer() {
   } = useRoutineStore();
 
   const viewport = useRootScale();
-  const spriteSize = viewport.isTablet ? tabletSpriteSize(viewport) : PHONE_SPRITE_SIZE;
+  const ringRef = useRef(null);
+  const [ringWidth, setRingWidth] = useState(null);
+  useEffect(() => {
+    const el = ringRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(([entry]) => setRingWidth(Math.round(entry.contentRect.width)));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const phoneSpriteSize = ringWidth ? Math.min(PHONE_SPRITE_SIZE, Math.round(ringWidth * PHONE_SPRITE_RATIO)) : PHONE_SPRITE_SIZE;
+  const spriteSize = viewport.isTablet ? tabletSpriteSize(viewport) : phoneSpriteSize;
   const currentTask = tasks[currentTaskIndex];
   const isHungry = rexState === 'hungry';
   const isBored = rexState === 'bored';
@@ -148,7 +161,7 @@ export default function ActivePlayer() {
         : 'Taking a break. Tap Resume when you are ready.';
 
   return (
-    <div className="h-full min-h-0 flex flex-col items-center px-3 pt-1.5 pb-3 sm:px-4 sm:pt-2 sm:pb-4 relative overflow-hidden text-ink">
+    <div className="timer-player h-full min-h-0 flex flex-col items-center px-3 pt-1.5 pb-3 sm:px-4 sm:pt-2 sm:pb-4 relative overflow-hidden text-ink">
       <div className="w-full max-w-sm min-h-0 flex-1 flex flex-col">
         <div className="flex items-center gap-2 mb-2 z-10 shrink-0 sm:mb-3">
           <button
@@ -197,13 +210,13 @@ export default function ActivePlayer() {
             <h2 className="font-display text-[1.55rem] sm:text-[2rem] font-bold text-center mb-1 leading-tight text-ink">
               {currentTask?.title}
             </h2>
-            <p className="text-[0.8125rem] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto tablet:min-h-[3.25em]">
+            <p className="timer-instruction text-[0.8125rem] sm:text-sm font-body text-ink-muted leading-snug sm:leading-relaxed px-3 sm:px-5 max-w-[20rem] mx-auto tablet:min-h-[3.25em]">
               {instructionText}
             </p>
           </MotionDiv>
         </AnimatePresence>
 
-        <div className="relative z-10 mb-3 flex flex-1 min-h-0 items-center justify-center sm:mb-4 tablet:flex-none tablet:mb-5">
+        <div className="timer-ring-area relative z-10 mb-3 flex flex-1 min-h-0 items-center justify-center sm:mb-4 tablet:flex-none tablet:mb-5">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
           <div className="relative w-full rounded-[32px] border border-border-card bg-surface-card px-3 py-3.5 sm:px-6 sm:py-6 shadow-soft flex items-center justify-center overflow-hidden">
 
@@ -259,7 +272,8 @@ export default function ActivePlayer() {
               themeColor={currentTask?.themeColor || COMPLETED_TASK_COLOR}
               size={214}
               strokeWidth={11}
-              className={RING_CLASS}
+              className={`${RING_CLASS} timer-ring-fit`}
+              ringRef={ringRef}
             >
               <PixelRexCharacter
                 state={postChompCelebrating ? 'celebrating' : rexState}

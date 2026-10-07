@@ -4,7 +4,7 @@ const ACCENT_COLOR = '#E89B6F';
 const MotionCircle = motion.circle;
 const MotionSpan = motion.span;
 
-export default function ProgressRing({ timeLeft, totalTime, themeColor: _themeColor, size = 220, strokeWidth = 12, className = '', children }) {
+export default function ProgressRing({ timeLeft, totalTime, themeColor: _themeColor, size = 220, strokeWidth = 12, className = '', ringRef, children }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const progress = totalTime > 0 ? timeLeft / totalTime : 0;
@@ -18,7 +18,7 @@ export default function ProgressRing({ timeLeft, totalTime, themeColor: _themeCo
   const isImpatient = timeLeft === 0;
 
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`.trim()}>
+    <div ref={ringRef} className={`relative inline-flex items-center justify-center ${className}`.trim()}>
       <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
         <circle
           cx={size / 2} cy={size / 2} r={radius}

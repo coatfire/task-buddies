@@ -51,6 +51,29 @@ button { font-family: inherit; }
   }
 }
 
+/* Phones: the timer ring is sized from the screen width, so on short screens (Android Chrome with
+   its toolbars, small phones, large system text) it could spill out of its card. Cap it at the
+   height its card actually has. Browsers without container units keep the width-based size. */
+@media (max-width: 699.98px) {
+  .timer-ring-area { container-type: size; }
+  .timer-player { container: timer-player / size; }
+}
+/* Very cramped phones (short screen plus large system text): drop the instruction line so the
+   ring keeps a usable size. rem here follows the user's text size. The buttons carry the same cue. */
+@container timer-player (max-height: 30rem) {
+  .timer-instruction { display: none; }
+}
+@supports (height: 1cqh) {
+  @media (max-width: 639.98px) {
+    /* card vertical padding py-3.5 (1.75rem) + 1px borders */
+    .timer-ring-fit { width: min(65vw, 55vh, calc(100cqh - 1.75rem - 2px)); height: min(65vw, 55vh, calc(100cqh - 1.75rem - 2px)); }
+  }
+  @media (min-width: 640px) and (max-width: 699.98px) {
+    /* sm:py-6 (3rem) */
+    .timer-ring-fit { width: min(65vw, 55vh, calc(100cqh - 3rem - 2px)); height: min(65vw, 55vh, calc(100cqh - 3rem - 2px)); }
+  }
+}
+
 /* Tablet: the layout is rem-based, so scaling the root font scales the whole UI. */
 @media (min-width: 700px) {
   html { font-size: clamp(18px, 0.6vw + 13px, 22px); }
