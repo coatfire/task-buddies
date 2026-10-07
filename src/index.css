@@ -22,6 +22,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
+  /* iOS paints a grey box over anything tapped; buttons here give their own
+     pressed feedback, so the box only reads as a flash. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 button { font-family: inherit; }

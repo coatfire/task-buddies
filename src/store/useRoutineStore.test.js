@@ -50,6 +50,13 @@ describe('routine timer state', () => {
     });
   });
 
+  it('lets Done feed in one tap: doneEarly is synchronous, so feedRex sees hungry straight away', () => {
+    useRoutineStore.getState().startRoutine();
+    useRoutineStore.getState().doneEarly();
+    useRoutineStore.getState().feedRex();
+    expect(useRoutineStore.getState()).toMatchObject({ rexState: 'eating', isRunning: false, timerInterval: null });
+  });
+
   it('recalculates and preserves remaining time across pause and resume', () => {
     useRoutineStore.getState().startRoutine();
     vi.setSystemTime(new Date('2026-09-03T12:00:10Z'));

@@ -15,6 +15,9 @@ const COMPLETED_TASK_COLOR = '#81906F';
 // Ring diameter. The tablet values are mirrored in tabletSpriteSize() so the buddy stays ~half the ring.
 const RING_CLASS = 'w-[min(65vw,55vh)] h-[min(65vw,55vh)] tablet:w-[min(70vw,38vh,20rem)] tablet:h-[min(70vw,38vh,20rem)] tablet:landscape:w-[min(26vh,20rem)] tablet:landscape:h-[min(26vh,20rem)]';
 const PHONE_SPRITE_SIZE = 146;
+// Fade controls out but keep their space. visibility switches at the end of the fade.
+const FADE = 'transition-[opacity,visibility,color] duration-200';
+const HIDDEN = 'opacity-0 invisible pointer-events-none';
 const tabletSpriteSize = ({ vw, vh, rem }) => {
   const landscape = vw > vh;
   const ring = landscape ? Math.min(0.26 * vh, 20 * rem) : Math.min(0.7 * vw, 0.38 * vh, 20 * rem);
@@ -121,10 +124,15 @@ export default function ActivePlayer() {
     startEatingSequence();
   }, [isHungry, isEatingSequence, startEatingSequence]);
 
+  // One tap finishes the step and feeds the buddy; the eating sequence then
+  // moves on to the next step by itself. doneEarly() flips the store to
+  // hungry synchronously (zustand set), which is what feedRex() inside the sequence needs.
+  // The separate Feed button remains for when the timer runs out on its own.
   const handleDoneEarly = useCallback(() => {
     if (!isWaiting || isEatingSequence) return;
     doneEarly();
-  }, [isWaiting, isEatingSequence, doneEarly]);
+    startEatingSequence();
+  }, [isWaiting, isEatingSequence, doneEarly, startEatingSequence]);
 
   const handleCancelRoutine = useCallback(() => {
     setConfirmCancel(false);
@@ -289,7 +297,8 @@ export default function ActivePlayer() {
                 onClick={handleDoneEarly}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                exit={{ opacity: 0, pointerEvents: 'none' }}
+                transition={{ duration: 0.2 }}
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
               >
@@ -299,9 +308,10 @@ export default function ActivePlayer() {
           </AnimatePresence>
         </div>
 
-        {/* Always laid out, hidden with visibility so the footprint is constant across states. */}
-        <div className={`mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5 tablet:mt-0 tablet:mb-auto ${isEatingSequence ? 'invisible' : ''}`}>
-          <div className={`w-full rounded-[28px] border border-border-card bg-surface-card p-2.5 sm:p-3 shadow-soft ${isWaiting ? '' : 'invisible'}`}>
+        {/* Always laid out so the footprint is constant across states. Hidden parts fade out
+            (visibility flips after the fade) and stop taking taps straight away. */}
+        <div className={`mt-auto z-10 shrink-0 flex flex-col items-center gap-1.5 tablet:mt-0 tablet:mb-auto ${FADE} ${isEatingSequence ? HIDDEN : ''}`} aria-hidden={isEatingSequence || undefined}>
+          <div className={`w-full rounded-[28px] border border-border-card bg-surface-card p-2.5 sm:p-3 shadow-soft ${FADE} ${isWaiting ? '' : HIDDEN}`}>
             <button
               onClick={isRunning ? pauseRoutine : resumeRoutine}
 
@@ -313,7 +323,7 @@ export default function ActivePlayer() {
           <button
             onClick={skipTask}
 
-            className={`min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink transition-colors ${isHungry ? 'invisible' : ''}`}
+            className={`min-h-[2.75rem] px-4 text-[0.8125rem] font-body text-ink-muted hover:text-ink ${FADE} ${isHungry ? HIDDEN : ''}`}
           >
             Skip task
           </button>
