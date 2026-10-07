@@ -67,7 +67,7 @@ export default function RoutineSetup() {
   }, [saveRoutine]);
 
   return (
-    <div data-buddy-scroll="true" className={`w-full h-full min-h-0 flex flex-col items-center overflow-x-hidden overscroll-contain px-1 py-1 pb-4 text-ink sm:py-2 sm:pb-8 ${showBuilder ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+    <div data-buddy-scroll="true" className={`w-full h-full min-h-0 flex flex-col items-center overflow-x-hidden overscroll-contain px-1 py-1 pb-4 text-ink sm:py-2 sm:pb-8 overflow-y-auto`}>
       <div className="w-full max-w-sm flex items-center gap-2 mb-3 shrink-0 sm:mb-5">
         <button
           onClick={() => setScreen(routineType.startsWith('custom:') ? 'customList' : 'picker')}
