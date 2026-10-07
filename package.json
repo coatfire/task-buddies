@@ -17,6 +17,7 @@
     "check": "npm run lint && npm test && npm run build:web && npm run build:native",
     "preview": "vite preview",
     "screenshots": "node scripts/screenshots/capture.mjs",
+    "social": "node scripts/social/export.mjs",
     "cap:sync": "npm run build:native && cap sync",
     "cap:copy": "npm run build:native && cap copy",
     "cap:open:android": "cap open android",

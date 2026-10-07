@@ -13,3 +13,6 @@ dist-ssr
 
 # generated store screenshots (npm run screenshots)
 store-assets/screenshots
+# generated social media pack (npm run social)
+store-assets/social
+store-assets/social-pack.zip

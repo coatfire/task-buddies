@@ -176,6 +176,11 @@
   body.frame-android .statusbar .icons { gap: 10px; }
   body.frame-android .statusbar svg { width: 32px; height: 32px; }
 
+  /* Mockup mode (social pack): just the device on a transparent canvas, no copy or tint. */
+  body.layout-mockup { background: transparent; }
+  body.layout-mockup .glow, body.layout-mockup .copy { display: none; }
+  body.layout-mockup .phone { top: 80px; box-shadow: 0 40px 80px -30px rgba(74,52,38,0.35); }
+
   /* per-poster tints */
   body.tint-peach  { --bg: #F6D9C4; }
   body.tint-sage   { --bg: #DCE5D2; }
