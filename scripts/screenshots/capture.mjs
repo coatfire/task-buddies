@@ -12,7 +12,7 @@
  *
  *   BASE_URL=http://localhost:4173 npm run screenshots   # against `vite preview`
  *   ONLY=setup,player-running npm run screenshots        # subset by id
- *   DEVICES=ipad npm run screenshots                     # subset by device (phone, ipad)
+ *   DEVICES=android npm run screenshots                  # subset by device (phone, android, ipad)
  *   OUT=tmp/shots npm run screenshots                    # write somewhere else (previews)
  *
  * Copy rules (App Store 2.3.8): sentence case, no em dashes, no exclamation marks,
@@ -35,6 +35,8 @@ const ONLY_DEVICES = process.env.DEVICES?.split(',').map((s) => s.trim()).filter
 // safeTop leaves room for the fake status bar drawn by the poster.
 const DEVICES = {
   phone: { width: 390, height: 844, deviceScaleFactor: 3, safeTop: 54 },   // iPhone 14/15 class
+  // Same viewport for Android (keeps the 19.5:9 poster screen), with a shorter Material status bar.
+  android: { width: 390, height: 844, deviceScaleFactor: 3, safeTop: 36 },
   // iPad Pro 11" logical size. Exported at the 13" store size; the 11" viewport keeps the app's
   // centred column readable instead of a narrow strip on a 13" canvas.
   ipad:  { width: 834, height: 1194, deviceScaleFactor: 2, safeTop: 32 },
@@ -45,7 +47,7 @@ const TARGETS = [
   { dir: 'ios-6.7', width: 1290, height: 2796, device: 'phone', base: 1290 },
   { dir: 'ios-6.9', width: 1320, height: 2868, device: 'phone', base: 1290 },
   { dir: 'ipad-13', width: 2064, height: 2752, device: 'ipad',  base: 2064 },
-  { dir: 'android', width: 1080, height: 2340, device: 'phone', base: 1290 },
+  { dir: 'android', width: 1080, height: 2340, device: 'android', base: 1290, frame: 'android' },
 ];
 
 /**
@@ -221,8 +223,9 @@ async function composePoster(browser, shot, appPng, target) {
   const ctx = await browser.newContext({ viewport: { width: target.width, height: target.height }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   await page.goto(pathToFileURL(resolve(__dirname, 'poster.html')).href);
-  await page.evaluate(({ headline, sub, tint, layout, device, dataUrl, zoom, buddies, spriteBase }) => {
+  await page.evaluate(({ headline, sub, tint, layout, device, frame, dataUrl, zoom, buddies, spriteBase }) => {
     document.body.classList.add(`tint-${tint}`, `device-${device}`);
+    if (frame) document.body.classList.add(`frame-${frame}`);
     if (layout) document.body.classList.add(`layout-${layout}`);
     document.body.style.zoom = String(zoom);
     document.getElementById('headline').textContent = headline;
@@ -246,6 +249,7 @@ async function composePoster(browser, shot, appPng, target) {
     tint: shot.tint,
     layout: shot.layout || null,
     device: target.device,
+    frame: target.frame || null,
     dataUrl: appPng ? `data:image/png;base64,${appPng.toString('base64')}` : null,
     zoom: target.width / target.base,
     buddies: shot.layout === 'buddies' ? HERO_BUDDIES.map((b) => ({ ...b, spriteScale: CHARACTERS.find((c) => c.id === b.id)?.spriteScale ?? 1 })) : [],
