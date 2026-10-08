@@ -16,5 +16,5 @@ VO: Task Buddies shows one thing at a time.
 VO: You pick a routine.
 VO: Their buddy stays on screen for each task, and gets fed when it is done.
 VO: At the end, a reward.
-VO: Same buddy for bedtime, or whatever comes next.
+VO: The same buddy carries on at bedtime.
 VO: Not another chart.

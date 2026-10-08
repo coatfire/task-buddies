@@ -73,7 +73,7 @@ export function writeDocs(filmDir, { title, seconds, framing, beats, vo, tl, not
 
   // Every string the film shows or says, for the house-rules check.
   const strip = (h) => h.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, '\n').replace(/&#10003;/g, '').split('\n').map((s) => s.trim()).filter(Boolean);
-  const shown = tl.elements.flatMap((e) => {
+  const shown = [...tl.elements].sort((a, b) => (a.in ?? 0) - (b.in ?? 0)).flatMap((e) => {
     if (e.kind === 'text') return [e.text.replace(/\n/g, ' ')];
     if (e.kind === 'html') return strip(e.html);
     if (e.kind === 'placeholder') return ['Screen not captured', e.label, e.sub].filter(Boolean);

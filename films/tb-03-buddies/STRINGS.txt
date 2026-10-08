@@ -1,9 +1,9 @@
+ON SCREEN: Who's the buddy?
 ON SCREEN: Hoppy
 ON SCREEN: Snapper
 ON SCREEN: Snoozy
 ON SCREEN: Flutty
 ON SCREEN: Buddy
-ON SCREEN: Who's the buddy?
 ON SCREEN: They choose.
 ON SCREEN: Then they get going together.
 ON SCREEN: taskbuddies.app
