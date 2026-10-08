@@ -3,9 +3,9 @@
 (() => {
   const SHOT = 1170 / 2532; // captured screen aspect
 
-  function cardRect(area, maxW) {
-    let h = area.h, w = h * SHOT;
-    if (w > (maxW ?? area.w)) { w = maxW ?? area.w; h = w / SHOT; }
+  function cardRect(area, maxW, aspect = SHOT) {
+    let h = area.h, w = h * aspect;
+    if (w > (maxW ?? area.w)) { w = maxW ?? area.w; h = w / aspect; }
     return { x: area.x + (area.w - w) / 2, y: area.y + (area.h - h) / 2, w, h };
   }
 
@@ -56,7 +56,11 @@
   function build(spec) {
     const root = document.createElement('div');
     root.className = 'el';
-    const r = { ...regionRect(spec.region || 'full') };
+    let r = { ...regionRect(spec.region || 'full') };
+    // A cropped capture (mw x mh device px) keeps its own aspect: inside the screen card area, or pinned to the top when full frame.
+    if (spec.kind === 'screen' && spec.mh && (spec.region || 'screen') === 'screen') {
+      r = L.screenFull ? { x: 0, y: 0, w: L.W, h: L.W * spec.mh / spec.mw } : cardRect(L.screenArea, undefined, spec.mw / spec.mh);
+    }
     if (spec.band === 'top') r.h *= 0.62;
     if (spec.band === 'bottom') { r.y += r.h * 0.62; r.h *= 0.38; }
     Object.assign(root.style, { left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px' });
@@ -69,7 +73,8 @@
       const media = document.createElement(spec.video ? 'video' : 'img');
       media.src = spec.video || spec.src;
       if (spec.video) { media.muted = true; media.preload = 'auto'; media.playsInline = true; }
-      media.style.width = '1170px'; media.style.height = '2532px';
+      e.IW = spec.mw || 1170; e.IH = spec.mh || 2532;
+      media.style.width = e.IW + 'px'; media.style.height = e.IH + 'px';
       root.appendChild(media);
       e.media = media;
     } else if (spec.kind === 'text') {
@@ -88,6 +93,13 @@
       root.classList.add('endcard');
       const base = Math.min(L.W, L.H);
       root.innerHTML = `<img src="${spec.logo}" style="width:${base * 0.5}px"><div class="url" style="font-size:${base * 0.045}px;margin-top:${base * 0.07}px">${spec.url}</div>${spec.label ? `<div class="ea" style="font-size:${base * 0.028}px;margin-top:${base * 0.03}px">${spec.label}</div>` : ''}`;
+    } else if (spec.kind === 'sprite') {
+      // Frames stepped straight from a 4x4 sheet, as the app does (src/components/rex/PixelRexCharacter.jsx).
+      const layer = (extra) => `<div style="position:absolute;inset:0;${extra}"></div>`;
+      const pos = 'background-size:400% 400%;background-repeat:no-repeat;';
+      root.innerHTML = layer(`background-image:url('${spec.sheet}');${pos}`)
+        + layer(`background:${spec.inkColor || '#4A3426'};-webkit-mask-image:url('${spec.sheet}');mask-image:url('${spec.sheet}');-webkit-mask-size:400% 400%;mask-size:400% 400%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;opacity:0`);
+      e.layers = [...root.children];
     } else if (spec.kind === 'html') {
       root.innerHTML = spec.html.replaceAll('{{S}}', String(scale));
       if (spec.css) Object.assign(root.style, spec.css);
@@ -103,7 +115,7 @@
   function focusTransform(e, t) {
     const f = sample(e.spec.focus, t) || [0, 0, 1, 1];
     const [fx, fy, fw, fh] = f;
-    const IW = 1170, IH = 2532, W = e.r.w, H = e.r.h;
+    const IW = e.IW || 1170, IH = e.IH || 2532, W = e.r.w, H = e.r.h;
     const s = Math.max(W / (fw * IW), H / (fh * IH));
     let tx = W / 2 - (fx + fw / 2) * IW * s;
     let ty = H / 2 - (fy + fh / 2) * IH * s;
@@ -147,7 +159,9 @@
       dx += sample(s.x, t) || 0; dy += sample(s.y, t) || 0;
       const ks = sample(s.scale, t); if (ks !== undefined) sc *= ks;
       e.root.style.opacity = op;
-      e.root.style.transform = `translate(${dx}px, ${dy}px) scale(${sc})`;
+      const ry = sample(s.rotY, t);
+      e.root.style.transform = `${ry !== undefined ? 'perspective(2400px) ' : ''}translate(${dx}px, ${dy}px) scale(${sc})${ry !== undefined ? ` rotateY(${ry}deg)` : ''}`;
+      if (s.innerY) { const n = e.root.querySelector('[data-scroll]'); if (n) n.style.transform = `translateY(${sample(s.innerY, t)}%)`; }
       if (s.filter) e.root.style.filter = sample(s.filter, t) !== undefined ? `blur(${sample(s.filter, t)}px)` : '';
       if (e.media) {
         const { s: k, tx, ty } = focusTransform(e, t);
@@ -160,11 +174,20 @@
           }
         }
       }
+      if (e.layers) {
+        const fps = s.fps || 10, n = 16;
+        const raw = Math.floor((t - tin + (s.offset || 0)) * fps + 1e-6);
+        const f = s.loop === false ? Math.min(raw, n - 1) : ((raw % n) + n) % n;
+        const p = `${(f % 4) * 100 / 3}% ${Math.floor(f / 4) * 100 / 3}%`;
+        e.layers[0].style.backgroundPosition = p;
+        e.layers[1].style.webkitMaskPosition = p; e.layers[1].style.maskPosition = p;
+        e.layers[1].style.opacity = sample(s.ink, t) ?? 0;
+      }
       if (e.blurOf) {
         const tgt = els.find((x) => x.spec.id === e.blurOf);
         const { s: k, tx, ty } = focusTransform(tgt, t);
         const [bx, by, bw, bh] = e.frac;
-        Object.assign(e.root.style, { left: (tgt.r.x + tx + bx * 1170 * k) + 'px', top: (tgt.r.y + ty + by * 2532 * k) + 'px', width: (bw * 1170 * k) + 'px', height: (bh * 2532 * k) + 'px' });
+        Object.assign(e.root.style, { left: (tgt.r.x + tx + bx * tgt.IW * k) + 'px', top: (tgt.r.y + ty + by * tgt.IH * k) + 'px', width: (bw * tgt.IW * k) + 'px', height: (bh * tgt.IH * k) + 'px' });
       }
     }
     await Promise.all(seeks);

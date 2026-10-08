@@ -16,7 +16,7 @@ const timeline = JSON.parse(fs.readFileSync(path.join(filmDir, 'TIMELINE.json'),
 // Asset paths in TIMELINE.json are repo-relative; the stage lives in films/_pipeline.
 const rel = (p) => (p && !/^(https?:|data:|file:)/.test(p) ? pathToFileURL(path.join(ROOT, p)).href : p);
 for (const e of timeline.elements) {
-  for (const k of ['src', 'video', 'logo']) if (e[k]) e[k] = rel(e[k]);
+  for (const k of ['src', 'video', 'logo', 'sheet']) if (e[k]) e[k] = rel(e[k]);
   if (e.html) e.html = e.html.replace(/src="([^"]+)"/g, (m, p) => `src="${rel(p)}"`).replace(/url\('([^']+)'\)/g, (m, p) => `url('${rel(p)}')`);
 }
 

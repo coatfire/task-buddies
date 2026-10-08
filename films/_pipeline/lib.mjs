@@ -19,8 +19,27 @@ export function text(t, tin, tout, extra = {}) {
   return { kind: 'text', text: t, region: 'caption', in: tin, out: tout, enter: 'up', ...extra };
 }
 
-export const screen = (src, tin, tout, extra = {}) => ({ kind: 'screen', src: S(src), region: 'screen', in: tin, out: tout, ...extra });
+// Capture log written by capture.mjs: crops, recording durations and step times.
+export const CAPTURES = JSON.parse(fs.readFileSync(path.resolve('screens/taskbuddies/capture-log.json'), 'utf8'));
+export const stepTime = (video, re) => {
+  const st = CAPTURES[`video/${video}`].steps.find((x) => re.test(x.text));
+  if (!st) throw new Error(`no step ${re} in ${video}`);
+  return st.t;
+};
+export const screen = (src, tin, tout, extra = {}) => {
+  const c = CAPTURES[src];
+  if (!c || c.discarded) throw new Error(`capture ${src} missing or discarded`);
+  const crop = c.crop ? { mw: c.crop.width * 3, mh: c.crop.height * 3 } : {};
+  return { kind: 'screen', src: S(src), region: 'screen', in: tin, out: tout, ...crop, ...extra };
+};
 export const clip = (name, tin, tout, extra = {}) => ({ kind: 'screen', video: V(name), region: 'screen', in: tin, out: tout, ...extra });
+// A buddy stepped from its sheet. size is in stage px; the app's spriteScale is applied on top.
+export const SPRITE = (id, state) => `public/buddy-watercolor/${id}-${state}.webp`;
+// cx, cy: centre in stage px; mult: the buddy's spriteScale. x, y, scale stay free for animation tracks.
+export const sprite = (id, state, tin, tout, { cx, cy, size, mult = 1, ...extra }) => {
+  const d = size * mult;
+  return { kind: 'sprite', sheet: SPRITE(id, state), region: { x: cx - d / 2, y: cy - d / 2, w: d, h: d }, in: tin, out: tout, ...extra };
+};
 export const endcard = (tin, tout, extra = {}) => ({ kind: 'endcard', logo: LOGO, url: 'taskbuddies.app', label: '', region: 'full', in: tin, out: tout, fadeOut: 0, ...extra });
 
 const tc = (s, sep = '.') => {
@@ -48,7 +67,8 @@ export function writeDocs(filmDir, { title, seconds, framing, beats, vo, tl, not
     ...vo.map((l) => `| ${tc(l.in)} | ${tc(l.out)} | ${l.text} |`)].join('\n');
   fs.writeFileSync(path.join(filmDir, 'VO.md'), voMd + '\n');
 
-  const srt = vo.map((l, i) => `${i + 1}\n${tc(l.in, ',')} --> ${tc(l.out, ',')}\n${l.text}\n`).join('\n');
+  // Captions carry the on-screen words, so the film reads the same with or without the proposed VO.
+  const srt = words.map((l, i) => `${i + 1}\n${tc(l.in, ',')} --> ${tc(l.out, ',')}\n${l.text}\n`).join('\n');
   fs.writeFileSync(path.join(filmDir, 'captions.srt'), srt);
 
   // Every string the film shows or says, for the house-rules check.
@@ -71,3 +91,37 @@ export function writeTimeline(filmDir, tl) {
   fs.writeFileSync(path.join(filmDir, 'TIMELINE.json'), JSON.stringify(tl, null, 2) + '\n');
   console.log('wrote', path.join(filmDir, 'TIMELINE.json'), els.length, 'elements');
 }
+
+// Stage geometry, mirrored from engine.js LAYOUTS, for elements placed in stage pixels (sprites).
+export const GEOM = {
+  '9x16': { W: 1080, H: 1920, screenArea: { x: 0, y: 440, w: 1080, h: 1420 } },
+  '4x5': { W: 1080, H: 1350, screenArea: { x: 0, y: 290, w: 1080, h: 1010 } },
+  '1x1': { W: 1080, H: 1080, screenArea: { x: 560, y: 60, w: 470, h: 960 } },
+  store886: { W: 886, H: 1920, full: true },
+  store1080: { W: 1080, H: 1920, full: true },
+};
+// The screen card rect for a layout (same maths as engine.js cardRect).
+export function card(layout) {
+  const g = GEOM[layout];
+  if (g.full) return { x: 0, y: 0, w: g.W, h: g.H };
+  const a = g.screenArea, aspect = 1170 / 2532;
+  let h = a.h, w = h * aspect;
+  if (w > a.w) { w = a.w; h = w / aspect; }
+  return { x: a.x + (a.w - w) / 2, y: a.y + (a.h - h) / 2, w, h };
+}
+// Build one element per layout: fn(layout, cardRect) returns an element or array of elements.
+export const perLayout = (layouts, fn) => layouts.flatMap((l) => [].concat(fn(l, card(l))).map((e) => ({ ...e, layouts: [l] })));
+
+// Brand-token frame drawn inside the screen card (cq units scale with the card).
+export const frame = (inner, tin, tout, extra = {}) => ({
+  kind: 'html', region: 'screen', in: tin, out: tout,
+  html: `<div style="position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden">${inner}</div>`,
+  ...extra,
+});
+
+// "x2" marker for sped-up stretches of a take, top right of the screen card.
+export const speedTag = (label, tin, tout, extra = {}) => ({
+  kind: 'html', region: 'screen', in: tin, out: tout, fadeIn: 0.2, fadeOut: 0.2,
+  html: `<div style="position:absolute;right:4cqw;top:2.5cqw;padding:1.2cqw 3cqw;border-radius:99px;background:rgba(74,52,38,0.82);color:#FAF3E8;font-family:'DM Sans';font-weight:600;font-size:5cqw;letter-spacing:0.04em">${label}</div>`,
+  ...extra,
+});

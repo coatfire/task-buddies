@@ -1,0 +1,976 @@
+{
+  "01-first-open": {
+    "file": "screens/taskbuddies/01-first-open.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173"
+    ],
+    "crop": null,
+    "note": "first open after a fresh install"
+  },
+  "02-parent-gate": {
+    "file": "screens/taskbuddies/02-parent-gate.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\""
+    ],
+    "crop": null,
+    "note": "parent gate on first open"
+  },
+  "03-parent-area": {
+    "file": "screens/taskbuddies/03-parent-area.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\""
+    ],
+    "crop": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 250
+    },
+    "note": "Parent Area on first open"
+  },
+  "04-buddy-selection": {
+    "file": "screens/taskbuddies/04-buddy-selection.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\""
+    ],
+    "crop": null,
+    "note": "buddy selection, Hoppy first"
+  },
+  "05-routine-picker": {
+    "file": "screens/taskbuddies/05-routine-picker.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy"
+    ],
+    "crop": null,
+    "note": "routine type picker"
+  },
+  "06-homework-default": {
+    "file": "screens/taskbuddies/06-homework-default.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy",
+      "tap \"Homework\""
+    ],
+    "crop": null,
+    "note": "Homework routine with its default tasks"
+  },
+  "07-homework-editor": {
+    "file": "screens/taskbuddies/07-homework-editor.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy",
+      "tap \"Homework\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 8 × 3; type 24",
+      "tap \"Continue\""
+    ],
+    "crop": null,
+    "note": "task editor open with the default Homework tasks"
+  },
+  "08-homework-tasks": {
+    "file": "screens/taskbuddies/08-homework-tasks.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy",
+      "tap \"Homework\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 8 × 3; type 24",
+      "tap \"Continue\"",
+      "remove task \"Reading\"",
+      "remove task \"Pack Backpack for Tomorrow\"",
+      "tap \"Add task\"",
+      "tap \"Custom task\"",
+      "type \"Tidy up\""
+    ],
+    "crop": null,
+    "note": "tasks set: Unpack Backpack, Have a Snack, Homework, Tidy up"
+  },
+  "09-homework-edited": {
+    "file": "screens/taskbuddies/09-homework-edited.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy",
+      "tap \"Homework\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 8 × 3; type 24",
+      "tap \"Continue\"",
+      "remove task \"Reading\"",
+      "remove task \"Pack Backpack for Tomorrow\"",
+      "tap \"Add task\"",
+      "tap \"Custom task\"",
+      "type \"Tidy up\"",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "drag \"Have a Snack\" from position 2 to position 1"
+    ],
+    "crop": null,
+    "note": "Homework 25 min, Have a Snack moved to the top"
+  },
+  "10-homework-ready": {
+    "file": "screens/taskbuddies/10-homework-ready.png",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 7; type 28",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\"",
+      "choose Hoppy",
+      "tap \"Homework\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 8 × 3; type 24",
+      "tap \"Continue\"",
+      "remove task \"Reading\"",
+      "remove task \"Pack Backpack for Tomorrow\"",
+      "tap \"Add task\"",
+      "tap \"Custom task\"",
+      "type \"Tidy up\"",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "Homework: tap + (more time)",
+      "drag \"Have a Snack\" from position 2 to position 1",
+      "tap \"Save\"",
+      "tap \"Done\" to close the editor",
+      "scroll back to the top"
+    ],
+    "crop": null,
+    "note": "routine ready, buddy waiting, Start routine"
+  },
+  "video/setup-take": {
+    "file": "screens/taskbuddies/video/setup-take.mp4",
+    "session": "setup",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": 1.5,
+        "text": "tap \"Set up\""
+      },
+      {
+        "t": 3.11,
+        "text": "parent gate asks 4 × 7; type 28"
+      },
+      {
+        "t": 4.39,
+        "text": "tap \"Open Parent Area\""
+      },
+      {
+        "t": 6.16,
+        "text": "tap \"Done\""
+      },
+      {
+        "t": 9.82,
+        "text": "choose Hoppy"
+      },
+      {
+        "t": 11.87,
+        "text": "tap \"Homework\""
+      },
+      {
+        "t": 14.39,
+        "text": "tap \"Edit tasks\""
+      },
+      {
+        "t": 15.1,
+        "text": "parent gate asks 8 × 3; type 24"
+      },
+      {
+        "t": 16.36,
+        "text": "tap \"Continue\""
+      },
+      {
+        "t": 18.14,
+        "text": "remove task \"Reading\""
+      },
+      {
+        "t": 19.06,
+        "text": "remove task \"Pack Backpack for Tomorrow\""
+      },
+      {
+        "t": 19.94,
+        "text": "tap \"Add task\""
+      },
+      {
+        "t": 20.92,
+        "text": "tap \"Custom task\""
+      },
+      {
+        "t": 21.77,
+        "text": "type \"Tidy up\""
+      },
+      {
+        "t": 24.4,
+        "text": "Homework: tap + (more time)"
+      },
+      {
+        "t": 24.72,
+        "text": "Homework: tap + (more time)"
+      },
+      {
+        "t": 25.05,
+        "text": "Homework: tap + (more time)"
+      },
+      {
+        "t": 25.38,
+        "text": "Homework: tap + (more time)"
+      },
+      {
+        "t": 25.72,
+        "text": "Homework: tap + (more time)"
+      },
+      {
+        "t": 26.59,
+        "text": "drag \"Have a Snack\" from position 2 to position 1"
+      },
+      {
+        "t": 29.36,
+        "text": "tap \"Save\""
+      },
+      {
+        "t": 30.52,
+        "text": "tap \"Done\" to close the editor"
+      },
+      {
+        "t": 31.49,
+        "text": "scroll back to the top"
+      }
+    ],
+    "marks": [
+      {
+        "t": 4.39,
+        "label": "other product may enter frame"
+      },
+      {
+        "t": 6.97,
+        "label": "other product has left frame"
+      }
+    ],
+    "frames": 640,
+    "duration": 36.683333,
+    "note": "continuous take, real speed, no cuts"
+  },
+  "20-morning-ready": {
+    "file": "screens/taskbuddies/20-morning-ready.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top"
+    ],
+    "crop": null,
+    "note": "Morning routine ready: Get Dressed, Eat Breakfast, Brush Teeth, Put on Shoes, Pack Backpack"
+  },
+  "21-morning-task1": {
+    "file": "screens/taskbuddies/21-morning-task1.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\""
+    ],
+    "crop": null,
+    "note": "running, task 1: Get Dressed"
+  },
+  "21-morning-task2": {
+    "file": "screens/taskbuddies/21-morning-task2.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\""
+    ],
+    "crop": null,
+    "note": "running, task 2: Get Dressed"
+  },
+  "21-morning-task3": {
+    "file": "screens/taskbuddies/21-morning-task3.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\""
+    ],
+    "crop": null,
+    "note": "running, task 3: Brush Teeth"
+  },
+  "21-morning-task4": {
+    "file": "screens/taskbuddies/21-morning-task4.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\""
+    ],
+    "crop": null,
+    "note": "running, task 4: Brush Teeth"
+  },
+  "21-morning-task5": {
+    "file": "screens/taskbuddies/21-morning-task5.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\""
+    ],
+    "crop": null,
+    "note": "running, task 5: Put on Shoes"
+  },
+  "22-routine-finished": {
+    "file": "screens/taskbuddies/22-routine-finished.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\""
+    ],
+    "crop": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 570
+    },
+    "note": "routine finished"
+  },
+  "23-reward-chest": {
+    "file": "screens/taskbuddies/23-reward-chest.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\""
+    ],
+    "crop": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 572
+    },
+    "note": "reward chest waiting"
+  },
+  "24-reward": {
+    "file": "screens/taskbuddies/24-reward.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\"",
+      "tap the reward chest"
+    ],
+    "crop": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 621
+    },
+    "note": "reward revealed"
+  },
+  "video/morning-run": {
+    "file": "screens/taskbuddies/video/morning-run.mp4",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": -0.01,
+        "text": "tap \"Start routine\""
+      },
+      {
+        "t": 4.86,
+        "text": "task 1 \"Get Dressed\": tap \"Done! Feed\""
+      },
+      {
+        "t": 14.01,
+        "text": "task 2 \"Get Dressed\": tap \"Done! Feed\""
+      },
+      {
+        "t": 22.17,
+        "text": "task 3 \"Brush Teeth\": tap \"Done! Feed\""
+      },
+      {
+        "t": 30.21,
+        "text": "task 4 \"Brush Teeth\": tap \"Done! Feed\""
+      },
+      {
+        "t": 39.42,
+        "text": "task 5 \"Put on Shoes\": tap \"Done! Feed\""
+      },
+      {
+        "t": 46.8,
+        "text": "tap the reward chest"
+      }
+    ],
+    "marks": [],
+    "frames": 1450,
+    "duration": 59.516667,
+    "note": "Start routine to reward, real speed; tasks finished with \"Done! Feed Hoppy\""
+  },
+  "25-bedtime-ready": {
+    "file": "screens/taskbuddies/25-bedtime-ready.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\"",
+      "tap the reward chest",
+      "tap \"Back to buddies\"",
+      "choose Hoppy",
+      "tap \"Bedtime\""
+    ],
+    "crop": null,
+    "note": "Bedtime routine with Hoppy, default tasks"
+  },
+  "26-bedtime-task1": {
+    "file": "screens/taskbuddies/26-bedtime-task1.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\"",
+      "tap the reward chest",
+      "tap \"Back to buddies\"",
+      "choose Hoppy",
+      "tap \"Bedtime\"",
+      "tap \"Start routine\""
+    ],
+    "crop": null,
+    "note": "Bedtime running, task 1"
+  },
+  "27-bedtime-task2": {
+    "file": "screens/taskbuddies/27-bedtime-task2.png",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 6 × 8; type 48",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 7 × 8; type 56",
+      "tap \"Continue\"",
+      "remove task \"Go Potty\"",
+      "remove task \"Wash Face\"",
+      "remove task \"Brush Hair\"",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "task 1 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 2 \"Get Dressed\": tap \"Done! Feed\"",
+      "task 3 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 4 \"Brush Teeth\": tap \"Done! Feed\"",
+      "task 5 \"Put on Shoes\": tap \"Done! Feed\"",
+      "tap the reward chest",
+      "tap \"Back to buddies\"",
+      "choose Hoppy",
+      "tap \"Bedtime\"",
+      "tap \"Start routine\"",
+      "tap \"Done! Feed Hoppy\""
+    ],
+    "crop": null,
+    "note": "Bedtime running, task 2"
+  },
+  "video/bedtime-run": {
+    "file": "screens/taskbuddies/video/bedtime-run.mp4",
+    "session": "morning",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": -0.01,
+        "text": "tap \"Start routine\""
+      },
+      {
+        "t": 6.08,
+        "text": "tap \"Done! Feed Hoppy\""
+      }
+    ],
+    "marks": [],
+    "frames": 460,
+    "duration": 15.883333,
+    "note": "Bedtime with the same buddy, real speed"
+  },
+  "30-bored": {
+    "file": "screens/taskbuddies/30-bored.png",
+    "session": "timeout",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 5; type 20",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 4 × 3; type 12",
+      "tap \"Continue\"",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "wait 33 s in real time"
+    ],
+    "crop": null,
+    "note": "under 30 s left on a 1 minute task: buddy bored"
+  },
+  "31-timer-ran-out": {
+    "file": "screens/taskbuddies/31-timer-ran-out.png",
+    "session": "timeout",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 4 × 5; type 20",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "choose Hoppy",
+      "tap \"Morning\"",
+      "tap \"Edit tasks\"",
+      "parent gate asks 4 × 3; type 12",
+      "tap \"Continue\"",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "Get Dressed: tap - (less time)",
+      "tap \"Save\"",
+      "tap \"Done\"",
+      "scroll back to the top",
+      "tap \"Start routine\"",
+      "wait 33 s in real time",
+      "wait until the minute is up"
+    ],
+    "crop": null,
+    "note": "time ran out: Feed button and bubble"
+  },
+  "video/feed": {
+    "file": "screens/taskbuddies/video/feed.mp4",
+    "session": "timeout",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": 1.49,
+        "text": "tap \"Feed Hoppy\""
+      }
+    ],
+    "marks": [],
+    "frames": 285,
+    "duration": 7.116667,
+    "note": "feeding after the timer ran out (real time)"
+  },
+  "40-select-hoppy": {
+    "file": "screens/taskbuddies/40-select-hoppy.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area"
+    ],
+    "crop": null,
+    "note": "selection carousel on Hoppy"
+  },
+  "40-select-snapper": {
+    "file": "screens/taskbuddies/40-select-snapper.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "tap \"Next buddy\""
+    ],
+    "crop": null,
+    "note": "selection carousel on Snapper"
+  },
+  "40-select-snoozy": {
+    "file": "screens/taskbuddies/40-select-snoozy.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\""
+    ],
+    "crop": null,
+    "note": "selection carousel on Snoozy"
+  },
+  "40-select-flutty": {
+    "file": "screens/taskbuddies/40-select-flutty.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\""
+    ],
+    "crop": null,
+    "note": "selection carousel on Flutty"
+  },
+  "40-select-buddy": {
+    "file": "screens/taskbuddies/40-select-buddy.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\""
+    ],
+    "crop": null,
+    "note": "selection carousel on Buddy"
+  },
+  "video/selection": {
+    "file": "screens/taskbuddies/video/selection.mp4",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": 2.68,
+        "text": "tap \"Next buddy\""
+      },
+      {
+        "t": 5.31,
+        "text": "tap \"Next buddy\""
+      },
+      {
+        "t": 7.82,
+        "text": "tap \"Next buddy\""
+      },
+      {
+        "t": 10.46,
+        "text": "tap \"Next buddy\""
+      },
+      {
+        "t": 12.83,
+        "text": "tap \"Previous buddy\""
+      },
+      {
+        "t": 13.97,
+        "text": "tap \"Previous buddy\""
+      },
+      {
+        "t": 15.81,
+        "text": "choose Snoozy"
+      }
+    ],
+    "marks": [],
+    "frames": 532,
+    "duration": 18.483333,
+    "note": "browsing all five buddies, then choosing Snoozy"
+  },
+  "41-snoozy-ready": {
+    "file": "screens/taskbuddies/41-snoozy-ready.png",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      "fresh install, open http://localhost:5173",
+      "tap \"Set up\"",
+      "parent gate asks 7 × 5; type 35",
+      "tap \"Open Parent Area\"",
+      "tap \"Done\" in the Parent Area",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Next buddy\"",
+      "tap \"Previous buddy\"",
+      "tap \"Previous buddy\"",
+      "choose Snoozy",
+      "tap \"Morning\""
+    ],
+    "crop": null,
+    "note": "Morning routine with Snoozy"
+  },
+  "video/snoozy-run": {
+    "file": "screens/taskbuddies/video/snoozy-run.mp4",
+    "session": "buddies",
+    "url": "http://localhost:5173/",
+    "steps": [
+      {
+        "t": -0.02,
+        "text": "tap \"Start routine\""
+      },
+      {
+        "t": 2.05,
+        "text": "tap \"Done! Feed Snoozy\""
+      }
+    ],
+    "marks": [],
+    "frames": 363,
+    "duration": 8.316667,
+    "note": "Snoozy in a running Morning routine: idle, chomp, celebrate, next task"
+  }
+}

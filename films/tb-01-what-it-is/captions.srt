@@ -1,0 +1,23 @@
+1
+00:00:00,500 --> 00:00:04,200
+Not another chart.
+
+2
+00:00:04,800 --> 00:00:08,600
+One thing at a time.
+
+3
+00:00:09,600 --> 00:00:12,200
+Pick a routine.
+
+4
+00:00:12,600 --> 00:00:16,000
+The buddy stays with them.
+
+5
+00:00:20,300 --> 00:00:23,600
+Same buddy, another routine.
+
+6
+00:00:25,600 --> 00:00:28,100
+Not another chart.

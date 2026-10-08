@@ -1,0 +1,327 @@
+{
+  "duration": 30,
+  "fps": 30,
+  "elements": [
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 0,
+      "out": 4.4,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"><div style=\"position:absolute;inset:6cqw 5cqw;background:#FFFDF8;border-radius:4cqw;box-shadow:0 2cqw 6cqw rgba(74,52,38,0.12)\"><div style=\"position:absolute;left:12cqw;top:9cqh;font-family:'Nunito';font-weight:800;font-size:9cqw;color:#4A3426\">Morning</div><div style=\"position:absolute;left:12cqw;right:12cqw;top:20cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Get dressed</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:31cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Breakfast</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:42cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Teeth</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:53cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Shoes</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:64cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Bag</div></div></div></div>",
+      "fadeIn": 0.5,
+      "fadeOut": 0
+    },
+    {
+      "kind": "text",
+      "text": "Not another chart.",
+      "region": "caption",
+      "in": 0.5,
+      "out": 4.2,
+      "enter": "up"
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 4.4,
+      "out": 9.4,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"></div>",
+      "fadeIn": 0,
+      "fadeOut": 0.35
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 4.4,
+      "out": 5.9,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"><div style=\"position:absolute;inset:6cqw 5cqw;background:#FFFDF8;border-radius:4cqw;box-shadow:0 2cqw 6cqw rgba(74,52,38,0.12)\"><div style=\"position:absolute;left:12cqw;top:9cqh;font-family:'Nunito';font-weight:800;font-size:9cqw;color:#4A3426\">Morning</div><div style=\"position:absolute;left:12cqw;right:12cqw;top:20cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Get dressed</div></div></div></div>",
+      "fadeIn": 0,
+      "fadeOut": 0.5
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 4.4,
+      "out": 5.6,
+      "html": "<div style=\"position:absolute;inset:6cqw 5cqw\"><div style=\"position:absolute;left:12cqw;right:12cqw;top:31cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Breakfast</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:42cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Teeth</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:53cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Shoes</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:64cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Bag</div></div></div>",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "opacity": [
+        [
+          4.4,
+          1
+        ],
+        [
+          5.6,
+          0
+        ]
+      ],
+      "y": [
+        [
+          4.4,
+          0
+        ],
+        [
+          5.6,
+          60
+        ]
+      ]
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 5.5,
+      "out": 9.4,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"><div style=\"position:absolute;left:0;right:0;top:12cqh;text-align:center;font-family:'Nunito';font-weight:800;font-size:11cqw;color:#4A3426\">Get dressed</div></div>",
+      "fadeIn": 0.5
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-idle.webp",
+      "region": {
+        "x": 284.0971563981043,
+        "y": 979.2971563981043,
+        "w": 511.8056872037914,
+        "h": 511.8056872037914
+      },
+      "in": 6.3,
+      "out": 9.4,
+      "fadeIn": 0.5,
+      "enter": "scale",
+      "layouts": [
+        "9x16"
+      ]
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-idle.webp",
+      "region": {
+        "x": 357.9845971563981,
+        "y": 673.5845971563981,
+        "w": 364.0308056872038,
+        "h": 364.0308056872038
+      },
+      "in": 6.3,
+      "out": 9.4,
+      "fadeIn": 0.5,
+      "enter": "scale",
+      "layouts": [
+        "4x5"
+      ]
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-idle.webp",
+      "region": {
+        "x": 621.9952606635071,
+        "y": 424.59526066350713,
+        "w": 346.00947867298584,
+        "h": 346.00947867298584
+      },
+      "in": 6.3,
+      "out": 9.4,
+      "fadeIn": 0.5,
+      "enter": "scale",
+      "layouts": [
+        "1x1"
+      ]
+    },
+    {
+      "kind": "text",
+      "text": "One thing at a time.",
+      "region": "caption",
+      "in": 4.8,
+      "out": 8.6,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/05-routine-picker.png",
+      "region": "screen",
+      "in": 9.4,
+      "out": 11.5,
+      "fadeIn": 0.35,
+      "fadeOut": 0
+    },
+    {
+      "kind": "text",
+      "text": "Pick a routine.",
+      "region": "caption",
+      "in": 9.6,
+      "out": 12.2,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/morning-run.mp4",
+      "region": "screen",
+      "in": 11.4,
+      "out": 16.5,
+      "start": 3.2600000000000002,
+      "fadeIn": 0.2,
+      "fadeOut": 0
+    },
+    {
+      "kind": "text",
+      "text": "The buddy stays with them.",
+      "region": "caption",
+      "in": 12.6,
+      "out": 16,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/21-morning-task3.png",
+      "region": "screen",
+      "in": 16.4,
+      "out": 16.95,
+      "fadeIn": 0.1,
+      "fadeOut": 0
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/21-morning-task4.png",
+      "region": "screen",
+      "in": 16.9,
+      "out": 17.45,
+      "fadeIn": 0.1,
+      "fadeOut": 0
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/21-morning-task5.png",
+      "region": "screen",
+      "in": 17.4,
+      "out": 18,
+      "fadeIn": 0.1,
+      "fadeOut": 0
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/22-routine-finished.png",
+      "region": "screen",
+      "in": 17.95,
+      "out": 18.9,
+      "mw": 1170,
+      "mh": 1710,
+      "fadeIn": 0.15,
+      "fadeOut": 0
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/24-reward.png",
+      "region": "screen",
+      "in": 18.85,
+      "out": 20,
+      "mw": 1170,
+      "mh": 1863,
+      "fadeIn": 0.15,
+      "fadeOut": 0.3
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/bedtime-run.mp4",
+      "region": "screen",
+      "in": 19.9,
+      "out": 24.9,
+      "start": 4.68,
+      "fadeIn": 0.3,
+      "fadeOut": 0.3
+    },
+    {
+      "kind": "text",
+      "text": "Same buddy, another routine.",
+      "region": "caption",
+      "in": 20.3,
+      "out": 23.6,
+      "enter": "up"
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 24.8,
+      "out": 26.3,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"><div style=\"position:absolute;inset:6cqw 5cqw;background:#FFFDF8;border-radius:4cqw;box-shadow:0 2cqw 6cqw rgba(74,52,38,0.12)\"><div style=\"position:absolute;left:12cqw;top:9cqh;font-family:'Nunito';font-weight:800;font-size:9cqw;color:#4A3426\">Morning</div><div style=\"position:absolute;left:12cqw;right:12cqw;top:20cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Get dressed</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:31cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\">✓</div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#8A7560;text-decoration:line-through;\">Breakfast</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:42cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Teeth</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:53cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Shoes</div></div><div style=\"position:absolute;left:12cqw;right:12cqw;top:64cqh;height:8cqh;display:flex;align-items:center;gap:5cqw;border-bottom:2px solid #E0CDB4\">\n  <div style=\"width:9cqw;height:9cqw;border:0.9cqw solid #8A7560;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#4A3426;font-family:'DM Sans';font-weight:600;font-size:7cqw;line-height:1\"></div>\n  <div style=\"font-family:'DM Sans';font-weight:400;font-size:7.4cqw;color:#4A3426;\">Bag</div></div></div></div>",
+      "fadeIn": 0.35,
+      "fadeOut": 0.6
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 25.7,
+      "out": 28.2,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"></div>",
+      "fadeIn": 0.6,
+      "fadeOut": 0.35
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-celebrate.webp",
+      "region": {
+        "x": 222.6804739336493,
+        "y": 832.6804739336493,
+        "w": 634.6390521327014,
+        "h": 634.6390521327014
+      },
+      "in": 25.8,
+      "out": 28.2,
+      "fadeIn": 0.6,
+      "enter": "scale",
+      "layouts": [
+        "9x16"
+      ]
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-celebrate.webp",
+      "region": {
+        "x": 314.30090047393367,
+        "y": 569.3009004739337,
+        "w": 451.3981990521327,
+        "h": 451.3981990521327
+      },
+      "in": 25.8,
+      "out": 28.2,
+      "fadeIn": 0.6,
+      "enter": "scale",
+      "layouts": [
+        "4x5"
+      ]
+    },
+    {
+      "kind": "sprite",
+      "sheet": "public/buddy-watercolor/hoppy-celebrate.webp",
+      "region": {
+        "x": 580.4741232227489,
+        "y": 325.47412322274886,
+        "w": 429.05175355450234,
+        "h": 429.05175355450234
+      },
+      "in": 25.8,
+      "out": 28.2,
+      "fadeIn": 0.6,
+      "enter": "scale",
+      "layouts": [
+        "1x1"
+      ]
+    },
+    {
+      "kind": "text",
+      "text": "Not another chart.",
+      "region": "caption",
+      "in": 25.6,
+      "out": 28.1,
+      "enter": "up"
+    },
+    {
+      "kind": "endcard",
+      "logo": "brand/taskbuddies/logo.svg",
+      "url": "taskbuddies.app",
+      "label": "",
+      "region": "full",
+      "in": 28.2,
+      "out": 30,
+      "fadeOut": 0,
+      "fadeIn": 0.4
+    }
+  ]
+}

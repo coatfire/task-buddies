@@ -1,0 +1,20 @@
+ON SCREEN: Morning
+ON SCREEN: ✓
+ON SCREEN: Get dressed
+ON SCREEN: Breakfast
+ON SCREEN: Teeth
+ON SCREEN: Shoes
+ON SCREEN: Bag
+ON SCREEN: Not another chart.
+ON SCREEN: One thing at a time.
+ON SCREEN: Pick a routine.
+ON SCREEN: The buddy stays with them.
+ON SCREEN: Same buddy, another routine.
+ON SCREEN: taskbuddies.app
+VO: Not another chart.
+VO: Task Buddies shows one thing at a time.
+VO: You pick a routine.
+VO: Their buddy stays on screen for each task, and gets fed when it is done.
+VO: At the end, a reward.
+VO: Same buddy for bedtime, or whatever comes next.
+VO: Not another chart.
