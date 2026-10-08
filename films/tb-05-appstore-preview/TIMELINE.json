@@ -1,0 +1,67 @@
+{
+  "duration": 20,
+  "fps": 30,
+  "elements": [
+    {
+      "kind": "html",
+      "region": "full",
+      "in": 0,
+      "out": 20,
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "html": "<div style=\"position:absolute;inset:0;background:#FAF3E8\"></div>"
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": "screen",
+      "in": 0,
+      "out": 6.1,
+      "start": 17.64,
+      "fadeIn": 0,
+      "fadeOut": 0.25
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": "screen",
+      "in": 5.9,
+      "out": 9.1,
+      "start": 7.82,
+      "fadeIn": 0.25,
+      "fadeOut": 0.25
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/morning-run.mp4",
+      "region": "screen",
+      "in": 8.9,
+      "out": 16.1,
+      "start": 3.0600000000000005,
+      "fadeIn": 0.25,
+      "fadeOut": 0.25
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/22-routine-finished.png",
+      "region": "screen",
+      "in": 15.9,
+      "out": 17.7,
+      "mw": 1170,
+      "mh": 1710,
+      "fadeIn": 0.25,
+      "fadeOut": 0.2
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/24-reward.png",
+      "region": "screen",
+      "in": 17.5,
+      "out": 20,
+      "mw": 1170,
+      "mh": 1863,
+      "fadeIn": 0.2,
+      "fadeOut": 0
+    }
+  ]
+}
