@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700" role="img" aria-labelledby="title desc">
+<title id="title">Task Buddies logo concept — concept_1_premium_spark_wordmark</title>
+<desc id="desc">Warm cream, cocoa and peach logo concept for the Task Buddies app.</desc>
+<style>
+  .serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 800; }
+  .soft { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; }
+  .small { font-family: Georgia, 'Times New Roman', serif; font-weight: 600; letter-spacing: .04em; }
+</style>
+
+<rect width="1400" height="700" rx="0" fill="#F6E5CC"/>
+<g transform="translate(700 350)">
+  <text class="serif" x="0" y="36" text-anchor="middle" font-size="164" fill="#24130D">Task Buddies</text>
+  <g transform="translate(360 -116) scale(.72)">
+<g fill="#F0A275" stroke="none">
+  <path d="M0,-18 C3,-6 6,-3 18,0 C6,3 3,6 0,18 C-3,6 -6,3 -18,0 C-6,-3 -3,-6 0,-18 Z"/>
+  <circle cx="24" cy="-17" r="4"/>
+  <circle cx="-22" cy="20" r="3.5"/>
+</g></g>
+  <path d="M284 78 C345 118 425 112 486 76" fill="none" stroke="#D98255" stroke-width="12" stroke-linecap="round" opacity=".9"/>
+  <text class="small" x="0" y="145" text-anchor="middle" font-size="34" fill="#8C7461">COZY FOCUS COMPANIONS</text>
+</g>
+
+</svg>

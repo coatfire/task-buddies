@@ -16,3 +16,6 @@ store-assets/screenshots
 # generated social media pack (npm run social)
 store-assets/social
 store-assets/social-pack.zip
+# raw screencast frames for the explainer films (encoded copies live in screens/taskbuddies/video)
+screens/taskbuddies/rec
+films/*/.poster-*

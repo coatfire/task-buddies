@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  /* Task Buddies tokens, from tailwind.config.js (see brand/taskbuddies/tokens.json). */
+  @font-face { font-family: 'Nunito'; font-weight: 700; src: url('../../node_modules/@fontsource/nunito/files/nunito-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Nunito'; font-weight: 800; src: url('../../node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'DM Sans'; font-weight: 400; src: url('../../node_modules/@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'DM Sans'; font-weight: 600; src: url('../../node_modules/@fontsource/dm-sans/files/dm-sans-latin-600-normal.woff2') format('woff2'); }
+  html, body { margin: 0; padding: 0; background: #FAF3E8; }
+  #stage { position: relative; overflow: hidden; background: linear-gradient(180deg, #FAF3E8 0%, #F6E5CC 100%); font-family: 'DM Sans', sans-serif; color: #4A3426; }
+  #stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(232,155,111,0.16) 0%, rgba(232,155,111,0.05) 35%, transparent 72%); }
+  .el { position: absolute; will-change: transform, opacity; container-type: size; }
+  .card { overflow: hidden; background: #FAF3E8; box-shadow: 0 24px 60px rgba(74,52,38,0.22); outline: 1px solid #E0CDB4; }
+  .card > img, .card > video { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .caption { display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Nunito', sans-serif; font-weight: 800; line-height: 1.18; letter-spacing: -0.01em; color: #4A3426; }
+  .caption.left { justify-content: flex-start; text-align: left; }
+  .placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #F2E6D4; outline: 2px dashed #E89B6F; color: #4A3426; }
+  .placeholder .tag { font-family: 'DM Sans'; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E89B6F; }
+  .placeholder .label { font-family: 'Nunito'; font-weight: 800; margin-top: 0.6em; }
+  .placeholder .sub { font-family: 'DM Sans'; color: #8A7560; margin-top: 0.8em; }
+  .endcard { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; }
+  .endcard img { display: block; }
+  .endcard .url { font-family: 'DM Sans'; font-weight: 600; color: #4A3426; letter-spacing: 0.02em; }
+  .endcard .ea { font-family: 'DM Sans'; font-weight: 600; color: #E89B6F; letter-spacing: 0.22em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="engine.js"></script>
+</body>
+</html>

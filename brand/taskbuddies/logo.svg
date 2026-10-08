@@ -1,0 +1,11 @@
+<svg viewBox="0 0 280 50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Task Buddies" width="1120" height="200">
+  <!-- Static copy of src/components/Logo.jsx at the default size="normal". This is the logo the app shows. -->
+  <text x="140" y="32" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="800" font-size="28" fill="#24130D">Task Buddies</text>
+  <g transform="translate(240 10) scale(0.6)">
+    <g fill="#F0A275" stroke="none">
+      <path d="M0,-18 C3,-6 6,-3 18,0 C6,3 3,6 0,18 C-3,6 -6,3 -18,0 C-6,-3 -3,-6 0,-18 Z"/>
+      <circle cx="24" cy="-17" r="4"/>
+      <circle cx="-22" cy="20" r="3.5"/>
+    </g>
+  </g>
+</svg>
