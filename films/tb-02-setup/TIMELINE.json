@@ -1,0 +1,282 @@
+{
+  "duration": 35,
+  "fps": 30,
+  "elements": [
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 0,
+      "out": 4.6,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"><div data-scroll style=\"position:absolute;left:0;right:0;top:0;padding-top:9cqw;background:#F4F2F0\">\n  <div style=\"margin:0 9cqw 7cqw;font-family:'DM Sans';font-weight:600;font-size:7.4cqw;color:#7D756F\">Create an account</div>\n  <div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Email address</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Create a password</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Confirm password</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Your full name</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Phone number</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Postcode</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Date of birth</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">How did you hear about us?</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Choose a username</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Security question</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div><div style=\"margin:0 9cqw 6cqw\"><div style=\"font-family:'DM Sans';font-size:4.6cqw;color:#9A9089;margin-bottom:1.6cqw\">Answer</div><div style=\"height:11cqw;border-radius:2.4cqw;background:#E9E5E1;border:1px solid #D6D0CA\"></div></div>\n  <div style=\"margin:0 9cqw 6cqw;display:flex;gap:3cqw;align-items:center\"><div style=\"width:6cqw;height:6cqw;border:1px solid #B9B1AA;border-radius:1cqw\"></div><div style=\"font-family:'DM Sans';font-size:4.2cqw;color:#9A9089\">I agree to the terms and conditions</div></div>\n  <div style=\"margin:0 9cqw 9cqw;height:12cqw;border-radius:3cqw;background:#C9C3BD\"></div></div></div>",
+      "fadeIn": 0.5,
+      "fadeOut": 0,
+      "innerY": [
+        [
+          0.3,
+          0
+        ],
+        [
+          4,
+          -48
+        ]
+      ],
+      "scale": [
+        [
+          3.9,
+          1
+        ],
+        [
+          4.6,
+          0.86
+        ]
+      ],
+      "opacity": [
+        [
+          3.9,
+          1
+        ],
+        [
+          4.6,
+          0
+        ]
+      ]
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/01-first-open.png",
+      "region": "screen",
+      "in": 4,
+      "out": 7.55,
+      "fadeIn": 0.6,
+      "fadeOut": 0
+    },
+    {
+      "kind": "text",
+      "text": "Open it.",
+      "region": "caption",
+      "in": 4.3,
+      "out": 7.3,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": "screen",
+      "in": 7.5,
+      "out": 11.09,
+      "start": 0.8,
+      "fadeIn": 0,
+      "fadeOut": 0
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": {
+        "x": 97.09123222748815,
+        "y": 588.0350000000001,
+        "w": 885.8175355450237,
+        "h": 555.93
+      },
+      "in": 11.09,
+      "out": 12.379999999999999,
+      "start": 4.39,
+      "rate": 2,
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "focus": [
+        [
+          0,
+          [
+            0,
+            0,
+            1,
+            0.29
+          ]
+        ]
+      ],
+      "layouts": [
+        "9x16"
+      ]
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": {
+        "x": 224.97334123222748,
+        "y": 395.2925,
+        "w": 630.053317535545,
+        "h": 395.41499999999996
+      },
+      "in": 11.09,
+      "out": 12.379999999999999,
+      "start": 4.39,
+      "rate": 2,
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "focus": [
+        [
+          0,
+          [
+            0,
+            0,
+            1,
+            0.29
+          ]
+        ]
+      ],
+      "layouts": [
+        "4x5"
+      ]
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": {
+        "x": 560,
+        "y": 200.51641025641027,
+        "w": 470,
+        "h": 294.96717948717946
+      },
+      "in": 11.09,
+      "out": 12.379999999999999,
+      "start": 4.39,
+      "rate": 2,
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "focus": [
+        [
+          0,
+          [
+            0,
+            0,
+            1,
+            0.29
+          ]
+        ]
+      ],
+      "layouts": [
+        "1x1"
+      ]
+    },
+    {
+      "kind": "screen",
+      "video": "screens/taskbuddies/video/setup-take.mp4",
+      "region": "screen",
+      "in": 12.379999999999999,
+      "out": 25.439999999999998,
+      "start": 6.97,
+      "rate": 2,
+      "fadeIn": 0,
+      "fadeOut": 0
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 11.09,
+      "out": 25.439999999999998,
+      "fadeIn": 0.2,
+      "fadeOut": 0.2,
+      "html": "<div style=\"position:absolute;right:4cqw;top:2.5cqw;padding:1.2cqw 3cqw;border-radius:99px;background:rgba(74,52,38,0.82);color:#FAF3E8;font-family:'DM Sans';font-weight:600;font-size:5cqw;letter-spacing:0.04em\">x2</div>"
+    },
+    {
+      "kind": "text",
+      "text": "Pick the kind of routine.",
+      "region": "caption",
+      "in": 13.905,
+      "out": 17.23,
+      "enter": "up"
+    },
+    {
+      "kind": "text",
+      "text": "Add what needs doing.",
+      "region": "caption",
+      "in": 17.665,
+      "out": 20.78,
+      "enter": "up"
+    },
+    {
+      "kind": "text",
+      "text": "Change it whenever.",
+      "region": "caption",
+      "in": 20.895,
+      "out": 23.974999999999998,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/10-homework-ready.png",
+      "region": "screen",
+      "in": 25.439999999999998,
+      "out": 26.04,
+      "fadeIn": 0.15,
+      "fadeOut": 0,
+      "rotY": [
+        [
+          25.439999999999998,
+          0
+        ],
+        [
+          26.04,
+          90
+        ]
+      ]
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 26.04,
+      "out": 26.34,
+      "html": "<div style=\"position:absolute;inset:0;border-radius:6cqw;background:#F2E6D4;border:1px solid #E0CDB4;box-shadow:0 24px 60px rgba(74,52,38,0.18);overflow:hidden\"></div>",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "rotY": [
+        [
+          26.04,
+          90
+        ],
+        [
+          26.34,
+          90
+        ]
+      ]
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/10-homework-ready.png",
+      "region": "screen",
+      "in": 26.04,
+      "out": 32,
+      "fadeIn": 0,
+      "fadeOut": 0.35,
+      "rotY": [
+        [
+          26.04,
+          -90
+        ],
+        [
+          26.64,
+          0
+        ]
+      ]
+    },
+    {
+      "kind": "text",
+      "text": "Hand it over.",
+      "region": "caption",
+      "in": 26.64,
+      "out": 30.04,
+      "enter": "up"
+    },
+    {
+      "kind": "endcard",
+      "logo": "brand/taskbuddies/logo.svg",
+      "url": "taskbuddies.app",
+      "label": "",
+      "region": "full",
+      "in": 32,
+      "out": 35,
+      "fadeOut": 0,
+      "fadeIn": 0.4
+    }
+  ]
+}

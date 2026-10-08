@@ -1,0 +1,27 @@
+ON SCREEN: Create an account
+ON SCREEN: Email address
+ON SCREEN: Create a password
+ON SCREEN: Confirm password
+ON SCREEN: Your full name
+ON SCREEN: Phone number
+ON SCREEN: Postcode
+ON SCREEN: Date of birth
+ON SCREEN: How did you hear about us?
+ON SCREEN: Choose a username
+ON SCREEN: Security question
+ON SCREEN: Answer
+ON SCREEN: I agree to the terms and conditions
+ON SCREEN: Open it.
+ON SCREEN: x2
+ON SCREEN: Pick the kind of routine.
+ON SCREEN: Add what needs doing.
+ON SCREEN: Change it whenever.
+ON SCREEN: Hand it over.
+ON SCREEN: taskbuddies.app
+VO: You might expect an account and a long form first.
+VO: Open it.
+VO: Answer the grown-up question.
+VO: Pick the kind of routine.
+VO: Add what needs doing.
+VO: Change times and order whenever you like.
+VO: Then hand it over.
