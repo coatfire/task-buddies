@@ -1,0 +1,213 @@
+{
+  "duration": 25,
+  "fps": 30,
+  "elements": [
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 0,
+      "out": 4.4,
+      "html": "<img src=\"brand/taskbuddies/icon.png\" style=\"position:absolute;left:50%;top:44%;width:52cqw;height:52cqw;transform:translate(-50%,-50%);border-radius:11.5cqw;box-shadow:0 3cqw 8cqw rgba(74,52,38,0.22)\">",
+      "fadeIn": 0.5,
+      "fadeOut": 0.4
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 0.6,
+      "out": 4.2,
+      "html": "<div style=\"position:absolute;left:8cqw;right:8cqw;top:58%;padding:4.5cqw 5cqw;border-radius:4cqw;background:#FFFFFF;border:1px solid #D6D0CA;box-shadow:0 4cqw 10cqw rgba(74,52,38,0.25);font-family:'DM Sans';font-size:5.4cqw;color:#A79E96\">Email address</div>",
+      "fadeIn": 0.4,
+      "fadeOut": 0,
+      "enter": "up",
+      "opacity": [
+        [
+          3.5,
+          1
+        ],
+        [
+          4.2,
+          0
+        ]
+      ],
+      "filter": [
+        [
+          3.5,
+          0
+        ],
+        [
+          4.2,
+          14
+        ]
+      ]
+    },
+    {
+      "kind": "text",
+      "text": "What's the catch?",
+      "region": "caption",
+      "in": 0.4,
+      "out": 3.4,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/50-prod-first-open.png",
+      "region": "screen",
+      "in": 4.1,
+      "out": 7.2,
+      "fadeIn": 0.5,
+      "fadeOut": 0.3
+    },
+    {
+      "kind": "text",
+      "text": "No sign-up.",
+      "region": "caption",
+      "in": 4.5,
+      "out": 7,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/51-prod-ready.png",
+      "region": "screen",
+      "in": 7,
+      "out": 11.4,
+      "fadeIn": 0.35,
+      "fadeOut": 0.3
+    },
+    {
+      "kind": "text",
+      "text": "Your routine stays on your device.",
+      "region": "caption",
+      "in": 7.3,
+      "out": 11.2,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/52-prod-finished.png",
+      "region": "screen",
+      "in": 11.2,
+      "out": 15.4,
+      "mw": 1170,
+      "mh": 1863,
+      "fadeIn": 0.35,
+      "fadeOut": 0.3
+    },
+    {
+      "kind": "text",
+      "text": "No ads.",
+      "region": "caption",
+      "in": 11.5,
+      "out": 15,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/52-prod-finished.png",
+      "region": "screen",
+      "in": 15.2,
+      "out": 15.9,
+      "mw": 1170,
+      "mh": 1863,
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "scale": [
+        [
+          15.2,
+          1
+        ],
+        [
+          15.9,
+          0.6
+        ]
+      ],
+      "opacity": [
+        [
+          15.2,
+          1
+        ],
+        [
+          15.9,
+          0
+        ]
+      ]
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/53-prod-reopened.png",
+      "region": "screen",
+      "in": 16.3,
+      "out": 17.3,
+      "mw": 1170,
+      "mh": 1716,
+      "fadeIn": 0,
+      "fadeOut": 0.2,
+      "enter": "scale",
+      "scale": [
+        [
+          16.3,
+          0.6
+        ],
+        [
+          16.8,
+          1
+        ]
+      ]
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/54-prod-reopened-ready.png",
+      "region": "screen",
+      "in": 17.2,
+      "out": 18.5,
+      "fadeIn": 0.2,
+      "fadeOut": 0.2
+    },
+    {
+      "kind": "text",
+      "text": "Close it. Open it again.",
+      "region": "caption",
+      "in": 15.5,
+      "out": 18.6,
+      "enter": "up"
+    },
+    {
+      "kind": "screen",
+      "src": "screens/taskbuddies/56-prod-reopened-tasks-all.png",
+      "region": "screen",
+      "in": 18.4,
+      "out": 21.2,
+      "fadeIn": 0.2,
+      "fadeOut": 0.35
+    },
+    {
+      "kind": "text",
+      "text": "Still there.",
+      "region": "caption",
+      "in": 18.8,
+      "out": 21.1,
+      "enter": "up"
+    },
+    {
+      "kind": "html",
+      "region": "screen",
+      "in": 21.2,
+      "out": 23.4,
+      "html": "<img src=\"brand/taskbuddies/icon.png\" style=\"position:absolute;left:50%;top:44%;width:52cqw;height:52cqw;transform:translate(-50%,-50%);border-radius:11.5cqw;box-shadow:0 3cqw 8cqw rgba(74,52,38,0.22)\">",
+      "fadeIn": 0.4,
+      "fadeOut": 0.35
+    },
+    {
+      "kind": "endcard",
+      "logo": "brand/taskbuddies/logo.svg",
+      "url": "taskbuddies.app",
+      "label": "",
+      "region": "full",
+      "in": 23.4,
+      "out": 25,
+      "fadeOut": 0,
+      "fadeIn": 0.4
+    }
+  ]
+}

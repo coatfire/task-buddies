@@ -1,0 +1,51 @@
+{
+  "before": {
+    "note": "fresh profile, nothing opened yet",
+    "cookies": []
+  },
+  "firstOpen": {
+    "localStorage": {
+      "routine-timer-state": "{\"state\":{\"screen\":\"welcome\",\"selectedCharacter\":\"hoppy\",\"routineName\":\"Bedtime\",\"routineType\":\"bedtime\",\"tasks\":[{\"id\":\"put_on_pyjamas\",\"title\":\"Put on Pajamas\",\"durationMinutes\":2,\"itemEmoji\":\"👕\",\"itemLabel\":\"Put on Pajamas\",\"svgGroup\":\"clothes\",\"themeColor\":\"#9D8AAE\",\"task_type_key\":\"put_on_pyjamas\"},{\"id\":\"brush_teeth\",\"title\":\"Brush Teeth\",\"durationMinutes\":2,\"itemEmoji\":\"🦷\",\"itemLabel\":\"Brush Teeth\",\"svgGroup\":\"toothbrush\",\"themeColor\":\"#86A4B3\",\"task_type_key\":\"brush_teeth\"},{\"id\":\"go_potty\",\"title\":\"Go Potty\",\"durationMinutes\":2,\"itemEmoji\":\"🧻\",\"itemLabel\":\"Go Potty\",\"svgGroup\":\"toilet-roll\",\"themeColor\":\"#C89A63\",\"task_type_key\":\"go_potty\"},{\"id\":\"pick_a_book\",\"title\":\"Pick a Book\",\"durationMinutes\":1,\"itemEmoji\":\"📖\",\"itemLabel\":\"Pick a Book\",\"svgGroup\":\"book\",\"themeColor\":\"#B86F56\",\"task_type_key\":\"pick_a_book\"},{\"id\":\"lights_off\",\"title\":\"Lights Off\",\"durationMinutes\":1,\"itemEmoji\":\"🌙\",\"itemLabel\":\"Lights Off\",\"svgGroup\":\"moon\",\"themeColor\":\"#81906F\",\"task_type_key\":\"lights_off\"}],\"currentTaskIndex\":0,\"timeLeft\":60,\"totalTime\":60,\"isRunning\":false,\"timerEndsAt\":null,\"rexState\":\"idle\",\"hasSavedRoutine\":false,\"customRoutineId\":null,\"afterGate\":null,\"returnScreen\":null},\"version\":0}"
+    },
+    "sessionStorage": {},
+    "indexedDB": [],
+    "cacheStorage": {
+      "workbox-precache-v2-http://localhost:4173/": 1
+    },
+    "cookies": []
+  },
+  "afterRun": {
+    "localStorage": {
+      "task-buddy:routines/v1": "{\"homework\":[{\"task_type_key\":\"unpack_bag\",\"custom_label\":null,\"emoji\":\"🎒\",\"duration_minutes\":2},{\"task_type_key\":\"have_a_snack\",\"custom_label\":null,\"emoji\":\"🍎\",\"duration_minutes\":5},{\"task_type_key\":\"homework\",\"custom_label\":null,\"emoji\":\"✏️\",\"duration_minutes\":20},{\"task_type_key\":\"custom\",\"custom_label\":\"Tidy up\",\"emoji\":\"❓\",\"duration_minutes\":5}]}",
+      "task-buddy:rewards/v1": "{\"pick-tomorrow\":\"2026-10-08T19:35:37.591Z\"}",
+      "task-buddy:has-completed-run": "true",
+      "task-buddy:setup-complete": "true",
+      "routine-timer-state": "{\"state\":{\"screen\":\"complete\",\"selectedCharacter\":\"hoppy\",\"routineName\":\"Homework\",\"routineType\":\"homework\",\"tasks\":[{\"id\":\"unpack_bag\",\"title\":\"Unpack Backpack\",\"durationMinutes\":2,\"itemEmoji\":\"🎒\",\"itemLabel\":\"Unpack Backpack\",\"svgGroup\":\"backpack\",\"themeColor\":\"#9D8AAE\",\"task_type_key\":\"unpack_bag\"},{\"id\":\"have_a_snack\",\"title\":\"Have a Snack\",\"durationMinutes\":5,\"itemEmoji\":\"🍎\",\"itemLabel\":\"Have a Snack\",\"svgGroup\":\"apple\",\"themeColor\":\"#86A4B3\",\"task_type_key\":\"have_a_snack\"},{\"id\":\"homework\",\"title\":\"Homework\",\"durationMinutes\":20,\"itemEmoji\":\"✏️\",\"itemLabel\":\"Homework\",\"svgGroup\":\"pencil\",\"themeColor\":\"#B86F56\",\"task_type_key\":\"homework\"},{\"id\":\"0HHBBmT71Kq1jO4pshzP1\",\"title\":\"Tidy up\",\"durationMinutes\":5,\"itemEmoji\":\"❓\",\"itemLabel\":\"Task\",\"svgGroup\":\"question-mark\",\"themeColor\":\"#B86F56\",\"task_type_key\":\"custom\"}],\"currentTaskIndex\":3,\"timeLeft\":0,\"totalTime\":300,\"isRunning\":false,\"timerEndsAt\":null,\"rexState\":\"celebrating\",\"hasSavedRoutine\":true,\"customRoutineId\":null,\"afterGate\":null,\"returnScreen\":null},\"version\":0}",
+      "task-buddy:last-routine": "\"homework\"",
+      "task-buddy:last-buddy": "\"hoppy\""
+    },
+    "sessionStorage": {},
+    "indexedDB": [],
+    "cacheStorage": {
+      "workbox-precache-v2-http://localhost:4173/": 74
+    },
+    "cookies": []
+  },
+  "afterReopen": {
+    "localStorage": {
+      "task-buddy:rewards/v1": "{\"pick-tomorrow\":\"2026-10-08T19:35:37.591Z\"}",
+      "task-buddy:routines/v1": "{\"homework\":[{\"task_type_key\":\"unpack_bag\",\"custom_label\":null,\"emoji\":\"🎒\",\"duration_minutes\":2},{\"task_type_key\":\"have_a_snack\",\"custom_label\":null,\"emoji\":\"🍎\",\"duration_minutes\":5},{\"task_type_key\":\"homework\",\"custom_label\":null,\"emoji\":\"✏️\",\"duration_minutes\":20},{\"task_type_key\":\"custom\",\"custom_label\":\"Tidy up\",\"emoji\":\"❓\",\"duration_minutes\":5}]}",
+      "task-buddy:has-completed-run": "true",
+      "task-buddy:setup-complete": "true",
+      "routine-timer-state": "{\"state\":{\"screen\":\"setup\",\"selectedCharacter\":\"hoppy\",\"routineName\":\"Homework\",\"routineType\":\"homework\",\"tasks\":[{\"id\":\"unpack_bag\",\"title\":\"Unpack Backpack\",\"durationMinutes\":2,\"itemEmoji\":\"🎒\",\"itemLabel\":\"Unpack Backpack\",\"svgGroup\":\"backpack\",\"themeColor\":\"#9D8AAE\",\"task_type_key\":\"unpack_bag\"},{\"id\":\"have_a_snack\",\"title\":\"Have a Snack\",\"durationMinutes\":5,\"itemEmoji\":\"🍎\",\"itemLabel\":\"Have a Snack\",\"svgGroup\":\"apple\",\"themeColor\":\"#86A4B3\",\"task_type_key\":\"have_a_snack\"},{\"id\":\"homework\",\"title\":\"Homework\",\"durationMinutes\":20,\"itemEmoji\":\"✏️\",\"itemLabel\":\"Homework\",\"svgGroup\":\"pencil\",\"themeColor\":\"#C89A63\",\"task_type_key\":\"homework\"},{\"id\":\"custom\",\"title\":\"Tidy up\",\"durationMinutes\":5,\"itemEmoji\":\"❓\",\"itemLabel\":\"Custom\",\"svgGroup\":\"question-mark\",\"themeColor\":\"#B86F56\",\"task_type_key\":\"custom\"}],\"currentTaskIndex\":0,\"timeLeft\":60,\"totalTime\":60,\"isRunning\":false,\"timerEndsAt\":null,\"rexState\":\"idle\",\"hasSavedRoutine\":true,\"customRoutineId\":null,\"afterGate\":null,\"returnScreen\":null},\"version\":0}",
+      "task-buddy:last-buddy": "\"hoppy\"",
+      "task-buddy:last-routine": "\"homework\""
+    },
+    "sessionStorage": {},
+    "indexedDB": [],
+    "cacheStorage": {
+      "workbox-precache-v2-http://localhost:4173/": 74
+    },
+    "cookies": []
+  }
+}

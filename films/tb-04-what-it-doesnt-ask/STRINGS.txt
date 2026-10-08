@@ -1,0 +1,13 @@
+ON SCREEN: Email address
+ON SCREEN: What's the catch?
+ON SCREEN: No sign-up.
+ON SCREEN: Your routine stays on your device.
+ON SCREEN: No ads.
+ON SCREEN: Close it. Open it again.
+ON SCREEN: Still there.
+ON SCREEN: taskbuddies.app
+VO: What's the catch?
+VO: There is no sign-up. No email.
+VO: The routine you set up stays on your device.
+VO: There are no ads.
+VO: Close it, open it again, and the routine is still there.
