@@ -1,0 +1,13 @@
+ON SCREEN: Hoppy
+ON SCREEN: Snapper
+ON SCREEN: Snoozy
+ON SCREEN: Flutty
+ON SCREEN: Buddy
+ON SCREEN: Who's the buddy?
+ON SCREEN: They choose.
+ON SCREEN: Then they get going together.
+ON SCREEN: taskbuddies.app
+VO: Who's the buddy?
+VO: There are five. Hoppy, Snapper, Snoozy, Flutty and Buddy.
+VO: Your child picks one.
+VO: Then they get going together.
